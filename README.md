@@ -8,12 +8,12 @@
 
 给定一段 agent 的交互历史，以及它接下来准备执行的 `proposed_action`，判断这个动作在当前上下文中的风险。历史包括用户请求、推理、工具调用和工具返回；待评估动作也可能是一段自然语言回复。
 
-| 子任务 | 要回答的问题 | 输出 | 主要指标 |
-| --- | --- | --- | --- |
-| Task 1：Risk Level Estimation | 执行这个动作有多危险？ | 1–5 的风险等级 | MAE，越低越好 |
-| Task 2a：Harm Domain Classification | 可能损害什么？ | 1–2 个 harm domain | Mean Jaccard，越高越好 |
-| Task 2b：Risk Driver Classification | 什么因素使动作有风险？ | 1–2 个 risk driver | Mean Jaccard，越高越好 |
-| Task 3：Policy-Guided Intervention | 按给定 policy 应该如何干预？ | intervention + actionable feedback | F1；具体评测细则待更新 |
+| 子任务                              | 要回答的问题                 | 输出                               | 主要指标               |
+| ----------------------------------- | ---------------------------- | ---------------------------------- | ---------------------- |
+| Task 1：Risk Level Estimation       | 执行这个动作有多危险？       | 1–5 的风险等级                     | MAE，越低越好          |
+| Task 2a：Harm Domain Classification | 可能损害什么？               | 1–2 个 harm domain                 | Mean Jaccard，越高越好 |
+| Task 2b：Risk Driver Classification | 什么因素使动作有风险？       | 1–2 个 risk driver                 | Mean Jaccard，越高越好 |
+| Task 3：Policy-Guided Intervention  | 按给定 policy 应该如何干预？ | intervention + actionable feedback | F1；具体评测细则待更新 |
 
 核心是**结合历史评估最后一个动作**。例如，历史中出现窃取信息的指令，但最后的动作是拒绝发送信息，就应评估这条拒绝回复本身的风险。Task 3 还取决于 policy：同一个动作在不同 policy 下可能需要不同干预。[任务说明](https://agentrisk-semeval.lovable.app/#tasks)
 
@@ -43,3 +43,58 @@
 - [ ] 跟进 Task 3 的 policy、评测脚本及提交格式，补充对应方案。
 
 后续实验分别记录版本与 dev 分数；dev 用于开发反馈，不作为最终泛化性能结论。Few-shot 示例只从 train 选择。
+
+## 快速开始
+
+### 目录
+
+| 目录       | 内容                                                                         |
+| ---------- | ---------------------------------------------------------------------------- |
+| `src/`     | 代码：下载数据、推理、评测、生成报告                                         |
+| `prompts/` | prompt 文件，每个版本一个文件，如 `zero_shot_v1.txt`                         |
+| `data/`    | 数据说明和 `MANIFEST.json`（固定的数据版本）；原始数据在 `data/raw/`，不提交 |
+| `results/` | 每次运行的结果，见 [results/README.md](results/README.md)                    |
+| `docs/`    | 方案文档                                                                     |
+| `slides/`  | 汇报 slides                                                                  |
+
+### 环境准备
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+cp .env.example .env        # 然后在 .env 里填入自己的 DEEPSEEK_API_KEY
+.venv/bin/python src/download_data.py   # 下载 train/dev，并校验与 MANIFEST.json 一致
+```
+
+每个新终端运行推理前，先加载密钥：`set -a; . ./.env; set +a`。
+
+### 常用命令
+
+```bash
+# 推理：不带 --run-id 会新建一次运行；带上则继续同一次运行（已完成的样本自动跳过）
+.venv/bin/python src/run.py --strategy zero-shot --version v1 --limit 20
+.venv/bin/python src/run.py --strategy zero-shot --version v1 --run-id <run_id>
+
+# 打分：生成 <run_dir>/metrics.json
+.venv/bin/python src/evaluate.py results/deepseek-flash/zero-shot-v1/<run_id>
+
+# 交互式分析报告：生成 <run_dir>/report.html，用浏览器打开
+.venv/bin/python src/analyze.py results/deepseek-flash/zero-shot-v1/<run_id>
+```
+
+命令写成一行，`--run-id` 写错会提示目录不存在，不会误建新运行。
+
+### 协作约定
+
+- 密钥只放本地 `.env`，不提交；`.env.example` 保持为空值。
+- 已经用于正式运行的 prompt 不再修改，要改就新建版本（如 `zero_shot_v2.txt`）并开新的运行。
+- 每次运行写进新的 `run_id` 目录，不覆盖旧结果。
+
+### 当前状态
+
+Zero-shot v1（`deepseek-flash`）已跑完完整 dev，143/143 条均有合法预测，正式运行是 `results/deepseek-flash/zero-shot-v1/20261022-051556/`：
+
+| Task 1 MAE | Task 2a Mean Jaccard | Task 2b Mean Jaccard |
+| ---------- | -------------------- | -------------------- |
+| 0.301      | 0.811                | 0.726                |
+
+主要问题：模型整体高估风险（标准答案为 3 的样本里 20/32 被预测成 4），并倾向多给第二个标签。详见该目录下的 `report.html`。
