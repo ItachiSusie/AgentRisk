@@ -27,11 +27,11 @@
 
 **分工：Shuai lead 实现、全量推理与评测；我提供 instruction，并参与结果讨论。** 执行细节见 [独立方案文档](docs/llm-in-context-learning-solution.md)，API 接入参考 [DeepSeek 中文文档](https://api-docs.deepseek.com/zh-cn/)。
 
-- [ ] 我：提供并确认第一版任务 instruction、标签定义和输出格式。
-- [ ] Shuai：下载官方 train/dev，记录数据版本，确认 dev 样本数量与 ID。
-- [ ] Shuai：完成 DeepSeek API 接入，用少量 train 样本检查调用、JSON 解析和标签校验。
-- [ ] Shuai：冻结 prompt 和配置，用 `deepseek-flash` 跑完整 dev set，保存预测、原始响应和运行记录。
-- [ ] Shuai：计算 Task 1 MAE、Task 2a/2b Mean Jaccard，汇总成功率、token 用量与费用。
+- [x] 我：提供并确认第一版任务 instruction、标签定义和输出格式。
+- [x] Shuai：下载官方 train/dev，记录数据版本，确认 dev 样本数量与 ID。
+- [x] Shuai：完成 DeepSeek API 接入，用少量 train 样本检查调用、JSON 解析和标签校验。
+- [x] Shuai：冻结 prompt 和配置，用 `deepseek-flash` 跑完整 dev set，保存预测、原始响应和运行记录。
+- [x] Shuai：计算 Task 1 MAE、Task 2a/2b Mean Jaccard，汇总成功率、token 用量与费用。
 - [ ] 共同：检查代表性错误，讨论等级混淆、domain/driver 混淆，以及拒绝动作是否被误判。
 
 完成标准：当前版本 dev 的 **143/143 条均有合法预测**，三个任务的指标可复算，prompt、配置和结果文件完整保留。若官方数据更新，以记录下来的版本和完整样本数为准。
