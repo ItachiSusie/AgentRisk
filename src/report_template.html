@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentRisk 基线分析报告</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb;
+  --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --ring: rgba(11,11,11,.10); --wash: rgba(11,11,11,.05);
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s7: #6250d6; --gold: #898781;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19;
+    --ink: #f0efec; --ink2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,.10); --wash: rgba(255,255,255,.07);
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s7: #9085e9;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19;
+  --ink: #f0efec; --ink2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,.10); --wash: rgba(255,255,255,.07);
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s7: #9085e9;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--page); color: var(--ink);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 22px; margin: 0 0 4px; font-weight: 650; }
+h2 { font-size: 15px; margin: 0 0 2px; font-weight: 650; }
+.sub { color: var(--ink2); font-size: 13px; margin: 0 0 12px; }
+.meta { color: var(--ink2); font-size: 12.5px; display: flex; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 16px; }
+.meta b { color: var(--ink); font-weight: 600; }
+.banner { background: var(--wash); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; color: var(--ink); }
+.card { background: var(--surface); border-radius: 12px; box-shadow: 0 0 0 1px var(--ring); padding: 16px; min-width: 0; }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); margin-bottom: 16px; }
+.full { grid-column: 1 / -1; }
+
+/* filters */
+.filters { margin-bottom: 12px; }
+.frow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 8px; margin-top: 10px; }
+.frow:first-child { margin-top: 0; }
+.flabel { color: var(--ink2); font-size: 12.5px; width: 92px; flex: none; }
+.seg { display: inline-flex; border-radius: 8px; box-shadow: 0 0 0 1px var(--ring); overflow: hidden; }
+.seg button { border: 0; background: transparent; color: var(--ink2); padding: 5px 12px; font: inherit; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.chip {
+  border: 0; font: inherit; font-size: 12.5px; color: var(--ink); background: var(--wash);
+  border-radius: 999px; padding: 3px 10px; cursor: pointer; display: inline-flex; gap: 6px; align-items: baseline;
+}
+.chip:hover { background: var(--ring); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.chip i { font-style: normal; color: var(--ink2); font-size: 11.5px; }
+.chip[aria-pressed="true"] i { color: var(--surface); opacity: .75; }
+button:focus-visible, [tabindex]:focus-visible, summary:focus-visible { outline: 2px solid var(--s1); outline-offset: 2px; }
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page);
+  padding: 8px 0; margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center;
+  font-size: 13px; color: var(--ink2); border-bottom: 1px solid var(--grid);
+}
+.bar b { color: var(--ink); }
+.btn { border: 0; font: inherit; font-size: 12.5px; background: var(--wash); color: var(--ink); border-radius: 8px; padding: 4px 10px; cursor: pointer; }
+.btn:hover { background: var(--ring); }
+
+/* kpis */
+.kpis { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-bottom: 16px; }
+.kpi { background: var(--surface); border-radius: 12px; box-shadow: 0 0 0 1px var(--ring); padding: 12px 14px; }
+.kpi .l { color: var(--ink2); font-size: 12.5px; }
+.kpi .v { font-size: 26px; font-weight: 650; line-height: 1.2; margin: 2px 0; }
+.kpi .d { color: var(--ink2); font-size: 12px; }
+
+/* charts */
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 4px; color: var(--ink2); font-size: 12.5px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend svg { flex: none; }
+svg text { font-family: inherit; fill: var(--ink2); font-size: 12px; }
+svg text.strong { fill: var(--ink); font-weight: 600; }
+.card svg { max-width: 980px; display: block; }
+svg .hit { fill: transparent; cursor: pointer; }
+svg .hit:hover, svg .hit:focus { fill: var(--wash); }
+.note { color: var(--ink2); font-size: 12.5px; margin: 6px 0 0; }
+.empty { color: var(--ink2); padding: 24px 0; text-align: center; }
+details { margin-top: 10px; }
+summary { cursor: pointer; color: var(--ink2); font-size: 12.5px; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--ink2); font-weight: 600; white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+th.sort { cursor: pointer; user-select: none; }
+th.sort:hover { color: var(--ink); }
+
+/* sample table */
+tr.row { cursor: pointer; }
+tr.row:hover td { background: var(--wash); }
+.lab { display: flex; flex-wrap: wrap; gap: 3px; margin: 1px 0; align-items: center; }
+.lab em { font-style: normal; color: var(--ink2); font-size: 11px; width: 28px; flex: none; }
+.tag { font-size: 11.5px; padding: 1px 7px 1px 6px; border-radius: 4px; background: var(--wash); border-left: 3px solid var(--s1); color: var(--ink); }
+.tag.miss { border-left-color: var(--s2); }
+.tag.extra { border-left-color: var(--s3); }
+.err0 { color: var(--ink2); }
+.errp, .errn { font-weight: 600; }
+.detail td { background: var(--wash); }
+.detail h3 { font-size: 12.5px; margin: 8px 0 4px; }
+.detail pre {
+  margin: 0; white-space: pre-wrap; word-break: break-word; font: 12px/1.5 ui-monospace, Menlo, Consolas, monospace;
+  background: var(--surface); border-radius: 8px; padding: 10px; max-height: 340px; overflow: auto; box-shadow: 0 0 0 1px var(--ring);
+}
+#tip {
+  position: fixed; z-index: 20; pointer-events: none; background: var(--surface); color: var(--ink);
+  border-radius: 8px; box-shadow: 0 0 0 1px var(--ring), 0 4px 16px rgba(0,0,0,.18);
+  padding: 8px 10px; font-size: 12.5px; max-width: 320px; display: none;
+}
+#tip .t { font-weight: 600; margin-bottom: 2px; }
+#tip .r { display: flex; justify-content: space-between; gap: 16px; color: var(--ink2); }
+#tip .r b { color: var(--ink); font-weight: 650; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 id="title"></h1>
+  <div class="meta" id="meta"></div>
+  <div id="banner"></div>
+
+  <div class="card filters" id="filters">
+    <div class="frow">
+      <span class="flabel">筛选口径</span>
+      <span class="seg" id="basis">
+        <button data-b="gold" aria-pressed="true">按标准答案</button>
+        <button data-b="pred" aria-pressed="false">按模型预测</button>
+      </span>
+      <span class="sub" style="margin:0" id="basisNote"></span>
+    </div>
+    <div class="frow"><span class="flabel">风险等级</span><span id="fLevel"></span></div>
+    <div class="frow"><span class="flabel">Harm domain</span><span id="fDom"></span></div>
+    <div class="frow"><span class="flabel">Risk driver</span><span id="fDrv"></span></div>
+    <p class="note">同一组内多选取并集，不同组之间取交集。图中的柱子、格子、标签行也可以直接点击来筛选。</p>
+  </div>
+
+  <div class="bar" id="bar"></div>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid">
+    <div class="card"><h2>风险等级混淆矩阵</h2><p class="sub">行 = 标准答案，列 = 模型预测；颜色越深数量越多。</p><div id="matrix"></div></div>
+    <div class="card"><h2>各等级 MAE</h2><p class="sub" id="levelSub"></p><div id="levels"></div></div>
+    <div class="card full"><h2>Harm domain：标准答案与预测是否一致</h2><p class="sub">每行是一个标签，统计当前筛选下的样本。</p><div id="agreeDom"></div><div id="tblDom"></div></div>
+    <div class="card full"><h2>Risk driver：标准答案与预测是否一致</h2><p class="sub">每行是一个标签，统计当前筛选下的样本。</p><div id="agreeDrv"></div><div id="tblDrv"></div></div>
+    <div class="card full"><h2>每个样本给了几个标签</h2><p class="sub">模型是否倾向多给第二个标签。</p><div id="counts"></div></div>
+  </div>
+
+  <div class="card">
+    <h2>样本浏览</h2>
+    <p class="sub" id="tableSub"></p>
+    <label class="note" style="display:inline-flex;gap:6px;align-items:center;margin:0 0 8px"><input type="checkbox" id="errOnly"> 只看有不一致的样本</label>
+    <div class="scroll"><table id="samples"></table></div>
+  </div>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const D = __REPORT_DATA__;
+
+/* ---------- data ---------- */
+const jac = (a, b) => { const A = new Set(a), B = new Set(b); let i = 0; A.forEach(v => { if (B.has(v)) i++; }); return i / (A.size + B.size - i); };
+const SAMPLES = D.samples.map(x => {
+  const err = x.pred.sev - x.gold.sev, jd = jac(x.gold.dom, x.pred.dom), jr = jac(x.gold.drv, x.pred.drv);
+  return Object.assign({}, x, { err, ae: Math.abs(err), jd, jr, anyErr: err !== 0 || jd < 1 || jr < 1 });
+});
+const LEVELS = [1, 2, 3, 4, 5];
+const KIND = { dom: "Harm domain", drv: "Risk driver" };
+const mean = xs => xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : NaN;
+const f2 = v => Number.isNaN(v) ? "—" : v.toFixed(2);
+const f3 = v => Number.isNaN(v) ? "—" : v.toFixed(3);
+const sgn = v => Number.isNaN(v) ? "—" : (v > 0 ? "+" : "") + v.toFixed(2);
+const pct = v => Number.isNaN(v) ? "—" : Math.round(v * 100) + "%";
+
+const state = { basis: "gold", levels: new Set(), dom: new Set(), drv: new Set(), cell: null, errOnly: false,
+                sort: { key: "ae", dir: -1 }, open: new Set() };
+const sideOf = x => state.basis === "gold" ? x.gold : x.pred;
+
+function passes(x, o = {}) {
+  const s = sideOf(x);
+  if (!o.skipLevel && state.levels.size && !state.levels.has(s.sev)) return false;
+  if (state.dom.size && !s.dom.some(d => state.dom.has(d))) return false;
+  if (state.drv.size && !s.drv.some(d => state.drv.has(d))) return false;
+  if (!o.skipCell && state.cell && !(x.gold.sev === state.cell.g && x.pred.sev === state.cell.p)) return false;
+  return true;
+}
+const toggle = (set, v) => { set.has(v) ? set.delete(v) : set.add(v); };
+
+/* ---------- tiny DOM helpers (all text through textContent) ---------- */
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === "class") el.className = v; else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v);
+  }
+  for (const c of kids.flat()) if (c != null) el.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return el;
+}
+const NS = "http://www.w3.org/2000/svg";
+function s(tag, attrs, ...kids) {
+  const el = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, v);
+  for (const c of kids.flat()) if (c != null) el.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return el;
+}
+const $ = id => document.getElementById(id);
+const put = (id, ...kids) => { const el = $(id); el.replaceChildren(...kids.flat().filter(c => c != null)); };
+
+/* ---------- tooltip ---------- */
+const tip = $("tip");
+function showTip(x, y, title, rows) {
+  tip.replaceChildren(h("div", { class: "t" }, title), ...rows.map(r => h("div", { class: "r" }, h("span", {}, r[0]), h("b", {}, r[1]))));
+  tip.style.display = "block";
+  const w = tip.offsetWidth, hh = tip.offsetHeight;
+  tip.style.left = Math.max(8, Math.min(x + 14, innerWidth - w - 8)) + "px";
+  tip.style.top = Math.max(8, Math.min(y + 14, innerHeight - hh - 8)) + "px";
+}
+const hideTip = () => { tip.style.display = "none"; };
+function attach(el, title, rows, onClick) {
+  el.addEventListener("pointermove", e => showTip(e.clientX, e.clientY, title, rows));
+  el.addEventListener("pointerleave", hideTip);
+  el.addEventListener("focus", () => { const b = el.getBoundingClientRect(); showTip(b.left, b.top + b.height / 2, title, rows); });
+  el.addEventListener("blur", hideTip);
+  if (onClick) {
+    el.setAttribute("tabindex", "0"); el.setAttribute("role", "button");
+    el.addEventListener("click", onClick);
+    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } });
+  }
+}
+
+/* ---------- colors ---------- */
+const SEQ = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7", "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b"];
+const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+function seq(t) { // light surface: darker = more; dark surface: lighter = more
+  const k = Math.round(t * (SEQ.length - 1));
+  return SEQ[isDark() ? SEQ.length - 1 - k : k];
+}
+function lum(hex) { const c = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4)); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
+const inkOn = hex => lum(hex) > .35 ? "#0b0b0b" : "#ffffff";
+
+/* ---------- header, filters ---------- */
+function renderHeader() {
+  const m = D.meta;
+  $("title").textContent = `AgentRisk 基线分析 · ${m.strategy} · ${m.split}`;
+  put("meta",
+    h("span", {}, "run ", h("b", {}, m.run_id)),
+    h("span", {}, "模型 ", h("b", {}, m.models.join(", ") || "—")),
+    h("span", {}, "prompt ", h("b", {}, m.prompt_sha256.slice(0, 12))),
+    h("span", {}, "数据版本 ", h("b", {}, (m.data_commit || "").slice(0, 7))),
+    h("span", {}, "样本 ", h("b", {}, `${m.n_success}/${m.n_total}`)),
+    h("span", {}, "token ", h("b", {}, `${m.prompt_tokens.toLocaleString()} 入 / ${m.completion_tokens.toLocaleString()} 出`)));
+  if (m.failed_ids.length) put("banner", h("div", { class: "banner" }, `有 ${m.failed_ids.length} 条样本没有合法预测，本页只统计成功的样本：${m.failed_ids.join(", ")}`));
+}
+function renderFilters() {
+  const countOn = (get, v) => SAMPLES.filter(x => get(sideOf(x)).includes ? get(sideOf(x)).includes(v) : get(sideOf(x)) === v).length;
+  const chip = (label, count, on, click) => h("button", { class: "chip", "aria-pressed": on, onclick: click }, label, h("i", {}, count));
+  put("fLevel", LEVELS.map(l => chip(`等级 ${l}`, countOn(z => z.sev, l), state.levels.has(l), () => { toggle(state.levels, l); state.cell = null; render(); })));
+  put("fDom", D.labels.dom.map(l => chip(l, countOn(z => z.dom, l), state.dom.has(l), () => { toggle(state.dom, l); render(); })));
+  put("fDrv", D.labels.drv.map(l => chip(l, countOn(z => z.drv, l), state.drv.has(l), () => { toggle(state.drv, l); render(); })));
+  for (const b of $("basis").children) b.setAttribute("aria-pressed", b.dataset.b === state.basis);
+  $("basisNote").textContent = state.basis === "gold"
+    ? "选「等级 3」= 标准答案是 3 的样本，看模型在真实 3 级上错多少。"
+    : "选「等级 4」= 模型预测为 4 的样本，看模型喊 4 级时有多可信。";
+}
+function renderBar(S) {
+  const parts = [];
+  if (state.levels.size) parts.push("等级 " + [...state.levels].sort().join("/"));
+  if (state.cell) parts.push(`标准 ${state.cell.g} → 预测 ${state.cell.p}`);
+  if (state.dom.size) parts.push("domain: " + [...state.dom].join(" / "));
+  if (state.drv.size) parts.push("driver: " + [...state.drv].join(" / "));
+  put("bar",
+    h("span", {}, state.basis === "gold" ? "按标准答案" : "按模型预测", " · 当前筛选：",
+      h("b", {}, parts.length ? parts.join("；") : "无（全部样本）"), " · ", h("b", {}, S.length), ` / ${SAMPLES.length} 条`),
+    parts.length ? h("button", { class: "btn", onclick: () => { state.levels.clear(); state.dom.clear(); state.drv.clear(); state.cell = null; render(); } }, "清除筛选") : null);
+}
+
+/* ---------- KPIs ---------- */
+function renderKPIs(S) {
+  const all = SAMPLES, small = S.length > 0 && S.length < 10;
+  const tile = (l, v, d) => h("div", { class: "kpi" }, h("div", { class: "l" }, l), h("div", { class: "v" }, v), h("div", { class: "d" }, d));
+  put("kpis",
+    tile("样本数", S.length, small ? "样本很少，数值不稳定" : `占全部 ${pct(S.length / all.length)}`),
+    tile("Task 1 MAE", f2(mean(S.map(x => x.ae))), `全体 ${f2(mean(all.map(x => x.ae)))} · 越低越好`),
+    tile("平均偏差（预测−标准）", sgn(mean(S.map(x => x.err))), `全体 ${sgn(mean(all.map(x => x.err)))} · 正数 = 高估`),
+    tile("等级完全一致", pct(mean(S.map(x => x.err === 0 ? 1 : 0))), `全体 ${pct(mean(all.map(x => x.err === 0 ? 1 : 0)))}`),
+    tile("Task 2a Jaccard", f3(mean(S.map(x => x.jd))), `全体 ${f3(mean(all.map(x => x.jd)))} · 越高越好`),
+    tile("Task 2b Jaccard", f3(mean(S.map(x => x.jr))), `全体 ${f3(mean(all.map(x => x.jr)))} · 越高越好`));
+}
+
+/* ---------- confusion matrix ---------- */
+function renderMatrix() {
+  const base = SAMPLES.filter(x => passes(x, { skipLevel: true, skipCell: true }));
+  const N = 5, cs = 66, left = 74, top = 54, right = 138, W = left + N * cs + right, H = top + N * cs + 8;
+  const cnt = LEVELS.map(() => LEVELS.map(() => 0));
+  base.forEach(x => { cnt[x.gold.sev - 1][x.pred.sev - 1]++; });
+  const max = Math.max(1, ...cnt.flat());
+  const svg = s("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": "风险等级混淆矩阵" });
+  svg.append(s("text", { x: left + N * cs / 2, y: 14, "text-anchor": "middle", class: "strong" }, "模型预测"));
+  svg.append(s("text", { x: 14, y: top + N * cs / 2, "text-anchor": "middle", class: "strong", transform: `rotate(-90 14 ${top + N * cs / 2})` }, "标准答案"));
+  LEVELS.forEach((l, i) => {
+    svg.append(s("text", { x: left + i * cs + cs / 2, y: top - 8, "text-anchor": "middle" }, l));
+    svg.append(s("text", { x: left - 8, y: top + i * cs + cs / 2 + 4, "text-anchor": "end" }, l));
+    const row = base.filter(x => x.gold.sev === l);
+    svg.append(s("text", { x: left + N * cs + 10, y: top + i * cs + cs / 2 + 4 },
+      row.length ? `n=${row.length} · MAE ${f2(mean(row.map(x => x.ae)))}` : "n=0"));
+  });
+  LEVELS.forEach((g, gi) => LEVELS.forEach((p, pi) => {
+    const v = cnt[gi][pi], x = left + pi * cs, y = top + gi * cs;
+    const fill = v ? seq(v / max) : "transparent";
+    const selected = state.cell && state.cell.g === g && state.cell.p === p;
+    const lvl = state.levels.size ? state.levels.has(state.basis === "gold" ? g : p) : true;
+    const grp = s("g", { opacity: lvl ? 1 : .3 });
+    grp.append(s("rect", { x: x + 1, y: y + 1, width: cs - 2, height: cs - 2, rx: 4, fill, stroke: g === p ? "var(--ink2)" : (v ? "none" : "var(--grid)"), "stroke-width": g === p ? 1.5 : 1 }));
+    if (selected) grp.append(s("rect", { x: x + 1, y: y + 1, width: cs - 2, height: cs - 2, rx: 4, fill: "none", stroke: "var(--ink)", "stroke-width": 3 }));
+    if (v) grp.append(s("text", { x: x + cs / 2, y: y + cs / 2 + 5, "text-anchor": "middle", style: `fill:${inkOn(fill)};font-size:15px;font-weight:${g === p ? 700 : 500}` }, v));
+    const rowN = base.filter(z => z.gold.sev === g).length;
+    const hit = s("rect", { x, y, width: cs, height: cs, class: "hit" });
+    attach(hit, `标准 ${g} → 预测 ${p}`, [["样本数", v], ["占该标准等级", rowN ? pct(v / rowN) : "—"],
+      ["方向", g === p ? "一致" : (p > g ? "高估" : "低估")]], () => { state.cell = selected ? null : { g, p }; render(); });
+    grp.append(hit);
+    svg.append(grp);
+  }));
+  const over = base.filter(x => x.err > 0).length, under = base.filter(x => x.err < 0).length;
+  put("matrix", svg, h("p", { class: "note" },
+    `右上方（预测 > 标准）= 高估，左下方 = 低估；粗框 = 对角线（完全一致）。当前：高估 ${over} · 一致 ${base.length - over - under} · 低估 ${under}。点击格子可筛选。`));
+}
+
+/* ---------- MAE by level ---------- */
+function renderLevels() {
+  const base = SAMPLES.filter(x => passes(x, { skipLevel: true, skipCell: true }));
+  $("levelSub").textContent = `按${state.basis === "gold" ? "标准答案" : "模型预测"}的等级分组，每组内 mean(|预测−标准|)。n 很小的等级不稳定。`;
+  const rows = LEVELS.map(l => { const g = base.filter(x => sideOf(x).sev === l); return { l, n: g.length, mae: mean(g.map(x => x.ae)) }; });
+  const maxV = Math.max(1, ...rows.map(r => r.mae || 0));
+  const lw = 96, pw = 300, rh = 38, W = lw + pw + 90, H = rows.length * rh + 24;
+  const svg = s("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": "各等级 MAE" });
+  [0, .5, 1].forEach(t => {
+    const x = lw + t * pw * (1 / maxV) ;
+    if (t <= maxV) { svg.append(s("line", { x1: x, x2: x, y1: 0, y2: rows.length * rh, stroke: "var(--grid)" })); svg.append(s("text", { x, y: rows.length * rh + 16, "text-anchor": "middle" }, t.toFixed(1))); }
+  });
+  rows.forEach((r, i) => {
+    const y = i * rh, sel = !state.levels.size || state.levels.has(r.l);
+    const g = s("g", { opacity: sel ? 1 : .35 });
+    g.append(s("text", { x: lw - 8, y: y + rh / 2 + 4, "text-anchor": "end", class: state.levels.has(r.l) ? "strong" : "" }, `等级 ${r.l}`));
+    g.append(s("text", { x: lw - 8, y: y + rh / 2 + 18, "text-anchor": "end", style: "font-size:11px" }, `n=${r.n}${r.n > 0 && r.n < 10 ? " ⚠" : ""}`));
+    if (r.n) {
+      const w = r.mae / maxV * pw;
+      if (w > 0) g.append(s("path", { d: `M${lw},${y + 9} h${w - 4} a4,4 0 0 1 4,4 v${rh - 26} a4,4 0 0 1 -4,4 h-${w - 4} z`, fill: "var(--s1)" }));
+      g.append(s("text", { x: lw + w + 8, y: y + rh / 2 + 4, class: "strong" }, f2(r.mae)));
+    } else g.append(s("text", { x: lw + 8, y: y + rh / 2 + 4 }, "—"));
+    const hit = s("rect", { x: 0, y, width: W, height: rh, class: "hit" });
+    attach(hit, `等级 ${r.l}（${state.basis === "gold" ? "标准答案" : "模型预测"}）`, [["样本数", r.n], ["MAE", f2(r.mae)]], () => { toggle(state.levels, r.l); state.cell = null; render(); });
+    g.append(hit); svg.append(g);
+  });
+  put("levels", svg, h("p", { class: "note" }, "⚠ = 样本少于 10 条。点击柱子可按等级筛选。"));
+}
+
+/* ---------- agreement per label ---------- */
+function labelStats(S, kind) {
+  return D.labels[kind].map(l => {
+    let both = 0, g = 0, p = 0;
+    for (const x of S) {
+      const a = x.gold[kind].includes(l), b = x.pred[kind].includes(l);
+      if (a && b) both++; else if (a) g++; else if (b) p++;
+    }
+    return { l, both, g, p, tot: both + g + p, prec: both + p ? both / (both + p) : NaN, rec: both + g ? both / (both + g) : NaN };
+  });
+}
+function swatch(color) { return s("svg", { width: 10, height: 10 }, s("rect", { width: 10, height: 10, rx: 2, fill: color })); }
+function renderAgreement(kind, mountId, tblId, S) {
+  const rows = labelStats(S, kind).filter(r => r.tot > 0).sort((a, b) => b.tot - a.tot || D.labels[kind].indexOf(a.l) - D.labels[kind].indexOf(b.l));
+  const legend = h("div", { class: "legend" },
+    h("span", {}, swatch("var(--s1)"), "命中（标准答案和预测都有）"),
+    h("span", {}, swatch("var(--s2)"), "漏掉（只有标准答案有）"),
+    h("span", {}, swatch("var(--s3)"), "多给（只有预测有）"));
+  if (!rows.length) { put(mountId, legend, h("div", { class: "empty" }, "没有符合条件的样本")); put(tblId); return; }
+  const lw = 250, pw = 380, rh = 32, W = lw + pw + 150, H = rows.length * rh + 8, GAP = 2;
+  const maxT = Math.max(...rows.map(r => r.tot)), sc = pw / maxT;
+  const svg = s("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": KIND[kind] + " 一致性" });
+  const colors = ["var(--s1)", "var(--s2)", "var(--s3)"];
+  rows.forEach((r, i) => {
+    const y = i * rh, on = state[kind].has(r.l), g = s("g", {});
+    g.append(s("text", { x: lw - 10, y: y + rh / 2 + 4, "text-anchor": "end", class: on ? "strong" : "" }, (on ? "● " : "") + r.l));
+    const segs = [r.both, r.g, r.p], last = segs.map((v, k) => v ? k : -1).reduce((a, b) => Math.max(a, b), -1);
+    let x = lw;
+    segs.forEach((v, k) => {
+      if (!v) return;
+      const w = v * sc, ww = Math.max(1, w - (k === last ? 0 : GAP)), t = y + 8, hh = 16;
+      g.append(k === last
+        ? s("path", { d: `M${x},${t} h${Math.max(0, ww - 4)} a4,4 0 0 1 4,4 v${hh - 8} a4,4 0 0 1 -4,4 h-${Math.max(0, ww - 4)} z`, fill: colors[k] })
+        : s("rect", { x, y: t, width: ww, height: hh, fill: colors[k] }));
+      x += w;
+    });
+    g.append(s("text", { x: x + 8, y: y + rh / 2 + 4 }, `${r.both}/${r.g}/${r.p}`));
+    const hit = s("rect", { x: 0, y, width: W, height: rh, class: "hit" });
+    attach(hit, r.l, [["命中", r.both], ["漏掉", r.g], ["多给", r.p], ["Precision", f2(r.prec)], ["Recall", f2(r.rec)]], () => { toggle(state[kind], r.l); render(); });
+    g.append(hit); svg.append(g);
+  });
+  put(mountId, legend, svg, h("p", { class: "note" }, "每行末尾的数字 = 命中 / 漏掉 / 多给（条数）。点击一行可按该标签筛选。"));
+  const full = labelStats(S, kind).filter(r => r.tot > 0);
+  put(tblId, h("details", {}, h("summary", {}, "表格视图（含 precision / recall / F1）"),
+    h("div", { class: "scroll" }, h("table", {},
+      h("tr", {}, ["标签", "标准", "预测", "命中", "漏掉", "多给", "Precision", "Recall", "F1"].map((t, i) => h("th", { class: i ? "num" : "" }, t))),
+      full.map(r => h("tr", {}, h("td", {}, r.l), [r.both + r.g, r.both + r.p, r.both, r.g, r.p].map(v => h("td", { class: "num" }, v)),
+        h("td", { class: "num" }, f2(r.prec)), h("td", { class: "num" }, f2(r.rec)),
+        h("td", { class: "num" }, f2(2 * r.prec * r.rec / (r.prec + r.rec)))))))));
+}
+
+/* ---------- number of labels ---------- */
+function renderCounts(S) {
+  const groups = [["dom", 1], ["dom", 2], ["drv", 1], ["drv", 2]].map(([k, n]) => ({
+    k, n, g: S.filter(x => x.gold[k].length === n).length, p: S.filter(x => x.pred[k].length === n).length }));
+  const legend = h("div", { class: "legend" }, h("span", {}, swatch("var(--gold)"), "标准答案"), h("span", {}, swatch("var(--s7)"), "模型预测"));
+  if (!S.length) { put("counts", legend, h("div", { class: "empty" }, "没有符合条件的样本")); return; }
+  const W = 640, H = 230, l = 40, b = 40, t = 16, ph = H - b - t, pw = W - l - 10;
+  const maxV = Math.max(1, ...groups.flatMap(g => [g.g, g.p])), top = Math.ceil(maxV / 10) * 10 || 10;
+  const svg = s("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": "标签数量" });
+  [0, .5, 1].forEach(f => { const y = t + ph * (1 - f); svg.append(s("line", { x1: l, x2: W - 10, y1: y, y2: y, stroke: "var(--grid)" })); svg.append(s("text", { x: l - 6, y: y + 4, "text-anchor": "end" }, Math.round(top * f))); });
+  const gw = pw / groups.length, bw = 24;
+  groups.forEach((g, i) => {
+    const cx = l + gw * i + gw / 2, grp = s("g", {});
+    [[g.g, "var(--gold)", -bw - 1], [g.p, "var(--s7)", 1]].forEach(([v, c, dx]) => {
+      const hgt = v / top * ph, x = cx + dx, y = t + ph - hgt;
+      if (v) grp.append(s("path", { d: `M${x},${t + ph} v-${Math.max(0, hgt - 4)} a4,4 0 0 1 4,-4 h${bw - 8} a4,4 0 0 1 4,4 v${Math.max(0, hgt - 4)} z`, fill: c }));
+      grp.append(s("text", { x: x + bw / 2, y: y - 5, "text-anchor": "middle", class: "strong" }, v));
+    });
+    grp.append(s("text", { x: cx, y: H - 14, "text-anchor": "middle" }, `${KIND[g.k]} · ${g.n} 个标签`));
+    const hit = s("rect", { x: cx - gw / 2, y: t, width: gw, height: ph + b, class: "hit" });
+    attach(hit, `${KIND[g.k]}：${g.n} 个标签`, [["标准答案", g.g], ["模型预测", g.p]]);
+    grp.append(hit); svg.append(grp);
+  });
+  put("counts", legend, svg);
+}
+
+/* ---------- sample explorer ---------- */
+function labelRow(who, mine, other, missCls) {
+  return h("div", { class: "lab" }, h("em", {}, who), mine.map(l => {
+    const ok = other.includes(l);
+    return h("span", { class: "tag" + (ok ? "" : " " + missCls) }, (ok ? "✓ " : missCls === "miss" ? "− " : "+ ") + l);
+  }));
+}
+function renderTable(S) {
+  let rows = S.filter(x => !state.errOnly || x.anyErr);
+  const k = state.sort.key, d = state.sort.dir;
+  rows = rows.slice().sort((a, b) => {
+    const va = k === "id" ? a.id : a[k], vb = k === "id" ? b.id : b[k];
+    return (va < vb ? -1 : va > vb ? 1 : 0) * d || (a.id < b.id ? -1 : 1);
+  });
+  $("tableSub").textContent = `${rows.length} 条（点击表头排序，点击行展开 proposed_action 和完整轨迹）。✓ 命中 · − 漏掉 · + 多给。`;
+  const th = (label, key, cls) => h("th", { class: "sort " + (cls || ""), onclick: () => { state.sort = { key, dir: state.sort.key === key ? -state.sort.dir : -1 }; render(); } },
+    label + (state.sort.key === key ? (state.sort.dir > 0 ? " ▲" : " ▼") : ""));
+  const out = [h("tr", {}, th("样本", "id"), th("等级 标准→预测", "ae"), h("th", {}, "Domain"), h("th", {}, "Driver"), th("J-dom", "jd", "num"), th("J-drv", "jr", "num"))];
+  rows.forEach(x => {
+    const open = state.open.has(x.id);
+    out.push(h("tr", { class: "row", tabindex: "0", "aria-expanded": open,
+      onclick: () => { toggle(state.open, x.id); render(); },
+      onkeydown: e => { if (e.key === "Enter") { toggle(state.open, x.id); render(); } } },
+      h("td", {}, (open ? "▾ " : "▸ ") + x.id),
+      h("td", {}, `${x.gold.sev} → ${x.pred.sev} `, h("span", { class: x.err === 0 ? "err0" : x.err > 0 ? "errp" : "errn" }, x.err === 0 ? "一致" : x.err > 0 ? `高估 +${x.err}` : `低估 ${x.err}`)),
+      h("td", {}, labelRow("标准", x.gold.dom, x.pred.dom, "miss"), labelRow("预测", x.pred.dom, x.gold.dom, "extra")),
+      h("td", {}, labelRow("标准", x.gold.drv, x.pred.drv, "miss"), labelRow("预测", x.pred.drv, x.gold.drv, "extra")),
+      h("td", { class: "num" }, f2(x.jd)), h("td", { class: "num" }, f2(x.jr))));
+    if (open) out.push(h("tr", { class: "detail" }, h("td", { colspan: 6 },
+      h("h3", {}, "proposed_action"), h("pre", {}, x.action),
+      h("h3", {}, "formatted_interaction"), h("pre", {}, x.interaction),
+      h("h3", {}, "调用信息"), h("div", { class: "note" }, `尝试 ${x.attempts} 次 · 输入 ${x.prompt_tokens} / 输出 ${x.completion_tokens} token`))));
+  });
+  put("samples", out);
+}
+
+/* ---------- main ---------- */
+function render() {
+  hideTip();
+  const S = SAMPLES.filter(x => passes(x));
+  renderFilters(); renderBar(S); renderKPIs(S);
+  renderMatrix(); renderLevels();
+  renderAgreement("dom", "agreeDom", "tblDom", S);
+  renderAgreement("drv", "agreeDrv", "tblDrv", S);
+  renderCounts(S); renderTable(S);
+}
+$("basis").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { state.basis = b.dataset.b; state.cell = null; render(); } });
+$("errOnly").addEventListener("change", e => { state.errOnly = e.target.checked; render(); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+renderHeader();
+render();
+</script>
+</body>
+</html>
