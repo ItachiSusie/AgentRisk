@@ -64,7 +64,7 @@ def main():
     data = {
         "meta": {
             "run_id": config["run_id"],
-            "strategy": f"{config['strategy']}-{config['version']}",
+            "strategy": config.get("experiment", f"{config['strategy']}-{config['version']}"),
             "split": config["split"],
             "models": config["returned_models"],
             "prompt_sha256": config["prompt_sha256"],
