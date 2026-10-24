@@ -38,7 +38,7 @@
 
 ### 计划 2：根据 baseline 结果确定改进方向
 
-- [ ] 从 train 中选取固定 few-shot 示例，与第一版 zero-shot baseline 比较。
+- [ ] 从 train 中为每条 dev 样本选取 few-shot 示例（随机、BM25 检索两种，k=3/5/10），与第一版 zero-shot baseline 比较。
 - [ ] 根据错误分析调整风险等级说明、上下文理解或多标签选择规则，每次只改一个主要因素。
 - [ ] 跟进 Task 3 的 policy、评测脚本及提交格式，补充对应方案。
 
@@ -51,7 +51,7 @@
 | 目录       | 内容                                                                         |
 | ---------- | ---------------------------------------------------------------------------- |
 | `src/`     | 代码：下载数据、推理、评测、生成报告                                         |
-| `prompts/` | prompt 文件，每个版本一个文件，如 `zero_shot_v1.txt`                         |
+| `prompts/` | prompt 文件，每个版本一个文件，如 `zero_shot_v1.txt`；`few_shot_v1.json` 是 few-shot 的消息拼装规范 |
 | `data/`    | 数据说明和 `MANIFEST.json`（固定的数据版本）；原始数据在 `data/raw/`，不提交 |
 | `results/` | 每次运行的结果，见 [results/README.md](results/README.md)                    |
 | `docs/`    | 方案文档                                                                     |
@@ -74,11 +74,23 @@ cp .env.example .env        # 然后在 .env 里填入自己的 DEEPSEEK_API_KEY
 .venv/bin/python src/run.py --strategy zero-shot --version v1 --limit 20
 .venv/bin/python src/run.py --strategy zero-shot --version v1 --run-id <run_id>
 
+# few-shot：--selection random|bm25，--k 3|5|10；random 加 --seed（默认 0）
+.venv/bin/python src/select_examples.py --method random --seed 0   # 先生成选择文件（已入库，通常不用重跑）
+.venv/bin/python src/run.py --strategy few-shot --selection bm25 --k 3 --version v1 --dry-run   # 不调用 API，检查并估算 token
+.venv/bin/python src/run.py --strategy few-shot --selection bm25 --k 3 --version v1 --limit 5
+.venv/bin/python src/run.py --strategy few-shot --selection bm25 --k 3 --version v1 --run-id <run_id>
+
+# 查看某条样本实际收到的完整消息（含示例）
+.venv/bin/python src/fewshot.py render --run-dir results/deepseek-flash/few-shot-bm25-k3-v1/<run_id> --id AGENTRISK-004
+
 # 打分：生成 <run_dir>/metrics.json
 .venv/bin/python src/evaluate.py results/deepseek-flash/zero-shot-v1/<run_id>
 
 # 交互式分析报告：生成 <run_dir>/report.html，用浏览器打开
 .venv/bin/python src/analyze.py results/deepseek-flash/zero-shot-v1/<run_id>
+
+# 多个运行并排对比：生成 results/comparison.md
+.venv/bin/python src/compare.py
 ```
 
 命令写成一行，`--run-id` 写错会提示目录不存在，不会误建新运行。
@@ -86,7 +98,8 @@ cp .env.example .env        # 然后在 .env 里填入自己的 DEEPSEEK_API_KEY
 ### 协作约定
 
 - 密钥只放本地 `.env`，不提交；`.env.example` 保持为空值。
-- 已经用于正式运行的 prompt 不再修改，要改就新建版本（如 `zero_shot_v2.txt`）并开新的运行。
+- 已经用于正式运行的 prompt 不再修改，要改就新建版本（如 `zero_shot_v2.txt`、`few_shot_v2.json`）并开新的运行。
+- few-shot 的示例选择文件在 `data/fewshot/`，已入库；换随机种子请生成新文件（`random_seed1.json`），不要覆盖旧的。
 - 每次运行写进新的 `run_id` 目录，不覆盖旧结果。
 
 ### 当前状态
@@ -98,3 +111,13 @@ Zero-shot v1（`deepseek-flash`）已跑完完整 dev，143/143 条均有合法�
 | 0.301      | 0.811                | 0.726                |
 
 主要问题：模型整体高估风险（标准答案为 3 的样本里 20/32 被预测成 4），并倾向多给第二个标签。详见该目录下的 `report.html`。
+
+Few-shot（每条 dev 样本各自选 k 个 train 示例，其余和 zero-shot 完全一致）已跑完 6 组，均 143/143 合法预测。完整对比见 [results/comparison.md](results/comparison.md)，错误分析（草稿）见 [results/few-shot-error-analysis.md](results/few-shot-error-analysis.md)：
+
+| 运行 | Task 1 MAE | Task 2a Mean Jaccard | Task 2b Mean Jaccard |
+| --- | --- | --- | --- |
+| zero-shot v1 | 0.301 | 0.811 | 0.726 |
+| random k=3 / 5 / 10（seed 0） | 0.273 / 0.266 / 0.245 | 0.854 / 0.839 / 0.843 | 0.724 / 0.733 / 0.740 |
+| bm25 k=3 / 5 / 10 | 0.266 / 0.231 / **0.189** | 0.853 / 0.867 / 0.862 | 0.752 / 0.779 / **0.793** |
+
+示例越多越好，BM25 优于随机；随机组只有一个种子，单个小差异可能是噪声。

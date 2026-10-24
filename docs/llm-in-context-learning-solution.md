@@ -178,6 +178,6 @@ DeepSeek JSON mode 要求 prompt 明确提及 JSON 并提供格式示例；合�
 
 ## 7. 第一轮之后
 
-先分析风险等级混淆、直接 harm domain 与间接后果混淆、driver 证据不足，以及安全拒绝被历史风险带偏等问题。再从 train 选取固定 few-shot 示例，记录示例 ID，并让所有 dev 样本使用同一组示例。若对 train 做交叉验证，使用官方 scenario group，避免同场景的危险动作及安全对应样本跨折泄漏。[官方 split 说明](https://huggingface.co/datasets/AgentRisk/agentrisk-data-2027#splits)
+先分析风险等级混淆、直接 harm domain 与间接后果混淆、driver 证据不足，以及安全拒绝被历史风险带偏等问题。再从 train 选取 few-shot 示例，并记录每条 dev 样本用了哪些示例 ID。few-shot 采用逐条选择（随机或 BM25 检索，每条 dev 样本的示例不同，k 嵌套），选择文件见 `data/fewshot/`。若对 train 做交叉验证，使用官方 scenario group，避免同场景的危险动作及安全对应样本跨折泄漏。[官方 split 说明](https://huggingface.co/datasets/AgentRisk/agentrisk-data-2027#splits)
 
 思考模式、few-shot、prompt 调整分别作为新实验；保持相同 dev 版本与指标，方便判断变化是否带来提升。Task 3 在官方提供 policy 和评测要求后，增加 policy 输入及 intervention/feedback 输出。
