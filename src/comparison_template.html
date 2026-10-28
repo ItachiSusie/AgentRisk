@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentRisk · 运行对比</title>
+<style>
+  :root {
+    --bg: #0a0b0d;
+    --surface: #111318;
+    --surface-2: #171a21;
+    --line: rgba(236, 234, 230, .085);
+    --line-strong: rgba(236, 234, 230, .17);
+    --ink: #eceae6;
+    --dim: #8d919a;
+    --dim-2: #5f636b;
+    --amber: #f0b354;
+    --blue: #6fa8ff;
+    --green: #6ede96;
+    --red: #ff7d7d;
+    --serif: ui-serif, "Iowan Old Style", "Songti SC", Charter, Georgia, serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { background: var(--bg); }
+
+  body {
+    margin: 0;
+    padding: 0 0 72px;
+    color: var(--ink);
+    font: 15px/1.62 var(--sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* paper grain + faint grid, purely decorative */
+  .grain {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: .5;
+    background-image:
+      radial-gradient(circle at 18% -8%, rgba(111, 168, 255, .10), transparent 42%),
+      radial-gradient(circle at 88% 4%, rgba(240, 179, 84, .085), transparent 38%),
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: auto, auto, 100% 96px, 96px 100%;
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.55) 45%, transparent 88%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.55) 45%, transparent 88%);
+  }
+  .grain::after {
+    content: ""; position: absolute; inset: 0; opacity: .16;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- header ---------- */
+  header { padding: 68px 0 30px; }
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    font: 600 11px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 20px;
+  }
+  .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--amber); }
+  h1 {
+    font: 600 clamp(34px, 5vw, 52px)/1.04 var(--serif);
+    letter-spacing: -.018em; margin: 0 0 16px; max-width: 17ch;
+    animation: rise .7s cubic-bezier(.2,.7,.2,1) both;
+  }
+  h1 em { font-style: italic; color: var(--amber); }
+  .lede { max-width: 62ch; color: var(--dim); margin: 0 0 26px; animation: rise .7s .06s cubic-bezier(.2,.7,.2,1) both; }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 8px 26px;
+    font: 500 12px/1.5 var(--mono); color: var(--dim-2);
+    border-top: 1px solid var(--line); padding-top: 16px;
+    animation: rise .7s .12s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .meta-row b { color: var(--dim); font-weight: 500; }
+
+  /* ---------- KPI ---------- */
+  .kpis {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
+    gap: 1px; background: var(--line); border: 1px solid var(--line);
+    border-radius: 14px; overflow: hidden; margin-bottom: 26px;
+  }
+  .kpi {
+    background: var(--surface); padding: 20px 22px 18px;
+    position: relative; transition: background .25s;
+  }
+  .kpi:hover { background: var(--surface-2); }
+  .kpi .tag { font: 600 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--dim-2); }
+  .kpi .val {
+    font: 500 34px/1.1 var(--mono); letter-spacing: -.03em; margin: 10px 0 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi .who { font-size: 12.5px; color: var(--dim); }
+  .kpi .who b { color: var(--amber); font-weight: 600; }
+  .kpi .who i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--dim-2); }
+
+  /* ---------- panels ---------- */
+  .cols { display: grid; grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr); gap: 18px; margin-bottom: 18px; }
+  @media (max-width: 940px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+
+  .panel {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px 22px; min-width: 0;
+  }
+  .panel-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 14px; flex-wrap: wrap; margin-bottom: 18px;
+  }
+  .panel-head h2 {
+    font: 600 17px/1.3 var(--serif); letter-spacing: .01em; margin: 0;
+  }
+  .panel-head .hint { font: 500 11.5px/1.4 var(--mono); color: var(--dim-2); }
+
+  /* segmented control */
+  .seg { display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: 9px; padding: 3px; gap: 2px; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: var(--dim);
+    font: 600 11.5px/1 var(--mono); letter-spacing: .02em;
+    padding: 8px 13px; border-radius: 6px; cursor: pointer; transition: color .18s, background .18s;
+  }
+  .seg button:hover { color: var(--ink); }
+  .seg button[aria-pressed="true"] { background: var(--surface-2); color: var(--amber); box-shadow: inset 0 0 0 1px var(--line-strong); }
+
+  /* ---------- chart ---------- */
+  #chart { position: relative; }
+  #chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .axis-line { stroke: var(--line-strong); stroke-width: 1; }
+  .grid-line { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
+  .tick { fill: var(--dim-2); font: 500 10.5px var(--mono); }
+  .series-line { fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+  .series-dot { stroke: var(--bg); stroke-width: 2.5; cursor: pointer; transition: r .15s; }
+  .series-dot:hover { r: 6.5; }
+  .baseline { stroke: var(--dim-2); stroke-width: 1.6; stroke-dasharray: 5 5; }
+  .series-label { font: 600 11.5px var(--mono); }
+  .chart-note { font-size: 12px; color: var(--dim-2); margin: 14px 0 0; }
+
+  #tip {
+    position: fixed; z-index: 40; pointer-events: none; opacity: 0;
+    transform: translate(-50%, -118%); transition: opacity .14s;
+    background: #06070a; border: 1px solid var(--line-strong); border-radius: 8px;
+    padding: 9px 12px; font: 500 11.5px/1.55 var(--mono); white-space: nowrap;
+    box-shadow: 0 14px 36px rgba(0,0,0,.65);
+  }
+  #tip b { color: var(--amber); font-weight: 600; }
+  #tip.on { opacity: 1; }
+
+  /* ---------- leaderboard ---------- */
+  .board { display: flex; flex-direction: column; gap: 3px; }
+  .row {
+    display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 10px;
+    padding: 9px 11px; border-radius: 8px; cursor: pointer;
+    border: 1px solid transparent; transition: background .16s, border-color .16s;
+  }
+  .row:hover { background: var(--surface-2); }
+  .row[aria-selected="true"] { background: var(--surface-2); border-color: var(--line-strong); }
+  .row .rank { font: 500 11px var(--mono); color: var(--dim-2); text-align: right; }
+  .row .nm { font-size: 13px; letter-spacing: -.005em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row .nm i { font-style: normal; font-family: var(--mono); font-size: 10.5px; color: var(--dim-2); margin-left: 6px; }
+  .row .sc { font: 500 13px var(--mono); font-variant-numeric: tabular-nums; color: var(--dim); }
+  .row .bar { grid-column: 2 / -1; height: 2px; border-radius: 2px; background: var(--line); overflow: hidden; margin-top: -4px; }
+  .row .bar span { display: block; height: 100%; border-radius: 2px; }
+  .swatch { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 7px; vertical-align: 1px; }
+
+  /* ---------- detail ---------- */
+  .detail-body { display: grid; grid-template-columns: minmax(0, 290px) minmax(0, 1fr); gap: 26px; }
+  @media (max-width: 860px) { .detail-body { grid-template-columns: minmax(0, 1fr); } }
+  .detail-title { font: 600 21px/1.25 var(--serif); margin: 0 0 4px; }
+  .detail-sub { font: 500 11.5px/1.55 var(--mono); color: var(--dim-2); margin-bottom: 16px; word-break: break-all; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 5px 14px; font: 500 12px/1.5 var(--mono); }
+  .kv dt { color: var(--dim-2); }
+  .kv dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .kv dd.good { color: var(--green); } .kv dd.bad { color: var(--red); }
+
+  /* confusion matrix */
+  .cm-wrap { overflow-x: auto; }
+  table.cm { border-collapse: separate; border-spacing: 3px; font-family: var(--mono); }
+  table.cm th { font: 500 10.5px var(--mono); color: var(--dim-2); padding: 0 4px 6px; font-weight: 500; }
+  table.cm th.corner { color: var(--dim-2); font-size: 10px; text-align: right; padding-right: 8px; }
+  table.cm td {
+    width: 46px; height: 40px; text-align: center; border-radius: 6px;
+    box-shadow: inset 0 0 0 1px rgba(236, 234, 230, .05);
+    font-size: 12px; font-variant-numeric: tabular-nums; cursor: default;
+    transition: transform .12s, outline-color .12s; outline: 1px solid transparent; outline-offset: -1px;
+  }
+  table.cm td:hover { transform: scale(1.06); outline-color: var(--amber); }
+  table.cm td.diag { box-shadow: inset 0 0 0 1px rgba(110, 222, 150, .5); }
+  .legend { display: flex; align-items: center; gap: 8px; margin-top: 12px; font: 500 10.5px var(--mono); color: var(--dim-2); }
+  .legend .ramp { width: 92px; height: 7px; border-radius: 4px; background: linear-gradient(90deg, #1b1e26, #6b4a1e, var(--amber)); }
+
+  /* ---------- sample diff ---------- */
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  select {
+    appearance: none; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line-strong); border-radius: 8px;
+    font: 500 12px var(--mono); padding: 8px 30px 8px 11px; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238d919a'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 11px center;
+  }
+  select:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
+  #diff { overflow-x: auto; }
+  table.diff { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.diff td.action, table.diff th:last-child { max-width: 22ch; }
+  table.diff th {
+    text-align: left; font: 600 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase;
+    color: var(--dim-2); padding: 10px 10px; border-bottom: 1px solid var(--line-strong); white-space: nowrap;
+  }
+  table.diff td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.diff tr:hover td { background: var(--surface-2); }
+  .eid { font: 500 11.5px var(--mono); color: var(--blue); white-space: nowrap; }
+  .sev { font: 500 12px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .sev .arrow { color: var(--dim-2); margin: 0 5px; }
+  .sev .up { color: var(--red); } .sev .down { color: var(--green); } .sev .flat { color: var(--dim-2); }
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .chip {
+    font: 500 10.5px/1.4 var(--mono); padding: 2px 7px; border-radius: 5px;
+    background: rgba(111, 168, 255, .1); color: #a9c8f7; border: 1px solid rgba(111, 168, 255, .18);
+    white-space: nowrap;
+  }
+  .chip.drv { background: rgba(240, 179, 84, .1); color: #f0c987; border-color: rgba(240, 179, 84, .2); }
+  .chip.hit { background: rgba(110, 222, 150, .12); color: #9fe6b8; border-color: rgba(110, 222, 150, .24); }
+  .chip.miss { background: rgba(255, 125, 125, .09); color: #e6a3a3; border-color: rgba(255, 125, 125, .18); }
+  .diffgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; min-width: 258px; }
+  .diffgrid .src {
+    display: block; font: 600 9.5px/1 var(--mono); letter-spacing: .16em;
+    color: var(--dim-2); margin-bottom: 5px; text-transform: uppercase;
+  }
+  .diffgrid .src.b { color: var(--amber); }
+  .sev.ok { color: var(--green); }
+  .sev.err { color: #ef9d9d; }
+  .sev.bad2 { color: var(--red); font-weight: 600; }
+  .action { color: var(--dim); font-size: 12px; max-width: 46ch; }
+  .empty { padding: 28px 8px; color: var(--dim-2); font: 500 12.5px var(--mono); }
+
+  footer {
+    margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line);
+    font: 500 11.5px/1.8 var(--mono); color: var(--dim-2);
+  }
+  footer code { color: var(--dim); }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes draw { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+  .fade-in { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
+
+  /* narrow screens: nothing may push the page wider than the viewport */
+  @media (max-width: 720px) {
+    .wrap { padding: 0 16px; }
+    header { padding: 40px 0 22px; }
+    .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .kpi { padding: 15px 14px 13px; }
+    .kpi .val { font-size: 26px; }
+    .panel { padding: 16px 14px 18px; }
+    .row { grid-template-columns: 18px minmax(0, 1fr) auto; gap: 8px; }
+    .row .sc { font-size: 12px; }
+    .row .sc > span { display: none; }
+    .seg button { padding: 7px 9px; font-size: 10.5px; }
+    table.diff td, table.diff th { padding: 8px 7px; }
+    .diffgrid { min-width: 200px; gap: 10px; }
+    table.diff td.action, table.diff th:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">AgentRisk · Baseline Sweep</div>
+    <h1>九个运行的<em>指标对照</em>，一页看完</h1>
+    <p class="lede">
+      同一个模型（<code>deepseek-flash</code>）、同一份 dev、同一份 system prompt，只改 few-shot 示例的选取方式与条数。
+      下面所有数字都由 <code>src/evaluate.py</code> 从各运行的 <code>predictions.jsonl</code> 复算，页面本身不引入任何新口径。
+    </p>
+    <div class="meta-row" id="metaRow"></div>
+  </header>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="cols">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>k 曲线</h2>
+        <div class="seg" id="metricTabs" role="group" aria-label="选择指标"></div>
+      </div>
+      <div id="chart"></div>
+      <p class="chart-note">
+        x 轴为示例条数 k，点位等距排布（k 本身不等间隔）。灰色虚线是 zero-shot 基线。
+        悬停任一点看具体数值与相对基线的差。
+      </p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>排行榜</h2>
+        <span class="hint" id="boardHint"></span>
+      </div>
+      <div class="board" id="board"></div>
+    </div>
+  </section>
+
+  <section class="panel" style="margin-bottom:18px">
+    <div class="panel-head">
+      <h2>混淆矩阵与偏差</h2>
+      <span class="hint">点排行榜任意一行切换</span>
+    </div>
+    <div class="detail-body">
+      <div>
+        <h3 class="detail-title" id="dTitle"></h3>
+        <div class="detail-sub" id="dSub"></div>
+        <dl class="kv" id="dKv"></dl>
+      </div>
+      <div class="cm-wrap">
+        <div id="cm"></div>
+        <div class="legend"><span>0</span><span class="ramp"></span><span id="cmMax"></span><span style="margin-left:auto">行=标准等级，列=预测等级</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>样本级对比</h2>
+      <div class="controls">
+        <select id="selA" aria-label="运行 A"></select>
+        <span style="color:var(--dim-2);font-family:var(--mono);font-size:11px">vs</span>
+        <select id="selB" aria-label="运行 B"></select>
+        <div class="seg" id="diffFilter" role="group" aria-label="筛选"></div>
+      </div>
+    </div>
+    <div id="diff"></div>
+  </section>
+
+  <footer>
+    由 <code>python src/compare_html.py</code> 生成，打开即用，无外部依赖（字体回退到系统衬线与等宽）。<br>
+    数据：<code id="fData"></code> · 生成于 <code id="fTime"></code> · 指标口径见 <code>src/common.py</code>。
+  </footer>
+</div>
+
+<div id="tip"></div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function () {
+  "use strict";
+
+  const DATA = JSON.parse(document.getElementById("data").textContent);
+
+  const METRICS = {
+    mae: { key: "task1_mae", label: "Task 1 MAE", short: "MAE", better: "min", digits: 3 },
+    j2a: { key: "task2a_mean_jaccard", label: "Task 2a Jaccard", short: "2a", better: "max", digits: 3 },
+    j2b: { key: "task2b_mean_jaccard", label: "Task 2b Jaccard", short: "2b", better: "max", digits: 3 }
+  };
+  const SERIES = { random: "#6fa8ff", bm25: "#f0b354", "bm25-action": "#c084fc", "zero-shot": "#8d919a" };
+  const POOL = DATA.pool;
+  const L = (i) => POOL[i];
+  const LEVELS = DATA.levels;
+
+  const state = { metric: "mae", selected: null, a: null, b: null, filter: "sev" };
+
+  const $ = (id) => document.getElementById(id);
+  const fmt = (x, d) => Number(x).toFixed(d === undefined ? 3 : d);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  const runs = DATA.runs;
+  const base = runs.find((r) => r.selection === "zero-shot");
+  const byId = Object.fromEntries(runs.map((r) => [r.id, r]));
+
+  function value(run, metricKey) { return run.metrics[METRICS[metricKey].key]; }
+  function better(metricKey) { return METRICS[metricKey].better; }
+
+  function sortedRuns() {
+    const b = better(state.metric);
+    return runs.slice().sort((x, y) => (b === "min" ? value(x, state.metric) - value(y, state.metric) : value(y, state.metric) - value(x, state.metric)));
+  }
+
+  function deltaTxt(run, metricKey) {
+    if (!base || run.id === base.id) return "";
+    const d = value(run, metricKey) - value(base, metricKey);
+    return (d > 0 ? "+" : "") + d.toFixed(3);
+  }
+  function deltaClass(run, metricKey) {
+    if (!base || run.id === base.id) return "";
+    const d = value(run, metricKey) - value(base, metricKey);
+    const improving = better(metricKey) === "min" ? d < 0 : d > 0;
+    return Math.abs(d) < 1e-9 ? "flat" : improving ? "good" : "bad";
+  }
+
+  /* ---------- header ---------- */
+  function renderMeta() {
+    const totalReq = runs.reduce((s, r) => s + r.tokens.attempts, 0);
+    const totalIn = runs.reduce((s, r) => s + r.tokens.prompt_tokens, 0);
+    $("metaRow").innerHTML = [
+      ["数据集", DATA.meta.data_file.replace("data/raw/", "")],
+      ["HF commit", DATA.meta.hf_commit.slice(0, 12)],
+      ["样本数", DATA.meta.n_samples + "（dev）"],
+      ["运行数", runs.length + " 个"],
+      ["请求总数", totalReq.toLocaleString()],
+      ["输入 token 合计", totalIn.toLocaleString()],
+      ["system prompt", DATA.meta.system_prompt_sha.slice(0, 12)]
+    ].map(([k, v]) => `<span>${k} <b>${esc(v)}</b></span>`).join("");
+    $("fData").textContent = DATA.meta.data_file;
+    $("fTime").textContent = DATA.meta.generated_at;
+  }
+
+  /* ---------- KPI ---------- */
+  function renderKpis() {
+    const cards = [
+      { tag: "Task 1 · 最低 MAE", best: sortedRuns().slice().sort((a, b) => a.metrics.task1_mae - b.metrics.task1_mae)[0], key: "task1_mae" },
+      { tag: "Task 2a · 最高 Jaccard", best: runs.slice().sort((a, b) => b.metrics.task2a_mean_jaccard - a.metrics.task2a_mean_jaccard)[0], key: "task2a_mean_jaccard" },
+      { tag: "Task 2b · 最高 Jaccard", best: runs.slice().sort((a, b) => b.metrics.task2b_mean_jaccard - a.metrics.task2b_mean_jaccard)[0], key: "task2b_mean_jaccard" },
+      { tag: "单位样本成本", best: runs.slice().sort((a, b) => (a.tokens.prompt_tokens / a.metrics.n_success) - (b.tokens.prompt_tokens / b.metrics.n_success))[0], key: null }
+    ];
+    $("kpis").innerHTML = cards.map((c, i) => {
+      const run = c.best;
+      const val = c.key ? fmt(run.metrics[c.key]) : Math.round(run.tokens.prompt_tokens / run.metrics.n_success).toLocaleString() + " tok";
+      return `<div class="kpi fade-in" style="animation-delay:${i * 70}ms">
+        <div class="tag">${c.tag}</div>
+        <div class="val">${val}</div>
+        <div class="who"><b>${esc(run.label)}</b> <i>${esc(run.run_id)}</i></div>
+      </div>`;
+    }).join("") + `<div class="kpi fade-in" style="animation-delay:280ms">
+        <div class="tag">与 zero-shot 相比</div>
+        <div class="val">${fmt(base ? base.metrics.task1_mae : 0)} <span style="color:var(--dim-2);font-size:20px">→</span> ${fmt(Math.min(...runs.map((r) => r.metrics.task1_mae)))}</div>
+        <div class="who">MAE 绝对值，越低越好</div>
+      </div>`;
+  }
+
+  /* ---------- metric tabs ---------- */
+  function renderTabs() {
+    $("metricTabs").innerHTML = Object.entries(METRICS).map(([k, m]) =>
+      `<button data-m="${k}" aria-pressed="${state.metric === k}">${m.label}</button>`).join("");
+  }
+
+  /* ---------- chart ---------- */
+  function renderChart() {
+    const m = METRICS[state.metric];
+    const W = 640, H = 320, P = { t: 26, r: 74, b: 40, l: 58 };
+    const iw = W - P.l - P.r, ih = H - P.t - P.b;
+
+    const points = runs.filter((r) => r.k && r.k > 0);
+    const ks = [...new Set(points.map((r) => r.k))].sort((a, b) => a - b);
+    const vals = points.map((r) => value(r, state.metric)).concat(base ? [value(base, state.metric)] : []);
+    let lo = Math.min(...vals), hi = Math.max(...vals);
+    const pad = (hi - lo) * 0.22 || 0.02;
+    lo -= pad; hi += pad;
+    if (m.better === "max") { lo = Math.max(0, lo); } else { lo = Math.max(0, lo); }
+
+    const inset = ks.length > 1 ? 7 : 0;
+    const x = (k) => P.l + inset + (ks.indexOf(k) / Math.max(1, ks.length - 1)) * (iw - inset * 2);
+    const y = (v) => P.t + ih - ((v - lo) / (hi - lo)) * ih;
+
+    const ticks = 4;
+    let g = "";
+    for (let i = 0; i <= ticks; i++) {
+      const v = lo + ((hi - lo) * i) / ticks;
+      g += `<line class="grid-line" x1="${P.l}" y1="${y(v)}" x2="${P.l + iw}" y2="${y(v)}"/>
+            <text class="tick" x="${P.l - 10}" y="${y(v) + 3.5}" text-anchor="end">${v.toFixed(3)}</text>`;
+    }
+    ks.forEach((k) => {
+      g += `<text class="tick" x="${x(k)}" y="${H - P.b + 20}" text-anchor="middle">k=${k}</text>`;
+    });
+
+    // zero-shot baseline
+    if (base) {
+      const bv = value(base, state.metric);
+      g += `<line class="baseline" x1="${P.l}" y1="${y(bv)}" x2="${P.l + iw}" y2="${y(bv)}"/>
+            <text class="tick" x="${P.l + iw - 2}" y="${y(bv) - 8}" text-anchor="end" fill="#8d919a">zero-shot ${bv.toFixed(3)}</text>`;
+    }
+
+    const groups = {};
+    points.forEach((r) => { (groups[r.selection] = groups[r.selection] || []).push(r); });
+
+    let s = "";
+    Object.entries(groups).forEach(([sel, rs]) => {
+      const ordered = rs.slice().sort((a, b) => a.k - b.k);
+      const d = ordered.map((r, i) => `${i ? "L" : "M"}${x(r.k).toFixed(1)},${y(value(r, state.metric)).toFixed(1)}`).join(" ");
+      s += `<path class="series-line" d="${d}" stroke="${SERIES[sel] || "#fff"}" opacity=".92"/>`;
+      ordered.forEach((r) => {
+        s += `<circle class="series-dot" cx="${x(r.k).toFixed(1)}" cy="${y(value(r, state.metric)).toFixed(1)}" r="5"
+                fill="${SERIES[sel] || "#fff"}" data-run="${esc(r.id)}"/>`;
+      });
+      const last = ordered[ordered.length - 1];
+      const lastV = value(last, state.metric);
+      s += `<text class="series-label" x="${x(last.k) + 12}" y="${y(lastV) + 4}" fill="${SERIES[sel] || "#fff"}">${sel}</text>`;
+    });
+
+    const svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="k 与 ${esc(m.label)} 的关系">
+      <line class="axis-line" x1="${P.l}" y1="${P.t + ih}" x2="${P.l + iw}" y2="${P.t + ih}"/>
+      ${g}
+      ${s}
+    </svg>`;
+    $("chart").innerHTML = svg;
+
+    $("chart").querySelectorAll("circle.series-dot").forEach((el) => {
+      el.addEventListener("mouseenter", (e) => {
+        const r = byId[el.dataset.run];
+        if (!r) return;
+        const tip = $("tip");
+        const dv = deltaTxt(r, state.metric);
+        tip.innerHTML = `${esc(r.label)}<br>k=${r.k} · <b>${fmt(value(r, state.metric))}</b>${dv ? ` · vs zero-shot ${dv}` : ""}<br><span style="color:#61656d">${esc(r.run_id)}</span>`;
+        tip.classList.add("on");
+      });
+      el.addEventListener("mousemove", (e) => {
+        const tip = $("tip");
+        tip.style.left = e.clientX + "px";
+        tip.style.top = e.clientY + "px";
+      });
+      el.addEventListener("mouseleave", () => $("tip").classList.remove("on"));
+      el.addEventListener("click", () => selectRun(el.dataset.run));
+    });
+  }
+
+  /* ---------- leaderboard ---------- */
+  function renderBoard() {
+    const ordered = sortedRuns();
+    const m = METRICS[state.metric];
+    const bestV = value(ordered[0], state.metric);
+    const worstV = value(ordered[ordered.length - 1], state.metric);
+    $("boardHint").textContent = `按 ${m.short} ${m.better === "min" ? "升序" : "降序"}`;
+    $("board").innerHTML = ordered.map((r, i) => {
+      const v = value(r, state.metric);
+      const span = Math.abs(worstV - bestV) < 1e-9 ? 1 : (m.better === "min" ? (worstV - v) / (worstV - bestV) : (v - worstV) / (bestV - worstV));
+      const d = deltaTxt(r, state.metric);
+      return `<div class="row" data-run="${esc(r.id)}" role="button" tabindex="0" aria-selected="${state.selected === r.id}">
+        <span class="rank">${i + 1}</span>
+        <span class="nm"><span class="swatch" style="background:${SERIES[r.selection] || "#fff"}"></span>${esc(r.label)}<i>${r.k ? "k=" + r.k : ""}</i></span>
+        <span class="sc">${fmt(v)}${d ? ` <span class="${deltaClass(r, state.metric)}" style="font-size:10.5px">${d}</span>` : ""}</span>
+        <span class="bar"><span style="width:${(Math.max(0.02, span) * 100).toFixed(1)}%;background:${SERIES[r.selection] || "#fff"};opacity:.75"></span></span>
+      </div>`;
+    }).join("");
+
+    $("board").querySelectorAll(".row").forEach((el) => {
+      const go = () => selectRun(el.dataset.run);
+      el.addEventListener("click", go);
+      el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    });
+  }
+
+  function selectRun(id) {
+    state.selected = id;
+    renderBoard();
+    renderDetail();
+  }
+
+  /* ---------- detail: confusion matrix + bias ---------- */
+  function renderDetail() {
+    const r = byId[state.selected] || sortedRuns()[0];
+    state.selected = r.id;
+    $("dTitle").textContent = r.label;
+    $("dSub").textContent = [r.selection, r.seed !== null && r.seed !== undefined ? "seed " + r.seed : null, r.k ? "k=" + r.k : null, r.run_id]
+      .filter(Boolean).join(" · ");
+
+    const m = r.metrics;
+    const rows = [
+      ["Task 1 MAE", fmt(m.task1_mae), base && r.id !== base.id ? deltaClass(r, "mae") : "", base && r.id !== base.id ? deltaTxt(r, "mae") : ""],
+      ["Task 2a Jaccard", fmt(m.task2a_mean_jaccard), base && r.id !== base.id ? deltaClass(r, "j2a") : "", base && r.id !== base.id ? deltaTxt(r, "j2a") : ""],
+      ["Task 2b Jaccard", fmt(m.task2b_mean_jaccard), base && r.id !== base.id ? deltaClass(r, "j2b") : "", base && r.id !== base.id ? deltaTxt(r, "j2b") : ""],
+      ["平均偏差（预测−标准）", (r.bias >= 0 ? "+" : "") + r.bias.toFixed(3), r.bias > 0.05 ? "bad" : r.bias < -0.05 ? "good" : "", ""],
+      ["有效预测", m.n_success + "/" + m.n_total, m.complete ? "good" : "bad", ""],
+      ["输入 token", r.tokens.prompt_tokens.toLocaleString(), "", ""],
+      ["输出 token", r.tokens.completion_tokens.toLocaleString(), "", ""],
+      ["prompt sha256", r.prompt_sha.slice(0, 12), "", ""]
+    ];
+    $("dKv").innerHTML = rows.map(([k, v, cls, d]) =>
+      `<dt>${esc(k)}</dt><dd class="${cls}">${esc(v)}${d ? ` <span style="color:var(--dim-2);font-size:10.5px">${d}</span>` : ""}</dd>`).join("");
+
+    // confusion matrix from per-sample severity
+    const cm = LEVELS.map(() => LEVELS.map(() => 0));
+    let maxCell = 1;
+    DATA.samples.forEach((s) => {
+      const gold = DATA.golds[s.eid].sev;
+      const pred = s.pred[r.id] ? s.pred[r.id][0] : null;
+      if (pred === null || pred === undefined) return;
+      const gi = LEVELS.indexOf(gold), pi = LEVELS.indexOf(pred);
+      if (gi >= 0 && pi >= 0) { cm[gi][pi]++; maxCell = Math.max(maxCell, cm[gi][pi]); }
+    });
+
+    let html = `<table class="cm"><tr><th class="corner">gold \\ pred</th>` +
+      LEVELS.map((l) => `<th>${l}</th>`).join("") + `</tr>`;
+    LEVELS.forEach((gl, gi) => {
+      html += `<tr><th style="text-align:right;padding-right:8px;color:var(--dim)">${gl}</th>`;
+      LEVELS.forEach((pl, pi) => {
+        const n = cm[gi][pi];
+        const t = Math.pow(n / maxCell, 0.62);
+        const bg = n === 0 ? "#15171d" : `rgba(240, 179, 84, ${(0.12 + t * 0.78).toFixed(2)})`;
+        const fg = n === 0 ? "#3f434a" : t > 0.55 ? "#1a1206" : "#f3d9a8";
+        html += `<td class="${gi === pi ? "diag" : ""}" style="background:${bg};color:${fg}" title="gold ${gl} → 预测 ${pl}：${n} 条">${n || ""}</td>`;
+      });
+      html += `</tr>`;
+    });
+    html += `</table>`;
+    $("cm").innerHTML = html;
+    $("cmMax").textContent = maxCell;
+  }
+
+  /* ---------- sample diff ---------- */
+  function renderDiffSelects() {
+    const opts = runs.map((r) => `<option value="${esc(r.id)}">${esc(r.label)}${r.k ? " · k=" + r.k : ""}</option>`).join("");
+    $("selA").innerHTML = opts;
+    $("selB").innerHTML = opts;
+    $("selA").value = state.a;
+    $("selB").value = state.b;
+    $("diffFilter").innerHTML = [
+      ["sev", "等级不同"],
+      ["big", "等级差 ≥ 2"],
+      ["label", "任何标签不同"],
+      ["all", "全部 143 条"]
+    ].map(([k, l]) => `<button data-f="${k}" aria-pressed="${state.filter === k}">${l}</button>`).join("");
+  }
+
+  function renderDiff() {
+    const A = byId[state.a], B = byId[state.b];
+    if (!A || !B) return;
+    const rows = [];
+    DATA.samples.forEach((s) => {
+      const gold = DATA.golds[s.eid];
+      const pa = s.pred[A.id], pb = s.pred[B.id];
+      if (!pa || !pb) return;
+      const dSev = pb[0] - pa[0];
+      const sameDom = sameSet(pa[1], pb[1]);
+      const sameDrv = sameSet(pa[2], pb[2]);
+      const anyDiff = dSev !== 0 || !sameDom || !sameDrv;
+      if (state.filter === "sev" && dSev === 0) return;
+      if (state.filter === "big" && Math.abs(dSev) < 2) return;
+      if (state.filter === "label" && !anyDiff) return;
+      rows.push({ eid: s.eid, gold, pa, pb, dSev, sameDom, sameDrv, anyDiff });
+    });
+    rows.sort((x, y) => Math.abs(y.dSev) - Math.abs(x.dSev) || (x.eid < y.eid ? -1 : 1));
+
+    if (!rows.length) {
+      $("diff").innerHTML = `<div class="empty">这两个运行在当前筛选条件下没有差异样本。</div>`;
+      return;
+    }
+
+    const head = `<table class="diff"><thead><tr>
+      <th>样本</th><th>gold</th><th>${esc(A.label)}</th><th>${esc(B.label)}</th><th>Δ 等级</th><th>标签差异</th><th>待评动作</th>
+    </tr></thead><tbody>`;
+
+    const sevCell = (v, gold) => {
+      const d = Math.abs(v - gold);
+      const cls = d === 0 ? "ok" : d >= 2 ? "bad2" : "err";
+      return `<span class="sev ${cls}">${v}${d === 0 ? " ✓" : ""}</span>`;
+    };
+    const side = (tag, pred, gold) => {
+      const okDom = sameSet(pred[1], gold.dom), okDrv = sameSet(pred[2], gold.drv);
+      const badge = okDom && okDrv ? " · 与 gold 一致" : okDom ? " · driver 不符" : " · domain 不符";
+      return `
+      <div>
+        <span class="src ${tag === "B" ? "b" : ""}">${tag}${badge}</span>
+        <div class="chips">${pred[1].map((d) => `<span class="chip">${esc(L(d))}</span>`).join("")}</div>
+        <div class="chips" style="margin-top:4px">${pred[2].map((d) => `<span class="chip drv">${esc(L(d))}</span>`).join("")}</div>
+      </div>`;
+    };
+
+    const body = rows.map((r) => {
+      const arrow = r.dSev === 0 ? `<span class="flat">—</span>`
+        : r.dSev > 0 ? `<span class="up">▲ +${r.dSev}</span>`
+        : `<span class="down">▼ ${r.dSev}</span>`;
+      const labelDiff = [];
+      if (!r.sameDom) labelDiff.push(`<span class="chip miss">domain 不同</span>`);
+      if (!r.sameDrv) labelDiff.push(`<span class="chip miss">driver 不同</span>`);
+      return `<tr>
+        <td><span class="eid">${esc(r.eid)}</span></td>
+        <td><span class="sev">${r.gold.sev}</span></td>
+        <td>${sevCell(r.pa[0], r.gold.sev)}</td>
+        <td>${sevCell(r.pb[0], r.gold.sev)}</td>
+        <td>${arrow}</td>
+        <td><div class="chips" style="margin-bottom:7px">${labelDiff.join("") || `<span class="chip hit">标签一致</span>`}</div>
+            <div class="diffgrid">${side("A", r.pa, r.gold)}${side("B", r.pb, r.gold)}</div></td>
+        <td class="action" title="${esc(r.gold.action)}">${esc(short(r.gold.action, 110))}</td>
+      </tr>`;
+    }).join("");
+
+    const count = `<div style="display:flex;gap:16px;align-items:baseline;margin-bottom:12px;font:500 11.5px var(--mono);color:var(--dim-2)">
+      <span>命中 <b style="color:var(--ink)">${rows.length}</b> 条</span>
+      <span>其中 B 更准 <b style="color:var(--green)">${rows.filter((r) => Math.abs(r.pb[0] - r.gold.sev) < Math.abs(r.pa[0] - r.gold.sev)).length}</b></span>
+      <span>A 更准 <b style="color:var(--red)">${rows.filter((r) => Math.abs(r.pb[0] - r.gold.sev) > Math.abs(r.pa[0] - r.gold.sev)).length}</b></span>
+      <span>一样 <b>${rows.filter((r) => Math.abs(r.pb[0] - r.gold.sev) === Math.abs(r.pa[0] - r.gold.sev)).length}</b></span>
+    </div>`;
+    $("diff").innerHTML = count + head + body + "</tbody></table>";
+  }
+
+  function short(text, n) {
+    if (text.length <= n) return text;
+    const cut = text.slice(0, n);
+    const at = cut.lastIndexOf(" ");
+    return (at > n * 0.6 ? cut.slice(0, at) : cut) + "…";
+  }
+
+  function sameSet(a, b) {
+    if (a.length !== b.length) return false;
+    const sa = a.slice().sort(), sb = b.slice().sort();
+    return sa.every((v, i) => v === sb[i]);
+  }
+
+  /* ---------- wiring ---------- */
+  $("metricTabs").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-m]");
+    if (!btn) return;
+    state.metric = btn.dataset.m;
+    renderTabs(); renderChart(); renderBoard();
+  });
+  $("diffFilter").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-f]");
+    if (!btn) return;
+    state.filter = btn.dataset.f;
+    renderDiffSelects(); renderDiff();
+  });
+  $("selA").addEventListener("change", (e) => { state.a = e.target.value; renderDiff(); });
+  $("selB").addEventListener("change", (e) => { state.b = e.target.value; renderDiff(); });
+
+  // initial state
+  const bestMae = runs.slice().sort((a, b) => a.metrics.task1_mae - b.metrics.task1_mae)[0];
+  state.selected = bestMae.id;
+  state.a = base ? base.id : runs[0].id;
+  state.b = bestMae.id;
+
+  renderMeta();
+  renderKpis();
+  renderTabs();
+  renderChart();
+  renderBoard();
+  renderDetail();
+  renderDiffSelects();
+  renderDiff();
+})();
+</script>
+</body>
+</html>
