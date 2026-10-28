@@ -98,6 +98,48 @@ cp .env.example .env        # 然后在 .env 里填入自己的 DEEPSEEK_API_KEY
 
 命令写成一行，`--run-id` 写错会提示目录不存在，不会误建新运行。
 
+### 下一轮流程（Makefile 入口）
+
+`dev` 已冻结为最终测试：所有选择在 train 内部的验证集上做，`dev` 只跑一次。方案见 [docs/next-round-plan.md](docs/next-round-plan.md)。
+
+```bash
+make validate                          # 离线自检：编译、切分漂移检查、dev/train_val 干跑
+make splits                            # 重建 data/splits（场景组切分 + 严重度分层）
+make baseline LIMIT=5                  # train_evolve 上跑 zero-shot 基线（LIMIT 先探）
+make triage RUN=<run_dir>              # 错误分诊：桶分类、混淆矩阵、标签漏/多
+make worklist RUN=<run_dir>            # 错例 -> worklist.jsonl
+make analyze LIMIT=5                   # 逐条归因（evidence 闸门），先 5 条看质量
+make cluster                           # 按主题聚类 lessons，看支持度
+make merge                             # 合并成 prompts/patches/v2/ + CHANGELOG
+make dev-final                         # 最终测试，只跑一次
+```
+
+### 协作约定
+
+- 密钥只放本地 `.env`，不提交；`.env.example` 保持为空值。
+- 已经用于正式运行的 prompt 不再修改，要改就新建版本（如 `zero_shot_v2.txt`、`few_shot_v2.json`）并开新的运行。
+- few-shot 的示例选择文件在 `data/fewshot/`，已入库；换随机种子请生成新文件（`random_seed1.json`），不要覆盖旧的。
+- 每次运行写进新的 `run_id` 目录，不覆盖旧结果。
+
+### 当前状态
+
+dev 143 条上共跑过 **11 个配置**，全部 143/143 合法预测。完整对比见 [results/comparison.md](results/comparison.md)；方法、切分与逐阶段结论见 [docs/next-round-plan.md](docs/next-round-plan.md)。
+
+| 运行 | Task 1 MAE | Task 2a Mean Jaccard | Task 2b Mean Jaccard | 三字段全对 |
+| --- | --- | --- | --- | --- |
+| zero-shot v1 | 0.301 | 0.811 | 0.726 | 70（49.0%） |
+| zero-shot v2（+5 条蒸馏规则） | 0.287 | 0.831 | 0.732 | 69（48.3%） |
+| random k=3 / 5 / 10 / 20（seed 0） | 0.273 / 0.266 / 0.245 / 0.217 | 0.854 / 0.839 / 0.843 / 0.850 | 0.724 / 0.733 / 0.740 / 0.754 | 50.3 / 53.1 / 51.0 / 52.4% |
+| bm25 k=3 / 5 / 10 / 20 | 0.266 / 0.231 / **0.189** / 0.196 | 0.853 / **0.867** / 0.862 / 0.852 | 0.752 / 0.779 / **0.793** / 0.759 | 52.4 / 56.6 / **56.6** / 54.5% |
+| bm25 k=10 + v2 规则 | **0.189** | 0.862 | 0.783 | 55.9% |
+
+结论（2026-10-28）：
+
+1. **bm25 k=10 是当前最好配置**：MAE 0.189，相对 zero-shot 0.301 显著更好（配对自举 95% CI [−0.175, −0.049]）。
+2. **k=20 没有更好**：与 k=10 的差为 +0.007，CI [−0.028, +0.042]，属噪声。143 条 dev 上，MAE 差距小于约 **0.03** 一律按噪声处理（`src/paired_bootstrap.py`）。
+3. **蒸馏规则在有示例时零增量**：bm25 k10 + v2 与 bm25 k10 + v1 的 MAE 差为 0.000，其余指标同为噪声，因此**提交配置保持 v1**，少一层复杂度。规则只在无示例的基线上有效（train_val 0.421 → 0.308）。
+4. **dev 已冻结**：它已被 11 个配置用于选择，0.189 是选择后的乐观上界。之后的实验一律在 `train_val`（107 条）上做，dev 只在最终提交前跑一次。官方隐藏测试集才是泛化成绩。
+
 ### 协作约定
 
 - 密钥只放本地 `.env`，不提交；`.env.example` 保持为空值。

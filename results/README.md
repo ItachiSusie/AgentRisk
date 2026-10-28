@@ -10,6 +10,7 @@
 | `few-shot-random-s<seed>-k<k>-v1` | 每条 dev 样本随机抽 k 个 train 示例，种子 `<seed>` |
 | `few-shot-bm25-k<k>-v1` | 每条 dev 样本用 BM25（只用 `formatted_interaction`）检索 k 个最相似的 train 示例 |
 | `few-shot-bm25-action-k<k>-v1` | 同上，检索文本加上 `proposed_action`（选择文件已备好，尚未运行） |
+| `zero-shot-v2` / `few-shot-bm25-k10-v2` | 换成蒸馏版 instruction `prompts/zero_shot_v2.txt`（5 条规则），few-shot 规格见 `prompts/few_shot_v2.json` |
 
 末尾的 `v1` 是 few-shot 拼装规范 `prompts/few_shot_v1.json` 的版本，不表示种子。换种子请看实验名里的 `s<seed>`。每个运行的 `config.json` 记录了 selection / seed / k 和选择文件的 SHA-256。
 
@@ -22,12 +23,14 @@
 | `deepseek-flash/few-shot-bm25-k{3,5,10}-v1/` | few-shot BM25 组，各 143/143 |
 | `deepseek-flash/few-shot-random-s0-k20-v1/20261027-225811/` | 随机组 k=20（selection `random_seed0_top20.json`），143/143 |
 | `deepseek-flash/few-shot-bm25-k20-v1/20261027-225802/` | BM25 组 k=20（selection `bm25_dev_top20.json`），143/143 |
+| `deepseek-flash/zero-shot-v2/20261028-002357/` | zero-shot + 蒸馏规则 v2，143/143；MAE 0.287，与 v1 的差在噪声内 |
+| `deepseek-flash/few-shot-bm25-k10-v2/20261028-095023/` | bm25 k=10 + 蒸馏规则 v2，143/143；与 bm25 k=10 + v1 完全相同（MAE 0.189） |
 
 ## 汇总
 
-- [comparison.md](comparison.md)：zero-shot 和 8 组 few-shot 并排对比（`python src/compare.py` 生成，不要手改）。
+- [comparison.md](comparison.md)：11 个配置并排对比（`python src/compare.py` 生成，不要手改）。
 - [comparison.html](comparison.html)：同一批运行的交互版（`python src/compare_html.py` 生成）。k 曲线可切三个指标、排行榜可点开混淆矩阵、样本级对比可选任意两个运行。单文件，离线可开。
-- [few-shot-error-analysis.md](few-shot-error-analysis.md)：few-shot 的错误分析（草稿，有待讨论项）。
+- [few-shot-error-analysis.md](few-shot-error-analysis.md)：10 月 25 日的错误分析草稿，**已被取代**，现行做法是每个 run 目录下的 `triage/summary.md`（`python src/triage.py <run_dir>`）。
 
 ## 每个运行目录里的文件
 

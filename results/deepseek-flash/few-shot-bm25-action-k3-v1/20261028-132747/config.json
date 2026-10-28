@@ -1,0 +1,50 @@
+{
+  "run_id": "20261028-132747",
+  "experiment": "few-shot-bm25-action-k3-v1",
+  "strategy": "few-shot",
+  "version": "v1",
+  "split": "dev",
+  "created_at": "2026-10-28T20:27:47.064422+00:00",
+  "params": {
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "max_tokens": 1024,
+    "response_format": {
+      "type": "json_object"
+    },
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    "stream": false
+  },
+  "prompt_file": "prompts/zero_shot_v1.txt",
+  "prompt_sha256": "ceb0530c8df1fa07f3cfe3763832be9d81115963d2def13913003293291be203",
+  "data_file": "data/raw/dev.jsonl",
+  "data_sha256": "27922c8974c458d6dd481eba5d8a3a99f2ceca63fef5863030e38543fa8b9dd8",
+  "data_hf_commit_sha": "bc7cbf702846e53ecbb31abcdb387ae4ec9f9392",
+  "selection": "bm25-action",
+  "seed": null,
+  "k": 3,
+  "selection_file": "data/fewshot/bm25_action_dev_top10.json",
+  "selection_sha256": "9bd31f5de2294f834584b112b6109ef7cd0bc30c1916d894588f0c151491ea4e",
+  "spec_file": "prompts/few_shot_v1.json",
+  "spec_sha256": "79c391689330b0aa450da3f41f895f2d5d7c7767d9a557df91d7a5509173ef1e",
+  "openai_sdk_version": "3.40.0",
+  "python_version": "3.14.3",
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "invocations": [
+    {
+      "started": "2026-10-28T20:27:47.065985+00:00",
+      "finished": "2026-10-28T20:30:07.641878+00:00",
+      "limit": null,
+      "succeeded": 143,
+      "failed_ids": [],
+      "prompt_tokens": 810775,
+      "completion_tokens": 5512
+    }
+  ]
+}
