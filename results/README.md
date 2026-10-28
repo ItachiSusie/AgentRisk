@@ -35,7 +35,7 @@
 | --- | --- |
 | `prompt.txt` | 本次实际使用的 system prompt |
 | `prompt_preview.txt` | 仅 few-shot：第一条样本收到的完整消息，可读 |
-| `messages.jsonl.gz` | 仅 few-shot：每条样本实际发出的完整消息（含示例）；用 `python src/fewshot.py render --run-dir <run_dir> --id <example_id>` 查看某一条 |
+| `messages.jsonl.gz` | 仅 few-shot：每条样本实际发出的完整消息（含示例）；用 `python src/fewshot.py render --run-dir <run_dir> --id <example_id>` 查看某一条。**本地生成，不入库**（k=20 时单个 3–4 MB），clone 后需自己重跑才有 |
 | `config.json` | 数据版本和 hash、模型、参数、prompt hash、SDK 版本、每次启动的记录 |
 | `predictions.jsonl` | 每条样本的 `example_id` 和三个预测字段 |
 | `raw_responses.jsonl` | 每次尝试的原始响应、耗时、错误和 token 用量（重试也在里面） |
