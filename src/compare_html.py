@@ -102,6 +102,7 @@ def main():
             "hf_commit": manifest["hf_commit_sha"],
             "n_samples": len(eids),
             "system_prompt_sha": runs[0]["config"]["prompt_sha256"],
+            "generated_at": __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M"),
         },
         "levels": [1, 2, 3, 4, 5],
         "pool": pool,
