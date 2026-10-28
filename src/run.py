@@ -5,7 +5,7 @@ Usage:
     python src/run.py --strategy zero-shot --version v1 --run-id <run_id> --limit 15  # continue it
     python src/run.py --strategy zero-shot --version v1 --run-id <run_id>             # finish the rest
 
-    # few-shot: --selection random|bm25|bm25-action, --k 3|5|10, --seed for random (default 0)
+    # few-shot: --selection random|bm25|bm25-action, --k N (needs a top_n >= N selection file), --seed for random (default 0)
     python src/run.py --strategy few-shot --selection random --seed 0 --k 3 --version v1 --dry-run
     python src/run.py --strategy few-shot --selection bm25 --k 3 --version v1 --limit 5
 
@@ -166,10 +166,14 @@ def setup_run_dir(args, prompt_text, prompt_path, data_path, manifest, extra):
 def few_shot_context(args, manifest):
     """Returns (system_prompt_path, build, extra); build(row) -> (messages, shot_ids)."""
     spec_path, spec = fewshot.load_spec(args.version)
-    sel_path, sel = fewshot.load_selection(args.selection, args.seed)
+    sel_path, sel = fewshot.load_selection(args.selection, args.seed, args.k)
     for name, key in (("train.jsonl", "train_sha256"), ("dev.jsonl", "dev_sha256")):
         if sel["meta"][key] != manifest["files"][name]["sha256"]:
             sys.exit(f"{sel_path.name} was made from a different {name}; regenerate it with select_examples.py")
+    shortest = min(len(v) for v in sel["selections"].values())
+    if shortest < args.k:
+        sys.exit(f"{sel_path.name} has only {shortest} examples per sample; "
+                 f"run src/select_examples.py --top-n {args.k} first")
     train = {r["example_id"]: r for r in load_jsonl(ROOT / "data" / "raw" / "train.jsonl")}
     prompt_path = ROOT / spec["system_prompt_file"]
     system_prompt = prompt_path.read_text(encoding="utf-8")
@@ -227,7 +231,7 @@ def main():
     parser.add_argument("--version", default="v1")
     parser.add_argument("--split", default="dev")
     parser.add_argument("--selection", choices=["random", "bm25", "bm25-action"], help="few-shot only")
-    parser.add_argument("--k", type=int, choices=[3, 5, 10], help="few-shot only: number of examples")
+    parser.add_argument("--k", type=int, help="few-shot only: number of examples (needs a selection with top_n >= k)")
     parser.add_argument("--seed", type=int, default=0, help="random selection only")
     parser.add_argument("--run-id", default=None, help="continue an existing run")
     parser.add_argument("--limit", type=int, default=None, help="process at most N more samples")
@@ -238,6 +242,8 @@ def main():
     if args.strategy == "few-shot":
         if args.selection is None or args.k is None:
             parser.error("--strategy few-shot needs --selection and --k")
+        if args.k < 1:
+            parser.error("--k must be a positive integer")
     elif args.selection is not None or args.k is not None:
         parser.error("--selection and --k only apply to --strategy few-shot")
 
