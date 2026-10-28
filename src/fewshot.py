@@ -27,19 +27,28 @@ def load_spec(version):
     return path, json.loads(path.read_text(encoding="utf-8"))
 
 
-def selection_path(selection, seed):
-    name = {
-        "random": f"random_seed{seed}.json",
-        "bm25": "bm25_dev_top10.json",
-        "bm25-action": "bm25_action_dev_top10.json",
-    }[selection]
-    return FEWSHOT_DIR / name
+def selection_path(selection, seed, k):
+    """Prefer a selection built for exactly this k, else the top10 file (valid for k <= 10).
+
+    Selections are nested (first k of a longer list), so a top20 file answers k=3..20
+    and a top10 file answers k=3..10.
+    """
+    if selection == "random":
+        candidates = [f"random_seed{seed}_top{k}.json", f"random_seed{seed}.json"]
+    else:
+        stem = "bm25_action_dev" if selection == "bm25-action" else "bm25_dev"
+        candidates = [f"{stem}_top{k}.json", f"{stem}_top10.json"]
+    for name in candidates:
+        path = FEWSHOT_DIR / name
+        if path.exists():
+            return path
+    return FEWSHOT_DIR / candidates[-1]
 
 
-def load_selection(selection, seed):
-    path = selection_path(selection, seed)
+def load_selection(selection, seed, k):
+    path = selection_path(selection, seed, k)
     if not path.exists():
-        sys.exit(f"selection file not found: {path}; run src/select_examples.py")
+        sys.exit(f"selection file not found: {path}; run src/select_examples.py --top-n {k}")
     return path, json.loads(path.read_text(encoding="utf-8"))
 
 

@@ -20,10 +20,13 @@
 | `deepseek-flash/zero-shot-v1/20261022-051556/` | zero-shot v1，完整 dev，143/143 条合法预测 |
 | `deepseek-flash/few-shot-random-s0-k{3,5,10}-v1/` | few-shot 随机组，seed 0，各 143/143 |
 | `deepseek-flash/few-shot-bm25-k{3,5,10}-v1/` | few-shot BM25 组，各 143/143 |
+| `deepseek-flash/few-shot-random-s0-k20-v1/20261027-225811/` | 随机组 k=20（selection `random_seed0_top20.json`），143/143 |
+| `deepseek-flash/few-shot-bm25-k20-v1/20261027-225802/` | BM25 组 k=20（selection `bm25_dev_top20.json`），143/143 |
 
 ## 汇总
 
-- [comparison.md](comparison.md)：zero-shot 和 6 组 few-shot 并排对比（`python src/compare.py` 生成，不要手改）。
+- [comparison.md](comparison.md)：zero-shot 和 8 组 few-shot 并排对比（`python src/compare.py` 生成，不要手改）。
+- [comparison.html](comparison.html)：同一批运行的交互版（`python src/compare_html.py` 生成）。k 曲线可切三个指标、排行榜可点开混淆矩阵、样本级对比可选任意两个运行。单文件，离线可开。
 - [few-shot-error-analysis.md](few-shot-error-analysis.md)：few-shot 的错误分析（草稿，有待讨论项）。
 
 ## 每个运行目录里的文件

@@ -74,7 +74,7 @@ cp .env.example .env        # 然后在 .env 里填入自己的 DEEPSEEK_API_KEY
 .venv/bin/python src/run.py --strategy zero-shot --version v1 --limit 20
 .venv/bin/python src/run.py --strategy zero-shot --version v1 --run-id <run_id>
 
-# few-shot：--selection random|bm25，--k 3|5|10；random 加 --seed（默认 0）
+# few-shot：--selection random|bm25|bm25-action，--k N（需要 top_n>=N 的选择文件）；random 加 --seed（默认 0）
 .venv/bin/python src/select_examples.py --method random --seed 0   # 先生成选择文件（已入库，通常不用重跑）
 .venv/bin/python src/run.py --strategy few-shot --selection bm25 --k 3 --version v1 --dry-run   # 不调用 API，检查并估算 token
 .venv/bin/python src/run.py --strategy few-shot --selection bm25 --k 3 --version v1 --limit 5
@@ -91,6 +91,9 @@ cp .env.example .env        # 然后在 .env 里填入自己的 DEEPSEEK_API_KEY
 
 # 多个运行并排对比：生成 results/comparison.md
 .venv/bin/python src/compare.py
+
+# 交互式对比页：生成单文件 results/comparison.html（无外部依赖，浏览器直接打开）
+.venv/bin/python src/compare_html.py
 ```
 
 命令写成一行，`--run-id` 写错会提示目录不存在，不会误建新运行。
@@ -112,12 +115,12 @@ Zero-shot v1（`deepseek-flash`）已跑完完整 dev，143/143 条均有合法�
 
 主要问题：模型整体高估风险（标准答案为 3 的样本里 20/32 被预测成 4），并倾向多给第二个标签。详见该目录下的 `report.html`。
 
-Few-shot（每条 dev 样本各自选 k 个 train 示例，其余和 zero-shot 完全一致）已跑完 6 组，均 143/143 合法预测。完整对比见 [results/comparison.md](results/comparison.md)，错误分析（草稿）见 [results/few-shot-error-analysis.md](results/few-shot-error-analysis.md)：
+Few-shot（每条 dev 样本各自选 k 个 train 示例，其余和 zero-shot 完全一致）已跑完 8 组，均 143/143 合法预测。完整对比见 [results/comparison.md](results/comparison.md)，错误分析（草稿）见 [results/few-shot-error-analysis.md](results/few-shot-error-analysis.md)：
 
 | 运行 | Task 1 MAE | Task 2a Mean Jaccard | Task 2b Mean Jaccard |
 | --- | --- | --- | --- |
 | zero-shot v1 | 0.301 | 0.811 | 0.726 |
-| random k=3 / 5 / 10（seed 0） | 0.273 / 0.266 / 0.245 | 0.854 / 0.839 / 0.843 | 0.724 / 0.733 / 0.740 |
-| bm25 k=3 / 5 / 10 | 0.266 / 0.231 / **0.189** | 0.853 / 0.867 / 0.862 | 0.752 / 0.779 / **0.793** |
+| random k=3 / 5 / 10 / 20（seed 0） | 0.273 / 0.266 / 0.245 / 0.217 | 0.854 / 0.839 / 0.843 / 0.850 | 0.724 / 0.733 / 0.740 / 0.754 |
+| bm25 k=3 / 5 / 10 / 20 | 0.266 / 0.231 / **0.189** / 0.196 | 0.853 / **0.867** / 0.862 / 0.852 | 0.752 / 0.779 / **0.793** / 0.759 |
 
-示例越多越好，BM25 优于随机；随机组只有一个种子，单个小差异可能是噪声。
+随机组在 k=3→20 上单调变好，BM25 在 k=10 见顶、k=20 回落（MAE 0.189→0.196，Task 2b 0.793→0.759）；「越多越好」对随机组成立，对 BM25 不成立。BM25 在 Task 1 上每个 k 都优于随机，Task 2a 在 k=20 时两者基本持平（0.852 vs 0.850）。随机组只有一个种子，单个小差异可能是噪声。
