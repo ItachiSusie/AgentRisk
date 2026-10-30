@@ -44,8 +44,6 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--target-val", type=int, default=100)
     ap.add_argument("--max-overshoot", type=float, default=0.15)
-    ap.add_argument("--check", action="store_true",
-                    help="recompute and compare with the files on disk; write nothing")
     args = ap.parse_args()
 
     manifest = load_jsonl(RAW / "split_manifest.jsonl")
@@ -84,21 +82,6 @@ def main():
     evolve_ids = [i for i in train if i not in val_set]
 
     out = ROOT / "data" / "splits"
-    if args.check:
-        drift = 0
-        for name, ids in (("train_evolve", evolve_ids), ("train_val", val_ids)):
-            path = out / f"{name}.json"
-            if not path.exists():
-                print(f"{name}: MISSING ({path})")
-                drift += 1
-                continue
-            on_disk = json.loads(path.read_text())["example_ids"]
-            if on_disk != ids:
-                print(f"{name}: DRIFT ({len(set(on_disk) ^ set(ids))} ids differ)")
-                drift += 1
-            else:
-                print(f"{name}: ok ({len(ids)} ids)")
-        raise SystemExit(1 if drift else 0)
     out.mkdir(parents=True, exist_ok=True)
     for name, ids in (("train_evolve", evolve_ids), ("train_val", val_ids)):
         payload = {
@@ -110,10 +93,6 @@ def main():
             "example_ids": ids,
         }
         (out / f"{name}.json").write_text(json.dumps(payload, indent=2) + "\n")
-        # materialized rows, so run.py can point --data-file at it
-        with (out / f"{name}.jsonl").open("w", encoding="utf-8") as fh:
-            for i in ids:
-                fh.write(json.dumps(train[i], ensure_ascii=False) + "\n")
         print(f"{name}: {len(ids)} samples, {payload['groups']} scenario groups -> {out / (name + '.json')}")
 
     print(f"\nval share: {len(val_ids) / len(train):.1%} of train")

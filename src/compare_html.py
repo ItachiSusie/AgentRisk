@@ -75,7 +75,6 @@ def main():
             "id": run_id_of(run),
             "label": label(run),
             "selection": c.get("selection") or "zero-shot",
-            "version": c.get("version") or "v1",
             "seed": c.get("seed"),
             "k": c.get("k") or 0,
             "run_id": c["run_id"],
