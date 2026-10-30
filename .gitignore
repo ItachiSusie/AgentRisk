@@ -1,8 +1,10 @@
 .env
 data/raw/
+data/splits/*.jsonl
 __pycache__/
 *.pyc
 .venv/
 .DS_Store
 results/_smoke/
 results/**/messages.jsonl.gz
+results/**/raw_responses.jsonl

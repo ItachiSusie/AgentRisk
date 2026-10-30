@@ -27,17 +27,27 @@ def load_spec(version):
     return path, json.loads(path.read_text(encoding="utf-8"))
 
 
-def selection_path(selection, seed, k):
+def selection_path(selection, seed, k, query_split="dev"):
     """Prefer a selection built for exactly this k, else the top10 file (valid for k <= 10).
 
     Selections are nested (first k of a longer list), so a top20 file answers k=3..20
     and a top10 file answers k=3..10.
+
+    query_split names the split being evaluated (the queries). "dev" keeps the historical
+    file names; any other split uses files written by select_examples_for_split.py.
     """
     if selection == "random":
-        candidates = [f"random_seed{seed}_top{k}.json", f"random_seed{seed}.json"]
+        if query_split == "dev":
+            candidates = [f"random_seed{seed}_top{k}.json", f"random_seed{seed}.json"]
+        else:
+            candidates = [f"random_{query_split}_s{seed}_top{k}.json",
+                          f"random_{query_split}_s{seed}_top10.json"]
     else:
-        stem = "bm25_action_dev" if selection == "bm25-action" else "bm25_dev"
-        candidates = [f"{stem}_top{k}.json", f"{stem}_top10.json"]
+        name = "bm25_action" if selection == "bm25-action" else "bm25"
+        if query_split == "dev":
+            candidates = [f"{name}_dev_top{k}.json", f"{name}_dev_top10.json"]
+        else:
+            candidates = [f"{name}_{query_split}_top{k}.json", f"{name}_{query_split}_top10.json"]
     for name in candidates:
         path = FEWSHOT_DIR / name
         if path.exists():
@@ -45,10 +55,13 @@ def selection_path(selection, seed, k):
     return FEWSHOT_DIR / candidates[-1]
 
 
-def load_selection(selection, seed, k):
-    path = selection_path(selection, seed, k)
+def load_selection(selection, seed, k, query_split="dev"):
+    path = selection_path(selection, seed, k, query_split)
     if not path.exists():
-        sys.exit(f"selection file not found: {path}; run src/select_examples.py --top-n {k}")
+        sys.exit(f"selection file not found: {path}; run src/select_examples.py --top-n {k}"
+                 if query_split == "dev" else
+                 f"selection file not found: {path}; run "
+                 f"src/select_examples_for_split.py --query-split {query_split} --top-n {k}")
     return path, json.loads(path.read_text(encoding="utf-8"))
 
 
