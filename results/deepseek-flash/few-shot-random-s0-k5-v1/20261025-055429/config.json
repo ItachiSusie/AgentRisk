@@ -1,0 +1,50 @@
+{
+  "run_id": "20261025-055429",
+  "experiment": "few-shot-random-s0-k5-v1",
+  "strategy": "few-shot",
+  "version": "v1",
+  "split": "dev",
+  "created_at": "2026-10-24T21:54:29.718713+00:00",
+  "params": {
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "max_tokens": 1024,
+    "response_format": {
+      "type": "json_object"
+    },
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    "stream": false
+  },
+  "prompt_file": "prompts/zero_shot_v1.txt",
+  "prompt_sha256": "ceb0530c8df1fa07f3cfe3763832be9d81115963d2def13913003293291be203",
+  "data_file": "data/raw/dev.jsonl",
+  "data_sha256": "27922c8974c458d6dd481eba5d8a3a99f2ceca63fef5863030e38543fa8b9dd8",
+  "data_hf_commit_sha": "bc7cbf702846e53ecbb31abcdb387ae4ec9f9392",
+  "selection": "random",
+  "seed": 0,
+  "k": 5,
+  "selection_file": "data/fewshot/random_seed0.json",
+  "selection_sha256": "997a18f6f3f7f779d3c225995ba28d130f2d6e46345a5761c58e4b8f3c2464fd",
+  "spec_file": "prompts/few_shot_v1.json",
+  "spec_sha256": "79c391689330b0aa450da3f41f895f2d5d7c7767d9a557df91d7a5509173ef1e",
+  "openai_sdk_version": "3.36.0",
+  "python_version": "3.13.2",
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "invocations": [
+    {
+      "started": "2026-10-24T21:54:29.719814+00:00",
+      "finished": "2026-10-24T21:56:52.716322+00:00",
+      "limit": null,
+      "succeeded": 143,
+      "failed_ids": [],
+      "prompt_tokens": 1091727,
+      "completion_tokens": 5543
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # AgentRisk 三轮实验路线
 
-更新日期：2026-10-30 · 状态：计划，尚未代表已完成实验
+更新日期：2026-10-30 · 状态：总体计划；API 基线已有结果，其余阶段按记录推进
 
 ## 目标与共同约定
 
@@ -8,22 +8,24 @@
 
 当前优先覆盖 Task 1、2a、2b，分别报告 MAE（越低越好）、domain Mean Jaccard 和 driver Mean Jaccard（越高越好），不自行将三项指标合成官方总分。Task 3 待官方 policy、数据和评测要求齐备后接入。数据数量、指标和规则以运行时固定的官方版本为准。
 
-这里将 traces2skill 作为待实现的方法路线：从交互轨迹、模型判断及其错误中，提炼有证据支持、可跨场景复用的风险评估步骤。具体工具或论文实现尚未指定。Guardian Skill 是供风险评估模型使用的指令知识，不直接执行轨迹中的工具动作。
+轨迹到技能（Trace2Skill，即从执行轨迹及错误归因中提炼可复用指令）在本项目中的路线是：从交互轨迹、模型判断及其错误中，提炼有证据支持、可跨场景复用的风险评估步骤。已有 [Trace2Skill 阅读笔记](reading-notes-trace2skill.md) 和 [下一轮实施方案](next-round-plan.md)，实现时以该方案的轨迹取证、规则合并和内部验证流程为起点。Guardian Skill 是供风险评估模型使用的指令知识，不直接执行轨迹中的工具动作。
 
 ## 第一轮：API 大模型与 Guardian Skill
 
-### A. 建立 zero-shot → few-shot 基线
+### A. 已有 zero-shot → few-shot 基线
 
 沿用 [LLM In-context Learning Solution](llm-in-context-learning-solution.md) 的 DeepSeek API 起点；正式运行前确认实际可用模型及参数，保存模型标识和运行日期。Shuai lead 接入、推理与评测；instruction 与结果分析沿用现有协作分工。
+
+当前状态：合作者已完成无示例预测（zero-shot，即只给任务指令）及八组 few-shot 基线，完整结果与运行目录见 [对比报告](../results/comparison.md)。下列步骤作为已有实验的记录和后续复现要求。
 
 1. 固定数据 revision、样本 ID、scenario group 和评测程序。
 2. 使用少量 train 样本完成输入、输出和费用记录检查。
 3. 冻结 zero-shot prompt，跑完整 dev，保存原始响应、合法预测、指标和失败记录。
-4. 从 train 选择固定 few-shot 示例，记录 ID 与选择依据，保持其余配置一致后评测。
+4. 沿用已有 few-shot 选择文件，记录每条样本的示例 ID 与选择依据；比较加入 skill 前后时，保持各样本示例完全相同。
 
 ### B. 用 traces2skill 提炼 Guardian Skill
 
-1. 在 train 内按官方 scenario group 划分开发折与验证折；同场景的安全、危险对应样本必须在同一折。
+1. 沿用已生成的场景组（scenario group，即同一原始场景及其安全、危险变体的集合）切分：`data/splits/train_evolve.json` 用于提炼，`data/splits/train_val.json` 用于验证；同场景样本必须在同一侧，不另建不兼容切分。
 2. 收集开发折中的轨迹、gold 标签、模型预测和简短的证据说明。证据说明应指出相关步骤及判断依据，不要求获取模型隐藏思维链。
 3. 归纳错误类型和可复用规则，例如：最终动作与历史危险请求的区分、授权来源、工具输出中的不可信指令、直接损害与推测后果、风险等级边界。
 4. 将规则整理为 skill 草案：适用范围、评估流程、domain/driver 选择准则、边界案例、结构化输出要求。每条规则保留来源 train ID 和修改记录。
@@ -42,7 +44,7 @@
 
 保持模型、数据、解码参数、输出格式和失败处理一致；分别比较 A2 对 A0、A3 对 A1。记录实际完整 prompt、skill 与示例版本、输入输出 token、费用、延迟和合法输出率。若有改善，再用简短通用风险检查清单作为对照，检查收益是否来自提炼内容；必要时做 skill 组成部分的消融。
 
-完成标准：四组均覆盖完整 dev，三项指标可复算；skill 规则可追溯到 train；能说明改善和退化发生在哪些错误类型。提升是待验证假设，结果不佳也保留并报告。
+完成标准：四组先在同一 train_val 上对照并可复算，选定 skill 版本后进行一次预先确定的完整 dev 评估；skill 规则可追溯到 train；能说明改善和退化发生在哪些错误类型。提升是待验证假设，结果不佳也保留并报告。
 
 ## 第二轮：先微调，再研究 augmentation 与扩展
 
@@ -84,8 +86,8 @@ B2 应使训练与推理的 skill 条件一致，并说明与 B1 的差异；训
 ## 数据边界与实验记录
 
 - Few-shot 选择、skill 提炼、训练、augmentation 种子与生成提示只使用 train；不将 dev 样本或 gold 写入 skill、训练集或扩展数据。
-- Dev 可以用于已声明的候选比较和汇总错误分析；具体规则和样本修复在 train 上实现与验证。记录查看 dev 后的每次修改，承认重复开发会带来选择偏差；最终泛化结论依赖正式测试。
+- 已有 dev 基线和错误分析保留为历史结果。后续遵循合作者方案冻结 dev，规则、超参数和候选比较在 train_val 上完成；最终候选及评估矩阵预先确定后再评估 dev，不反复按 dev 错例改 skill。第三轮使用已有及预先确定的最终 dev 结果选型；最终泛化结论依赖正式测试。
 - 所有实验保存 run ID、数据 revision/hash、模型标识、prompt/skill hash、示例 ID、训练配置、逐条预测、原始响应、三项指标、失败率和资源消耗。合成数据另存生成与审核记录。
 - 第一轮 API baseline 的具体输出目录和文件规范继续遵循 [执行文档](llm-in-context-learning-solution.md)。
 
-下一步交付：先完成 A0 的全量 baseline 和统一评测记录，再推进 A1 与 train 内的 Guardian Skill 提炼。
+下一步交付：复用已完成的 API 基线和统一评测记录，按 [下一轮方案](next-round-plan.md) 推进 train_evolve 上的基线与错误取证、Guardian Skill 提炼及 train_val 验证。

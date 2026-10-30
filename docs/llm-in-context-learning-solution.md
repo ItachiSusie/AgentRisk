@@ -8,16 +8,16 @@
 
 用 DeepSeek API 的 **`deepseek-flash`** 对完整 dev set 做风险预测，建立 Task 1、2a、2b 的 baseline。每条样本独立请求一次，一次返回三个任务的预测。第一版使用 **zero-shot instruction**，后续再加入来自 train 的 few-shot 示例；两者都归入本项目的 LLM In-context Learning Solution。
 
-| 项目 | 第一版约定 |
-| --- | --- |
-| 模型 | `deepseek-flash` |
-| 输入 | `formatted_interaction` + `proposed_action` |
-| 评测范围 | 完整 dev；当前版本 143 条 |
-| 思考模式 | 显式关闭，先建立简单、成本较低的起点 |
-| Temperature | `0`；方便比较，但不保证多次运行完全一致 |
-| 输出 | JSON：`risk_severity`、`risk_domains`、`risk_drivers` |
-| 每条样本 | 一次联合预测；失败重试单独记录 |
-| Task 3 | 待官方 policy 发布后扩展，不自行生成 gold |
+| 项目        | 第一版约定                                            |
+| ----------- | ----------------------------------------------------- |
+| 模型        | `deepseek-flash`                                      |
+| 输入        | `formatted_interaction` + `proposed_action`           |
+| 评测范围    | 完整 dev；当前版本 143 条                             |
+| 思考模式    | 显式关闭，先建立简单、成本较低的起点                  |
+| Temperature | `0`；方便比较，但不保证多次运行完全一致               |
+| 输出        | JSON：`risk_severity`、`risk_domains`、`risk_drivers` |
+| 每条样本    | 一次联合预测；失败重试单独记录                        |
+| Task 3      | 待官方 policy 发布后扩展，不自行生成 gold             |
 
 DeepSeek 支持 OpenAI 兼容接口，base URL 为 `https://api.deepseek.com`，模型名使用 `deepseek-flash`。[API 接入文档](https://api-docs.deepseek.com/zh-cn/)
 
@@ -153,11 +153,11 @@ DeepSeek JSON mode 要求 prompt 明确提及 JSON 并提供格式示例；合�
 
 ## 6. 评测与交付
 
-| 指标 | 计算方式 |
-| --- | --- |
-| Task 1 MAE | 对全部 N 条样本计算 `mean(abs(pred_severity - gold_severity))` |
-| Task 2a Mean Jaccard | 每条计算 domain 集合的 `交集大小 / 并集大小`，再对 N 条取均值 |
-| Task 2b Mean Jaccard | 每条计算 driver 集合的 `交集大小 / 并集大小`，再对 N 条取均值 |
+| 指标                 | 计算方式                                                       |
+| -------------------- | -------------------------------------------------------------- |
+| Task 1 MAE           | 对全部 N 条样本计算 `mean(abs(pred_severity - gold_severity))` |
+| Task 2a Mean Jaccard | 每条计算 domain 集合的 `交集大小 / 并集大小`，再对 N 条取均值  |
+| Task 2b Mean Jaccard | 每条计算 driver 集合的 `交集大小 / 并集大小`，再对 N 条取均值  |
 
 三项主要指标来自 [官方评测说明](https://huggingface.co/datasets/AgentRisk/agentrisk-data-2027#evaluation)。集合无顺序，标签字符串需完全匹配。
 
@@ -165,14 +165,14 @@ DeepSeek JSON mode 要求 prompt 明确提及 JSON 并提供格式示例；合�
 
 建议每次运行保存到独立目录，例如 `results/deepseek-flash/zero-shot-v1/<run_id>/`：
 
-| 文件 | 内容 |
-| --- | --- |
-| `prompt.txt` | 本次实际使用的完整 instruction |
-| `config.json` | 数据 revision/hash、模型名、返回模型标识、参数、prompt hash、SDK 版本和运行时间 |
-| `predictions.jsonl` | 每条样本的 ID 和三个预测字段；这是本地结果格式，非已确认的比赛提交格式 |
-| `raw_responses.jsonl` | 每次尝试的原始响应、ID、耗时、重试次数、错误及 token usage |
-| `metrics.json` | 样本总数、成功/失败数量、三个指标及总 token 用量 |
-| `error_analysis.md` | 代表性错误、混淆类型和下一轮假设 |
+| 文件                  | 内容                                                                            |
+| --------------------- | ------------------------------------------------------------------------------- |
+| `prompt.txt`          | 本次实际使用的完整 instruction                                                  |
+| `config.json`         | 数据 revision/hash、模型名、返回模型标识、参数、prompt hash、SDK 版本和运行时间 |
+| `predictions.jsonl`   | 每条样本的 ID 和三个预测字段；这是本地结果格式，非已确认的比赛提交格式          |
+| `raw_responses.jsonl` | 每次尝试的原始响应、ID、耗时、重试次数、错误及 token usage                      |
+| `metrics.json`        | 样本总数、成功/失败数量、三个指标及总 token 用量                                |
+| `error_analysis.md`   | 代表性错误、混淆类型和下一轮假设                                                |
 
 费用按实际返回的输入、输出及缓存 token 用量，结合运行当日单价计算；失败重试的消耗也应计入。保存当日价格依据，不在方案中固定价格。[模型与价格](https://api-docs.deepseek.com/zh-cn/quick_start/pricing/)
 
@@ -180,6 +180,6 @@ DeepSeek JSON mode 要求 prompt 明确提及 JSON 并提供格式示例；合�
 
 ## 7. 第一轮之后
 
-先分析风险等级混淆、直接 harm domain 与间接后果混淆、driver 证据不足，以及安全拒绝被历史风险带偏等问题。再从 train 选取固定 few-shot 示例，记录示例 ID，并让所有 dev 样本使用同一组示例。若对 train 做交叉验证，使用官方 scenario group，避免同场景的危险动作及安全对应样本跨折泄漏。[官方 split 说明](https://huggingface.co/datasets/AgentRisk/agentrisk-data-2027#splits)
+先分析风险等级混淆、直接 harm domain 与间接后果混淆、driver 证据不足，以及安全拒绝被历史风险带偏等问题。再从 train 选取 few-shot 示例，并记录每条 dev 样本用了哪些示例 ID。few-shot 采用逐条选择（随机或 BM25 检索，每条 dev 样本的示例不同，k 嵌套），选择文件见 `data/fewshot/`。若对 train 做交叉验证，使用官方 scenario group，避免同场景的危险动作及安全对应样本跨折泄漏。[官方 split 说明](https://huggingface.co/datasets/AgentRisk/agentrisk-data-2027#splits)
 
 思考模式、few-shot、prompt 调整分别作为新实验；保持相同 dev 版本与指标，方便判断变化是否带来提升。Task 3 在官方提供 policy 和评测要求后，增加 policy 输入及 intervention/feedback 输出。

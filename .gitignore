@@ -1,1 +1,8 @@
+.env
+data/raw/
+__pycache__/
+*.pyc
+.venv/
 .DS_Store
+results/_smoke/
+results/**/messages.jsonl.gz
