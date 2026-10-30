@@ -1,5 +1,7 @@
 # LLM In-context Learning Solution
 
+本文提供第一轮 API baseline 的执行细节；三轮总体路线和 traces2skill、微调、数据扩展的对照设计见 [实验路线](experiment-roadmap.md)。
+
 更新日期：2026-10-21 · Lead：Shuai · Instruction：由我提供
 
 ## 1. 目标与第一版设置
