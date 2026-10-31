@@ -162,24 +162,10 @@
   }
   .seg button:hover { color: var(--ink); }
   .seg button[aria-pressed="true"] { background: rgba(200, 247, 90, .12); color: var(--lime); }
-  .pairbtn {
-    appearance: none; cursor: pointer; margin-left: 8px;
-    font: 600 10.5px/1 var(--mono); letter-spacing: .06em; padding: 7px 11px; border-radius: 6px;
-    color: var(--dim-2); background: rgba(255, 255, 255, .03); border: 1px solid var(--line);
-    transition: color .2s var(--ease), background .2s var(--ease);
-  }
-  .pairbtn:hover { color: var(--ink); }
-  .pairbtn[aria-pressed="true"] { background: rgba(200, 247, 90, .12); color: var(--lime); border-color: rgba(200, 247, 90, .35); }
 
   /* ---------- chart ---------- */
   #chart { position: relative; }
   #chart svg { display: block; width: 100%; height: auto; overflow: visible; }
-  .legend {
-    display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 10px 2px 0;
-    font: 500 11px/1 var(--mono); color: var(--dim-2);
-  }
-  .legend .lg { display: inline-flex; align-items: center; gap: 6px; }
-  .legend .note { opacity: .65; }
   .grid-ln { stroke: rgba(255, 255, 255, .05); stroke-width: 1; }
   .axis-ln { stroke: rgba(255, 255, 255, .14); stroke-width: 1; }
   .tk { fill: var(--dim-2); font: 500 10px var(--mono); }
@@ -356,7 +342,7 @@
   <div class="eyebrow">AgentRisk · baseline sweep</div>
   <h1><span class="w">Metrics</span> <span class="w lime">Dashboard</span></h1>
   <p class="sub">
-    AgentRisk benchmark<span>·</span><b>deepseek-flash</b><span>·</span>dev <b id="nSamples"></b> 条<span>·</span>两版 system prompt（v1 人写 / v2 加 5 条蒸馏规则），另改 few-shot 示例的选取方式与条数
+    AgentRisk benchmark<span>·</span><b>deepseek-flash</b><span>·</span>dev <b id="nSamples"></b> 条<span>·</span>同一 system prompt，只改 few-shot 示例的选取方式与条数
   </p>
   <p class="claim" id="claim"></p>
   <div class="chips">
@@ -377,10 +363,7 @@
     <div class="card chart-card reveal">
       <div class="card-head">
         <h2>指标 vs 示例条数</h2>
-        <div>
-          <div class="seg" id="metricSwitch" role="group" aria-label="指标"></div>
-          <button class="pairbtn" id="pairBtn" aria-pressed="false" title="只画下方选中的两个运行所在的曲线">只看 A/B</button>
-        </div>
+        <div class="seg" id="metricSwitch" role="group" aria-label="指标"></div>
       </div>
       <div id="chart"></div>
       <div class="caption" id="caption"></div>
@@ -454,14 +437,10 @@
     j2a: { key: "task2a_mean_jaccard", label: "2a", dir: -1 },
     j2b: { key: "task2b_mean_jaccard", label: "2b", dir: -1 }
   };
-  const C = { random: "#6a9dff", bm25: "#c8f75a", "bm25-action": "#a98bff", "zero-shot": "#5e6472",
-              "bm25+v2": "#e8ff9a", "random+v2": "#9dc0ff", "bm25-action+v2": "#c7b0ff", "zero-shot+v2": "#8b93a3" };
-  /* series key: the selection method plus the instruction version; v1 keeps the plain name */
-  const sk = (r) => r.selection + (r.version && r.version !== "v1" ? "+" + r.version : "");
+  const C = { random: "#6a9dff", bm25: "#c8f75a", "bm25-action": "#a98bff", "zero-shot": "#5e6472" };
   const runs = D.runs, byId = Object.fromEntries(runs.map((r) => [r.id, r]));
-  const base = runs.find((r) => r.selection === "zero-shot" && (r.version || "v1") === "v1")
-            || runs.find((r) => r.selection === "zero-shot");
-  const st = { metric: "mae", sort: "mae", filter: "all", open: null, hover: null, a: null, b: null, dfilter: "sev", pairOnly: false };
+  const base = runs.find((r) => r.selection === "zero-shot");
+  const st = { metric: "mae", sort: "mae", filter: "all", open: null, hover: null, a: null, b: null, dfilter: "sev" };
 
   const val = (r, m) => r.metrics[M[m || st.metric].key];
   const dlt = (r, m) => (base && r !== base ? val(r, m) - val(base, m) : 0);
@@ -474,17 +453,12 @@
   $("cPrompt").textContent = D.meta.system_prompt_sha.slice(0, 8);
   $("foot").textContent = `指标由 src/evaluate.py 从各运行 predictions.jsonl 复算 · ${D.meta.generated_at}`;
 
-  const pick = (sel, k, ver) => runs.find((r) => r.selection === sel && r.k === k && (r.version || "v1") === ver);
-  const bm10 = pick("bm25", 10, "v1"), bm20 = pick("bm25", 20, "v1");
-  const rd10 = pick("random", 10, "v1"), rd20 = pick("random", 20, "v1");
-  const zs1 = pick("zero-shot", 0, "v1"), zs2 = pick("zero-shot", 0, "v2");
-  const bm10v2 = pick("bm25", 10, "v2");
+  const bm10 = runs.find((r) => r.selection === "bm25" && r.k === 10);
+  const bm20 = runs.find((r) => r.selection === "bm25" && r.k === 20);
+  const rd10 = runs.find((r) => r.selection === "random" && r.k === 10);
+  const rd20 = runs.find((r) => r.selection === "random" && r.k === 20);
   if (bm10 && bm20 && rd10 && rd20) {
-    let txt = `示例从 10 条加到 20 条：BM25 的 MAE <em>${f3(bm10.metrics.task1_mae)} → ${f3(bm20.metrics.task1_mae)}</em>，反而变差；随机组 <em>${f3(rd10.metrics.task1_mae)} → ${f3(rd20.metrics.task1_mae)}</em>，仍在变好。`;
-    if (zs1 && zs2 && bm10v2) {
-      txt += ` 换上蒸馏版指令 v2：zero-shot <em>${f3(zs1.metrics.task1_mae)} → ${f3(zs2.metrics.task1_mae)}</em>，BM25 k=10 <em>${f3(bm10.metrics.task1_mae)} → ${f3(bm10v2.metrics.task1_mae)}</em> —— 有示例时规则没有增量。`;
-    }
-    $("claim").innerHTML = txt;
+    $("claim").innerHTML = `示例从 10 条加到 20 条：BM25 的 MAE <em>${f3(bm10.metrics.task1_mae)} → ${f3(bm20.metrics.task1_mae)}</em>，反而变差；随机组 <em>${f3(rd10.metrics.task1_mae)} → ${f3(rd20.metrics.task1_mae)}</em>，仍在变好。`;
   }
 
   /* ---------- count-up ---------- */
@@ -501,7 +475,7 @@
   }
 
   function spark(key, sel, color) {
-    const pts = runs.filter((r) => sk(r) === sel && r.k > 0).sort((a, b) => a.k - b.k);
+    const pts = runs.filter((r) => r.selection === sel && r.k > 0).sort((a, b) => a.k - b.k);
     if (pts.length < 2) return "";
     const vs = pts.map((r) => r.metrics[key]);
     const lo = Math.min(...vs), hi = Math.max(...vs), sp = (hi - lo) || 1;
@@ -553,7 +527,7 @@
   function chart(animate) {
     const W = 1120, H = 380, P = { t: 34, r: 64, b: 40, l: 52 };
     const iw = W - P.l - P.r, ih = H - P.t - P.b;
-    const pts = runs.slice();                 // k=0 (zero-shot) is a real point on the curve
+    const pts = runs.filter((r) => r.k > 0);
     const ks = [...new Set(pts.map((r) => r.k))].sort((a, b) => a - b);
     const all = pts.map((r) => val(r)).concat(base ? [val(base)] : []);
     let lo = Math.min(...all), hi = Math.max(...all);
@@ -566,26 +540,10 @@
     chartGeom = { W, H, P, iw, ih, ks, x, y, lo, hi };
 
     const groups = {};
-    pts.forEach((r) => { const key = sk(r); (groups[key] = groups[key] || []).push(r); });
-    // every selection curve starts from its own k=0 point (the zero-shot run of the same
-    // instruction version); the standalone zero-shot series is dropped afterwards
-    const zsOf = (key) => {
-      const ver = key.includes("+v2") ? "v2" : "v1";
-      return runs.find((r) => r.selection === "zero-shot" && (r.version || "v1") === ver);
-    };
-    Object.keys(groups).forEach((key) => {
-      if (key.startsWith("zero-shot")) return;
-      const z = zsOf(key);
-      if (z && !groups[key].some((r) => r.id === z.id)) groups[key].push(z);
-    });
-    let series = Object.entries(groups)
-      .filter(([key]) => !key.startsWith("zero-shot"))
-      .map(([sel, rs]) => ({ sel, ord: rs.slice().sort((a, b) => a.k - b.k) }));
-    if (st.pairOnly && st.a && st.b) {
-      const keep = new Set([st.a, st.b]);
-      const picked = series.filter((s2) => s2.ord.some((r) => keep.has(r.id)));
-      if (picked.length) series = picked;      // never render an empty chart
-    }
+    pts.forEach((r) => { (groups[r.selection] = groups[r.selection] || []).push(r); });
+    const series = Object.entries(groups).map(([sel, rs]) => ({
+      sel, ord: rs.slice().sort((a, b) => a.k - b.k)
+    }));
 
     const yTicks = [0, 1, 2, 3].map((i) => lo + ((hi - lo) * i) / 3);
 
@@ -598,7 +556,6 @@
       `<line class="grid-ln" x1="${P.l}" y1="${y(v)}" x2="${P.l + iw}" y2="${y(v)}"/>
        <text class="tk ytk" x="${P.l - 12}" y="${y(v) + 3}" text-anchor="end" data-v="${v}">${v.toFixed(3)}</text>`).join("") + `</g>`;
     s += ks.map((k) => `<text class="tk" x="${x(k)}" y="${H - P.b + 20}" text-anchor="middle">${k}</text>`).join("");
-    s += `<text class="tk" x="${P.l + 26}" y="${H - P.b + 36}" text-anchor="middle" opacity=".7">no examples</text>`;
     s += `<line class="axis-ln" x1="${P.l}" y1="${P.t + ih}" x2="${P.l + iw}" y2="${P.t + ih}"/>`;
     s += `<line class="guide" id="guide" x1="0" y1="${P.t - 6}" x2="0" y2="${P.t + ih}"/>`;
 
@@ -608,23 +565,13 @@
             <text class="tk" x="${P.l + iw}" y="${y(bv) - 9}" text-anchor="end">zero-shot ${f3(bv)}</text>`;
     }
 
-    const k0Drawn = new Set();
     series.forEach(({ sel, ord }) => {
       const line = ord.map((r, i) => `${i ? "L" : "M"}${x(r.k).toFixed(1)},${y(val(r)).toFixed(1)}`).join(" ");
-      // v2 series (rules added to the instruction) are dashed with hollow markers, so the
-      // instruction version reads as a second dimension instead of blurring into the method.
-      const alt = sel.includes("+v2");
-      const dash = alt ? ' stroke-dasharray="7 5"' : "";
-      const dot = alt
-        ? `fill="none" stroke="${C[sel]}" stroke-width="2"`
-        : `fill="${C[sel]}"`;
-      const solo = ord.length === 1 ? ` data-solo="1"` : "";
-      s += `<g clip-path="url(#plot)" data-series="${sel}"${solo}>
+      s += `<g clip-path="url(#plot)" data-series="${sel}">
         <path class="glowpath" data-glow="${sel}" d="${line}" fill="none" stroke="${C[sel]}" stroke-width="3" filter="url(#glow)" opacity=".35"/>
-        <path class="ln" data-line="${sel}" stroke="${C[sel]}" d="${line}"${dash}/>
+        <path class="ln" data-line="${sel}" stroke="${C[sel]}" d="${line}"/>
         ${ord.map((r) => `<circle class="halo" data-halo="${esc(r.id)}" cx="${x(r.k)}" cy="${y(val(r))}" r="10" fill="${C[sel]}"/>`).join("")}
-        ${ord.filter((r) => { if (r.k !== 0) return true; if (k0Drawn.has(r.id)) return false; k0Drawn.add(r.id); return true; })
-              .map((r) => `<circle class="pt" data-r="${esc(r.id)}" cx="${x(r.k)}" cy="${y(val(r))}" r="${alt ? 5 : 4}" ${dot}/>`).join("")}
+        ${ord.map((r) => `<circle class="pt" data-r="${esc(r.id)}" cx="${x(r.k)}" cy="${y(val(r))}" r="4" fill="${C[sel]}"/>`).join("")}
       </g>`;
     });
 
@@ -635,15 +582,7 @@
     for (let i = 1; i < labels.length; i++) {
       if (labels[i].y - labels[i - 1].y < 15) labels[i].y = labels[i - 1].y + 15;
     }
-    labels.forEach((l) => {
-      const ord = series.find((s2) => s2.sel === l.sel).ord;
-      const have = new Set(ord.map((r) => r.k));
-      const lo = Math.min(...have), hi = Math.max(...have);
-      const gaps = ks.filter((k) => k > lo && k < hi && !have.has(k));
-      // a series that skipped some k values gets its actual k list in the label
-      const note = ord.length === 1 ? " (single point)" : (gaps.length ? ` (k=${ord.map((r) => r.k).join(",")})` : "");
-      s += `<text class="anno serif" x="${l.x}" y="${l.y}" fill="${C[l.sel]}">${l.sel}${note}</text>`;
-    });
+    labels.forEach((l) => { s += `<text class="anno serif" x="${l.x}" y="${l.y}" fill="${C[l.sel]}">${l.sel}</text>`; });
 
     const best = sortedRuns()[0];
     if (M[st.metric].dir === 1 && best.k) {
@@ -651,13 +590,7 @@
     }
 
     const svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="k 与指标的关系">${s}</svg>`;
-    const legend = series.map(({ sel }) => {
-      const alt = sel.includes("+v2");
-      return `<span class="lg"><svg width="26" height="10" aria-hidden="true"><line x1="1" y1="5" x2="25" y2="5" stroke="${C[sel]}" stroke-width="2"${alt ? ' stroke-dasharray="5 4"' : ""}/></svg>${esc(sel)}</span>`;
-    });
-    if (base && !st.pairOnly) legend.push(`<span class="lg"><svg width="26" height="10" aria-hidden="true"><line x1="1" y1="5" x2="25" y2="5" stroke="#5e6472" stroke-width="1.5" stroke-dasharray="2 3"/></svg>zero-shot 基线</span>`);
-    legend.push(`<span class="lg note">${st.pairOnly ? "只显示 A/B 所在曲线" : "实线 = v1 指令 · 虚线 = v2 指令（+5 条蒸馏规则）"}</span>`);
-    $("chart").innerHTML = svg + `<div class="legend">${legend.join("")}</div>`;
+    $("chart").innerHTML = svg;
 
     // draw-in animation on first paint, morph afterwards
     if (!reduced) {
@@ -718,7 +651,7 @@
     const { x, y } = chartGeom;
     $("chart").querySelectorAll("[data-line]").forEach((p) => {
       const sel = p.dataset.line;
-      const ord = runs.filter((r) => sk(r) === sel && r.k > 0).sort((a, b) => a.k - b.k);
+      const ord = runs.filter((r) => r.selection === sel && r.k > 0).sort((a, b) => a.k - b.k);
       p.setAttribute("d", ord.map((r, i) => `${i ? "L" : "M"}${x(r.k).toFixed(1)},${y(val(r)).toFixed(1)}`).join(" "));
       const glow = p.parentNode.querySelector("path[filter]");
       if (glow) glow.setAttribute("d", p.getAttribute("d"));
@@ -773,7 +706,7 @@
   /* ---------- table ---------- */
   function filtered() {
     if (st.filter === "all") return runs;
-    return runs.filter((r) => sk(r).startsWith(st.filter) || r.selection === "zero-shot");
+    return runs.filter((r) => r.selection === st.filter || r.selection === "zero-shot");
   }
 
   function sortedRuns() {
@@ -964,11 +897,6 @@
     $("metricSwitch").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
     chart(true); table(); caption(); setHash();
   });
-  $("pairBtn").addEventListener("click", () => {
-    st.pairOnly = !st.pairOnly;
-    $("pairBtn").setAttribute("aria-pressed", String(st.pairOnly));
-    chart(true); caption();
-  });
 
   document.querySelectorAll("thead th.sortable").forEach((th) => {
     th.addEventListener("click", () => {
@@ -993,8 +921,8 @@
     st.dfilter = b.dataset.f;
     selects(); diff(); setHash();
   });
-  $("selA").addEventListener("change", (e) => { st.a = e.target.value; selects(); diff(); if (st.pairOnly) { chart(true); caption(); } setHash(); });
-  $("selB").addEventListener("change", (e) => { st.b = e.target.value; selects(); diff(); if (st.pairOnly) { chart(true); caption(); } setHash(); });
+  $("selA").addEventListener("change", (e) => { st.a = e.target.value; selects(); diff(); setHash(); });
+  $("selB").addEventListener("change", (e) => { st.b = e.target.value; selects(); diff(); setHash(); });
 
   /* keyboard */
   document.addEventListener("keydown", (e) => {
@@ -1020,15 +948,6 @@
 
   /* caption under the chart: the two deltas, nothing else */
   function caption() {
-    if (st.pairOnly && st.a && st.b) {
-      const A = byId[st.a], B = byId[st.b], k = M[st.metric].key;
-      const av = A.metrics[k], bv = B.metrics[k], d = bv - av;
-      const good = (x) => (M[st.metric].dir === 1 ? x < 0 : x > 0);
-      $("caption").innerHTML = `<span><b>A vs B</b></span>
-        <span>${esc(A.label)} <b>${f3(av)}</b> → ${esc(B.label)} <b>${f3(bv)}</b>
-        <span class="${good(d) ? "down" : "up"}">${d > 0 ? "+" : ""}${d.toFixed(3)}</span></span>`;
-      return;
-    }
     if (!bm10 || !bm20 || !rd10 || !rd20) { $("caption").innerHTML = ""; return; }
     const k = M[st.metric].key;
     const b1 = bm10.metrics[k], b2 = bm20.metrics[k], r1 = rd10.metrics[k], r2 = rd20.metrics[k];

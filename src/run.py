@@ -166,11 +166,10 @@ def setup_run_dir(args, prompt_text, prompt_path, data_path, manifest, extra):
 def few_shot_context(args, manifest):
     """Returns (system_prompt_path, build, extra); build(row) -> (messages, shot_ids)."""
     spec_path, spec = fewshot.load_spec(args.version)
-    sel_path, sel = fewshot.load_selection(args.selection, args.seed, args.k, args.split)
+    sel_path, sel = fewshot.load_selection(args.selection, args.seed, args.k)
     for name, key in (("train.jsonl", "train_sha256"), ("dev.jsonl", "dev_sha256")):
-        recorded = sel["meta"].get(key)
-        if recorded is not None and recorded != manifest["files"][name]["sha256"]:
-            sys.exit(f"{sel_path.name} was made from a different {name}; regenerate the selection file")
+        if sel["meta"][key] != manifest["files"][name]["sha256"]:
+            sys.exit(f"{sel_path.name} was made from a different {name}; regenerate it with select_examples.py")
     shortest = min(len(v) for v in sel["selections"].values())
     if shortest < args.k:
         sys.exit(f"{sel_path.name} has only {shortest} examples per sample; "
@@ -182,8 +181,7 @@ def few_shot_context(args, manifest):
     def build(row):
         eid = row["example_id"]
         if eid not in sel["selections"]:
-            sys.exit(f"{eid} has no entry in {sel_path.name}; "
-                     f"build a selection for the '{args.split}' split with src/select_examples_for_split.py")
+            sys.exit(f"{eid} has no entry in {sel_path.name}; few-shot runs support the dev split only")
         shot_ids = fewshot.pick_shot_ids(args.selection, sel["selections"][eid], args.k)
         examples = [train[i] for i in shot_ids]
         return fewshot.build_messages(row, system_prompt, spec, examples), shot_ids
@@ -231,10 +229,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--strategy", choices=["zero-shot", "few-shot"], default="zero-shot")
     parser.add_argument("--version", default="v1")
-    parser.add_argument("--split", default="dev",
-                        help="named split under data/raw/; also names the few-shot selection query split")
-    parser.add_argument("--data-file", default=None,
-                        help="explicit jsonl input, e.g. data/splits/train_val.jsonl (overrides --split for input)")
+    parser.add_argument("--split", default="dev")
     parser.add_argument("--selection", choices=["random", "bm25", "bm25-action"], help="few-shot only")
     parser.add_argument("--k", type=int, help="few-shot only: number of examples (needs a selection with top_n >= k)")
     parser.add_argument("--seed", type=int, default=0, help="random selection only")
@@ -252,16 +247,10 @@ def main():
     elif args.selection is not None or args.k is not None:
         parser.error("--selection and --k only apply to --strategy few-shot")
 
-    if args.data_file:
-        data_path = Path(args.data_file)
-        if not data_path.is_absolute():
-            data_path = ROOT / data_path
-    else:
-        data_path = ROOT / "data" / "raw" / f"{args.split}.jsonl"
+    data_path = ROOT / "data" / "raw" / f"{args.split}.jsonl"
     manifest = json.loads((ROOT / "data" / "MANIFEST.json").read_text())
-    # only files pinned in MANIFEST are hash-checked; derived splits (see src/make_splits.py) are not
-    pinned = manifest["files"].get(data_path.name, {}).get("sha256")
-    if pinned is not None and sha256_of(data_path) != pinned:
+    pinned = manifest["files"][data_path.name]["sha256"]
+    if sha256_of(data_path) != pinned:
         sys.exit(f"{data_path.name} does not match data/MANIFEST.json; run src/download_data.py")
 
     if args.strategy == "few-shot":

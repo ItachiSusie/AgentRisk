@@ -1,8 +1,3 @@
-> ⚠️ **已被后续结论取代（2026-10-28）**：本文是 10 月 25 日的草稿，只覆盖到 k=10 的 few-shot。
-> 现在每个运行的逐样本分诊在各自 `<run_dir>/triage/summary.md`（工具 `src/triage.py`），
-> 最终结论与提交配置见 [README 当前状态](../../README.md#当前状态) 和
-> [docs/next-round-plan.md](../../docs/next-round-plan.md) §8。本文保留作过程记录，数字不再更新。
-
 # Few-shot 错误分析（草稿，待确认）
 
 数据：dev 143 条。对比对象：zero-shot v1（`20261022-051556`）、random k=10（`few-shot-random-s0-k10-v1/20261025-055712`）、bm25 k=10（`few-shot-bm25-k10-v1/20261025-055210`）。完整指标见 [comparison.md](comparison.md)，两个 k=10 运行各有一份 `report.html` 可交互查看。
