@@ -1,0 +1,13 @@
+{
+  "version": "v4",
+  "system_prompt_file": "prompts/zero_shot_v4.txt",
+  "example_format": "chat_turns",
+  "preamble": "",
+  "user_payload_keys": ["formatted_interaction", "proposed_action"],
+  "assistant_output_keys": ["risk_severity", "risk_domains", "risk_drivers"],
+  "order": {
+    "random": "as listed in the selection file",
+    "bm25": "ascending similarity, most similar last",
+    "bm25-action": "ascending similarity, most similar last"
+  }
+}

@@ -31,10 +31,12 @@ import openai
 from openai import OpenAI
 
 import fewshot
-from common import load_jsonl, validate_prediction
+from common import load_jsonl, unpack_prediction, validate_prediction
 
 ROOT = Path(__file__).resolve().parent.parent
 MAX_ATTEMPTS = 3
+# v4 isolates a brief rationale before labels; all released earlier versions stay label-only.
+OUTPUT_FORMATS = {"v4": "reasoning-answer-v1"}
 PARAMS = dict(
     model="deepseek-flash",
     temperature=0,
@@ -275,6 +277,10 @@ def main():
         def build(row):
             return zero_shot_messages(row, prompt_text), None
 
+    output_format = OUTPUT_FORMATS.get(args.version, "labels")
+    if output_format != "labels":
+        extra["output_format"] = output_format
+
     rows = load_jsonl(data_path)
     if args.dry_run:
         dry_run(args, rows, build, prompt_text)
@@ -305,7 +311,7 @@ def main():
     for row in todo:
         eid = row["example_id"]
         messages, shot_ids = build(row)
-        if shot_ids is not None and eid not in recorded:
+        if (shot_ids is not None or output_format != "labels") and eid not in recorded:
             # the exact messages are saved before the request, so the record exists even if the call fails
             with gzip.open(messages_path, "at", encoding="utf-8") as f:
                 f.write(json.dumps({"example_id": eid, "shot_ids": shot_ids, "messages": messages},
@@ -324,8 +330,9 @@ def main():
                 if response.usage:
                     usage["prompt_tokens"] += response.usage.prompt_tokens
                     usage["completion_tokens"] += response.usage.completion_tokens
-                prediction = parse(response)
-                validate_prediction(prediction)
+                prediction, reasoning = unpack_prediction(parse(response), output_format)
+                if reasoning is not None:
+                    rec["reasoning"] = reasoning
                 rec["status"] = "ok"
             except RETRYABLE as e:
                 rec.update(status="api_error", error=repr(e))

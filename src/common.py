@@ -52,6 +52,21 @@ def validate_prediction(pred):
     _check_labels(pred["risk_drivers"], DRIVERS, "No Material Risk", "risk_drivers")
 
 
+def unpack_prediction(output, output_format="labels"):
+    """Validate a model output and return (labels, optional brief rationale)."""
+    if output_format == "labels":
+        validate_prediction(output)
+        return output, None
+    if output_format != "reasoning-answer-v1":
+        raise ValueError(f"unknown output format: {output_format}")
+    if not isinstance(output, dict) or set(output) != {"reasoning", "answer"}:
+        raise ValueError("output must have exactly reasoning and answer")
+    if not isinstance(output["reasoning"], str) or not output["reasoning"].strip():
+        raise ValueError("reasoning must be a non-empty string")
+    validate_prediction(output["answer"])
+    return output["answer"], output["reasoning"]
+
+
 def jaccard(a, b):
     a, b = set(a), set(b)
     return len(a & b) / len(a | b)

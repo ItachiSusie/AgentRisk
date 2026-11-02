@@ -94,6 +94,10 @@ cp .env.example .env        # 然后在 .env 里填入自己的 DEEPSEEK_API_KEY
 
 ### 常用命令
 
+新增 v4 支持先输出简短判断依据、再输出标签；无示例与少样本设置均可用。输出格式、对照设计、日志和命令见 [v4 实验说明](docs/reasoning-answer-experiment.md)。
+
+下一版还需增加各子任务独立预测，与当前多任务联合预测对照；已有实验设置、判断说明要求及单任务计划见 [下一版提示词实验](docs/next-prompt-experiments.md)。
+
 ```bash
 # 推理：不带 --run-id 会新建一次运行；带上则继续同一次运行（已完成的样本自动跳过）
 .venv/bin/python src/run.py --strategy zero-shot --version v1 --limit 20
