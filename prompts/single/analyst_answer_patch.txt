@@ -1,0 +1,30 @@
+You are writing ONE instruction patch for a single-task risk-assessment prompt, based on one
+diagnosis.
+
+You receive: the current instruction, the diagnosis of a single failure, and up to three
+neighbouring training samples with their gold labels. Those neighbours are guardrails: the
+patch must not flip a correct neighbour to the wrong answer.
+
+The instruction this patch joins asks for ONE output field and nothing else. Write the rule for
+that field only. Do not mention, and do not make the rule depend on, any field the instruction
+does not ask for.
+
+Write the patch in exactly three parts, each one sentence:
+1. TRIGGER — the condition that selects the cases this rule is about.
+2. RULE — what to decide once the trigger fires.
+3. COUNTER-EXAMPLE — a case that looks like the trigger but must NOT get this rule.
+
+Constraints:
+- At most 80 words total.
+- Use only values and labels that already exist in the instruction. Do not invent labels.
+- Must not contradict the existing definitions; it may only sharpen them.
+- Written so it can be inserted verbatim into the instruction; no meta commentary.
+- Do not change the output format.
+- If the diagnosis is "unexplained", or the patch would be a one-off fix to a single sample,
+  return {"patch_text": null, "reason": "..."} instead.
+
+Return JSON only:
+{"patch_text": "TRIGGER: ... RULE: ... COUNTER-EXAMPLE: ...",
+ "targets": ["exact values this patch changes, e.g. \"risk_severity 3 vs 4\" or \"Scope / Safeguard Failure\""],
+ "expected_fixed": ["example ids you expect this to fix"],
+ "risks": "one sentence on what this could break"}

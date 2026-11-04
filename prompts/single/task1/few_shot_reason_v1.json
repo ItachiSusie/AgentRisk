@@ -1,0 +1,22 @@
+{
+  "task": "task1",
+  "version": "reason-v1",
+  "prompt_id": "task1-reason-v1",
+  "system_prompt_file": "prompts/single/task1/zero_shot_reason_v1.txt",
+  "example_format": "chat_turns",
+  "preamble": "",
+  "user_payload_keys": [
+    "formatted_interaction",
+    "proposed_action"
+  ],
+  "assistant_output_keys": [
+    "risk_severity"
+  ],
+  "order": {
+    "random": "as listed in the selection file",
+    "bm25": "ascending similarity, most similar last",
+    "bm25-action": "ascending similarity, most similar last"
+  },
+  "final_user_suffix": "The demonstrations above are answered with the label only. For THIS sample, follow the system instruction instead: return one JSON object with \"reasoning\" first and then \"answer\".",
+  "note": "The format reminder is on the final user turn only; the demonstrations are label-only and byte-identical to the answer lineage. Rationale and evidence: docs/single-task/00-common.md section 5."
+}

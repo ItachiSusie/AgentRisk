@@ -22,8 +22,16 @@ def sha256_of(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def load_spec(version):
-    path = ROOT / "prompts" / f"few_shot_{version}.json"
+def load_spec(version, task="multi"):
+    """Multi-task specs live in prompts/; single-task specs in prompts/single/<task>/.
+
+    File names use underscores, command-line versions use hyphens (answer-v1 ->
+    few_shot_answer_v1.json). See docs/single-task/00-common.md section 3.4.
+    """
+    base = ROOT / "prompts" if task == "multi" else ROOT / "prompts" / "single" / task
+    path = base / f"few_shot_{version.replace('-', '_')}.json"
+    if not path.exists():
+        sys.exit(f"few-shot spec not found: {path.relative_to(ROOT)}")
     return path, json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -92,7 +100,12 @@ def build_messages(row, system_prompt, spec, examples):
     for ex in examples:
         messages.append({"role": "user", "content": user_content(ex, spec)})
         messages.append({"role": "assistant", "content": assistant_content(ex, spec)})
-    messages.append({"role": "user", "content": user_content(row, spec)})
+    final = user_content(row, spec)
+    if spec.get("final_user_suffix"):
+        # Only the sample being assessed carries it: label-only demonstrations otherwise set a
+        # pattern the system prompt loses against, and the last turn is where it is broken.
+        final = final + "\n\n" + spec["final_user_suffix"]
+    messages.append({"role": "user", "content": final})
     return messages
 
 
@@ -107,9 +120,14 @@ def format_messages(messages):
         elif m["role"] == "user":
             header = f"USER (example {shot + 1})" if i < len(messages) - 1 else "USER (sample to assess)"
             try:
-                payload = json.loads(m["content"])
+                # raw_decode so anything appended after the payload (a final-turn format
+                # reminder) still shows, instead of dropping the whole turn to raw text
+                payload, end = json.JSONDecoder().raw_decode(m["content"])
                 body = "\n\n".join(f"{key}:\n{value}" for key, value in payload.items())
-            except (json.JSONDecodeError, AttributeError):
+                trailer = m["content"][end:].strip()
+                if trailer:
+                    body += "\n\n" + trailer
+            except (json.JSONDecodeError, AttributeError, TypeError):
                 body = m["content"]
         else:
             header = f"ASSISTANT (example {shot + 1} gold answer)"

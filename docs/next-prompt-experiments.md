@@ -70,6 +70,8 @@ Task 2a、Task 2b 采用相同外层格式，分别只输出 `risk_domains` 或 
 
 **单任务模板、运行入口、输出校验及评测衔接尚待实现。当前 v4 仍然是多任务联合预测，不能当作已经完成了单任务实验。**
 
+可执行方案（2026-11-04）：共用设计见 [single-task/00-common.md](single-task/00-common.md)，三个任务各自的完整方案见 [Task 1](single-task/01-task1-risk-level.md)、[Task 2a](single-task/02-task2a-harm-domain.md)、[Task 2b](single-task/03-task2b-risk-driver.md)。方案本身不改变上面的状态判断：模板和代码改动仍未实现。
+
 ## 4. 对照设计：分开判断两项改动的收益
 
 为区分“增加判断说明”与“拆分任务”的影响，保留以下对照；无示例和少样本设置分别比较：
