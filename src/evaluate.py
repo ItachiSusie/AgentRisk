@@ -30,6 +30,8 @@ def main():
     run_dir = Path(args.run_dir)
 
     config = json.loads((run_dir / "config.json").read_text())
+    # runs written before single-task support have no "task" key and are joint predictions
+    task = config.get("task", "multi")
     golds = {r["example_id"]: r for r in load_jsonl(ROOT / config["data_file"])}
 
     preds = {}
@@ -39,13 +41,13 @@ def main():
             sys.exit(f"duplicate prediction for {eid}")
         if eid not in golds:
             sys.exit(f"prediction for unknown example_id {eid}")
-        validate_prediction({k: v for k, v in rec.items() if k != "example_id"})
+        validate_prediction({k: v for k, v in rec.items() if k != "example_id"}, task)
         preds[eid] = rec
 
     if not preds:
         sys.exit("no valid predictions to score")
 
-    metrics = compute_metrics(preds, golds)
+    metrics = compute_metrics(preds, golds, task)
     complete = metrics["n_failed"] == 0
     metrics.update(
         run_id=config["run_id"],
@@ -54,6 +56,8 @@ def main():
         failed_ids=[i for i in golds if i not in preds],
         tokens=token_usage(load_jsonl(run_dir / "raw_responses.jsonl")),
     )
+    if task != "multi":
+        metrics["task"] = task
     if not complete:
         metrics["note"] = "diagnostic only: not every sample has a valid prediction"
 

@@ -4,7 +4,7 @@ Usage:
     python src/compare_html.py
 
 Reads config.json / metrics.json / predictions.jsonl of every run under
-results/deepseek-flash/ (same discovery rule as compare.py) plus the gold labels,
+results/deepseek-flash/multitask/ (same discovery rule as compare.py) plus the gold labels,
 embeds everything into src/comparison_template.html and writes results/comparison.html.
 
 The page is self-contained: no CDN, no fonts to download, opens from file://.
@@ -15,6 +15,12 @@ import json
 from pathlib import Path
 
 from compare import label, level_stats, load_runs, sort_key
+
+# The page shows all three fields side by side, so it only covers joint predictions.
+# Single-task runs get their numbers from `src/compare.py --task <task>`; once all three
+# tasks are finished, src/assemble_single.py merges them into a three-field run that this
+# page can then render like any other.
+TASK = "multi"
 
 ROOT = Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "results"
@@ -27,9 +33,9 @@ def run_id_of(run):
 
 
 def main():
-    runs = sorted(load_runs(), key=sort_key)
+    runs = sorted(load_runs(TASK), key=sort_key)
     if not runs:
-        raise SystemExit("no finished runs under results/deepseek-flash/*/*/metrics.json")
+        raise SystemExit("no finished runs under results/deepseek-flash/multitask/*/*/metrics.json")
 
     # --- label pool: domain/driver strings repeat a lot across 9 runs x 143 samples
     pool, index = [], {}

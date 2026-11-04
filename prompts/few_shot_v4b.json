@@ -1,0 +1,15 @@
+{
+  "version": "v4b",
+  "system_prompt_file": "prompts/zero_shot_v4.txt",
+  "example_format": "chat_turns",
+  "preamble": "",
+  "user_payload_keys": ["formatted_interaction", "proposed_action"],
+  "assistant_output_keys": ["risk_severity", "risk_domains", "risk_drivers"],
+  "final_user_suffix": "The demonstrations above are answered with labels only. For THIS sample, follow the system instruction instead: return one JSON object with \"reasoning\" first and then \"answer\".",
+  "order": {
+    "random": "as listed in the selection file",
+    "bm25": "ascending similarity, most similar last",
+    "bm25-action": "ascending similarity, most similar last"
+  },
+  "note": "v4 with a format reminder on the final user turn only. The demonstrations are byte-identical to few_shot_v4.json: no rationale is invented for them, which stays a separate variable (docs/next-prompt-experiments.md section 2). Added because few-shot v4 lost 11/143 dev samples to bare-label output that retries could not recover."
+}

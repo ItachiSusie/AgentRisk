@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from common import load_jsonl, unpack_prediction
+from common import load_jsonl, unpack_prediction, validate_prediction
 import evaluate
 import fewshot
 
@@ -92,7 +92,7 @@ class RunnerTests(unittest.TestCase):
                     patch.object(runner.time, "sleep"):
                 runner.main()
                 self.assertEqual(request.call_count, 2)
-                run_dir, = (root / "results/_smoke/zero-shot-v4").iterdir()
+                run_dir, = (root / "results/_smoke/multitask/zero-shot-v4").iterdir()
                 self.assertEqual(load_jsonl(run_dir / "predictions.jsonl"),
                                  [{"example_id": "test-query", **LABELS}])
                 raw = load_jsonl(run_dir / "raw_responses.jsonl")
@@ -118,6 +118,100 @@ class RunnerTests(unittest.TestCase):
                 with gzip.open(run_dir / "messages.jsonl.gz", "rt") as f:
                     self.assertEqual(len(f.readlines()), 1)
 
+
+
+class SingleTaskTests(unittest.TestCase):
+    """The single-task prompts and schema, offline. No SDK, model call or real run needed."""
+
+    TASKS = {"task1": "risk_severity", "task2a": "risk_domains", "task2b": "risk_drivers"}
+
+    def test_schema_is_scoped_to_the_task(self):
+        for task, field in self.TASKS.items():
+            with self.subTest(task=task):
+                validate_prediction({field: LABELS[field]}, task)
+                # the joint prediction is not a valid single-task answer, and vice versa
+                with self.assertRaises(ValueError):
+                    validate_prediction(LABELS, task)
+                with self.assertRaises(ValueError):
+                    validate_prediction({field: LABELS[field]}, "multi")
+
+    def test_reasoning_wrapper_carries_the_task(self):
+        out = {"reasoning": RATIONALE, "answer": {"risk_severity": LABELS["risk_severity"]}}
+        self.assertEqual(unpack_prediction(out, "reasoning-answer-v1", "task1"),
+                         ({"risk_severity": 1}, RATIONALE))
+        with self.assertRaises(ValueError):
+            unpack_prediction(out, "reasoning-answer-v1", "task2a")
+
+    def test_generated_prompts_reuse_v1_verbatim(self):
+        """Every paragraph kept from zero_shot_v1.txt must be byte-identical."""
+        import make_single_prompts as gen
+        v1 = (ROOT / "prompts/zero_shot_v1.txt").read_text()
+        header = v1[: v1.index("Predict all three fields:")]
+        assess = v1[v1.index("Assess the proposed action itself,"):
+                    v1.index("Return only a JSON object")].rstrip()
+        for task, field in self.TASKS.items():
+            d = ROOT / "prompts/single" / task
+            if not (d / "zero_shot_answer_v1.txt").exists():
+                continue  # that task has not been generated yet
+            answer = (d / "zero_shot_answer_v1.txt").read_text()
+            reason = (d / "zero_shot_reason_v1.txt").read_text()
+            block = v1[v1.index(gen.SECTIONS[field]):]
+            block = block[block.index(":") + 1:].lstrip(" \n")
+            block = block[: block.index("\n\n")]
+            with self.subTest(task=task):
+                for text in (answer, reason):
+                    self.assertTrue(text.startswith(header))
+                    self.assertIn(block, text)
+                    self.assertIn(assess, text)
+                    for other in set(self.TASKS.values()) - {field}:
+                        self.assertNotIn(other, text)
+                # the two lineages differ only from the output section onwards
+                self.assertEqual(answer[: answer.index("Return only a JSON object")],
+                                 reason[: reason.index("For the final sample")])
+
+    def test_single_task_shots_carry_only_this_task_label(self):
+        import fewshot as fs
+        for task, field in self.TASKS.items():
+            d = ROOT / "prompts/single" / task
+            if not (d / "few_shot_reason_v1.json").exists():
+                continue
+            for lineage in ("answer", "reason"):
+                _, spec = fs.load_spec(f"{lineage}-v1", task)
+                example = dict(LABELS, example_id="train-example",
+                               formatted_interaction="History", proposed_action="Refuse")
+                query = dict(example, example_id="query")
+                system = (d / f"zero_shot_{lineage}_v1.txt").read_text()
+                messages = fs.build_messages(query, system, spec, [example])
+                with self.subTest(task=task, lineage=lineage):
+                    self.assertEqual([m["role"] for m in messages],
+                                     ["system", "user", "assistant", "user"])
+                    # the demonstration answers with this task's label and nothing else
+                    self.assertEqual(json.loads(messages[2]["content"]), {field: LABELS[field]})
+                    validate_prediction(json.loads(messages[2]["content"]), task)
+                    # only the reason lineage reminds the final turn about the format
+                    tail = messages[-1]["content"]
+                    self.assertEqual("reasoning" in tail, lineage == "reason")
+
+    def test_output_format_follows_the_lineage(self):
+        import importlib.util, types
+        sdk = types.ModuleType("openai")
+        sdk.__version__ = "offline-test"
+        sdk.OpenAI = object
+        for name in ["APIConnectionError", "RateLimitError", "InternalServerError",
+                     "BadRequestError", "OpenAIError"]:
+            setattr(sdk, name, type(name, (Exception,), {}))
+        spec = importlib.util.spec_from_file_location("offline_runner2", ROOT / "src/run.py")
+        runner = importlib.util.module_from_spec(spec)
+        with patch.dict(sys.modules, {"openai": sdk}):
+            spec.loader.exec_module(runner)
+        self.assertEqual(runner.output_format_for("task1", "answer-v1"), "labels")
+        self.assertEqual(runner.output_format_for("task1", "reason-v2"), "reasoning-answer-v1")
+        self.assertEqual(runner.output_format_for("multi", "v4"), "reasoning-answer-v1")
+        self.assertEqual(runner.output_format_for("multi", "v1"), "labels")
+        with self.assertRaises(SystemExit):
+            runner.output_format_for("task1", "v1")       # multi-style version on a single task
+        self.assertEqual(runner.task_dir_name("multi"), "multitask")
+        self.assertEqual(runner.task_dir_name("task2a"), "task2a")
 
 if __name__ == "__main__":
     unittest.main()

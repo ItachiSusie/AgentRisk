@@ -1,26 +1,50 @@
-"""Compare finished runs side by side and write results/comparison.md.
+"""Compare finished runs side by side and write a markdown table.
 
-Usage: python src/compare.py            # every run under results/deepseek-flash/ that has metrics.json
+Usage:
+    python src/compare.py                  # multi-task runs -> results/comparison.md
+    python src/compare.py --task task1     # Task 1 runs     -> results/comparison-task1.md
 
-Reads config.json, metrics.json and predictions.jsonl of each run; nothing is written except comparison.md.
-Rows come from config.json (selection / seed / k / run_id), so runs added later (other seeds,
-bm25-action) are listed automatically.
+Reads config.json, metrics.json and predictions.jsonl of each run under
+results/deepseek-flash/<task_dir>/; nothing is written except the markdown file.
+Rows come from config.json (selection / seed / k / version / run_id), so runs added later
+are listed automatically. Sections that need a field the task does not predict are skipped.
 """
+import argparse
+import hashlib
 import json
 from collections import Counter
 from pathlib import Path
 
-from common import load_jsonl
+from common import jaccard, load_jsonl, task_fields
 
 ROOT = Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "results"
 LEVELS = (1, 2, 3, 4, 5)
-SYSTEM_HASH_PREFIX = "ceb0530c8df1"
+# The instruction every run of a task is compared against in the completeness table.
+# For multi this is prompts/zero_shot_v1.txt, whose sha256 starts with ceb0530c8df1 —
+# the value that used to be hard-coded here.
+REFERENCE_PROMPT = {
+    "multi": "prompts/zero_shot_v1.txt",
+    "task1": "prompts/single/task1/zero_shot_answer_v1.txt",
+    "task2a": "prompts/single/task2a/zero_shot_answer_v1.txt",
+    "task2b": "prompts/single/task2b/zero_shot_answer_v1.txt",
+}
 
 
-def load_runs():
+def task_dir_name(task):
+    return "multitask" if task == "multi" else task
+
+
+def reference_hash(task):
+    path = ROOT / REFERENCE_PROMPT[task]
+    if not path.exists():
+        return None
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def load_runs(task="multi"):
     golds_cache, runs = {}, []
-    for metrics_path in sorted((RESULTS / "deepseek-flash").glob("*/*/metrics.json")):
+    for metrics_path in sorted((RESULTS / "deepseek-flash" / task_dir_name(task)).glob("*/*/metrics.json")):
         run_dir = metrics_path.parent
         config = json.loads((run_dir / "config.json").read_text())
         metrics = json.loads(metrics_path.read_text())
@@ -38,7 +62,10 @@ def sort_key(run):
     c = run["config"]
     selection = c.get("selection")
     order = {None: 0, "random": 1, "bm25": 2, "bm25-action": 3}[selection]
-    return (order, c.get("seed") or 0, c.get("k") or 0, c["run_id"])
+    if c.get("task", "multi") == "multi":
+        return ("", order, c.get("seed") or 0, c.get("k") or 0, c["run_id"])
+    # single-task: all of answer-* first, then reason-*, each in the same shape as above
+    return (c["version"], order, c.get("seed") or 0, c.get("k") or 0, c["run_id"])
 
 
 def label(run):
@@ -47,6 +74,14 @@ def label(run):
 
 def sev_errors(run):
     return {e: abs(p["risk_severity"] - run["golds"][e]["risk_severity"]) for e, p in run["preds"].items()}
+
+
+def sample_loss(run, task):
+    """Per-sample loss in the task's own metric, so "better / worse" counts work for every task."""
+    if "risk_severity" in task_fields(task):
+        return sev_errors(run)
+    field = "risk_domains" if task == "task2a" else "risk_drivers"
+    return {e: 1.0 - jaccard(p[field], run["golds"][e][field]) for e, p in run["preds"].items()}
 
 
 def level_stats(run):
@@ -87,107 +122,150 @@ def delta(x, base, nd=3, higher_better=True):
     return f"{d:+.{nd}f}"
 
 
+METRIC_LABEL = {"task1_mae": ("MAE", "越低越好"),
+                "task2a_mean_jaccard": ("2a Jaccard", "越高越好"),
+                "task2b_mean_jaccard": ("2b Jaccard", "越高越好")}
+FIELD_METRIC = {"risk_severity": "task1_mae", "risk_domains": "task2a_mean_jaccard",
+                "risk_drivers": "task2b_mean_jaccard"}
+TASK_TITLE = {"multi": "多任务联合预测", "task1": "Task 1 风险严重度",
+              "task2a": "Task 2a 损害领域", "task2b": "Task 2b 风险成因"}
+
+
 def main():
-    runs = sorted(load_runs(), key=sort_key)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--task", default="multi", choices=list(REFERENCE_PROMPT),
+                    help="which task's runs to compare (default: the historical joint prediction)")
+    args = ap.parse_args()
+    task = args.task
+    fields = task_fields(task)
+    metrics_shown = [FIELD_METRIC[f] for f in fields]
+
+    runs = sorted(load_runs(task), key=sort_key)
+    if not runs:
+        raise SystemExit(f"no finished runs under results/deepseek-flash/{task_dir_name(task)}/*/*/metrics.json")
     base = next((r for r in runs if r["config"]["strategy"] == "zero-shot"), None)
-    out = ["# 运行对比", "", "由 `src/compare.py` 生成，不要手改。数据：dev 143 条；指标：Task 1 MAE（越低越好）、Task 2a / 2b Mean Jaccard（越高越好）。", ""]
-    out.append("> 单个运行只有 143 条样本，指标差 0.02–0.03 很可能是噪声；看方向是否一致，不要把小差异当结论。")
-    out.append("")
+    n_samples = runs[0]["metrics"]["n_total"]
+
+    out = [f"# 运行对比 — {TASK_TITLE[task]}", "",
+           f"由 `src/compare.py --task {task}` 生成，不要手改。数据：dev {n_samples} 条；"
+           + "指标：" + "、".join(f"{METRIC_LABEL[m][0]}（{METRIC_LABEL[m][1]}）" for m in metrics_shown) + "。", "",
+           f"> 单个运行只有 {n_samples} 条样本，指标差 0.02–0.03 很可能是噪声；看方向是否一致，不要把小差异当结论。", ""]
 
     # 1. main metrics
-    out += ["## 1. 三个指标", "",
-            "| 运行 | selection | seed | k | run_id | MAE | Δ | 2a Jaccard | Δ | 2b Jaccard | Δ |",
-            "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+    cols = "".join(f" {METRIC_LABEL[m][0]} | Δ |" for m in metrics_shown)
+    out += ["## 1. 指标", "",
+            "| 运行 | version | selection | seed | k | run_id |" + cols,
+            "| --- | --- | --- | --- | --- | --- |" + " --- | --- |" * len(metrics_shown)]
     for r in runs:
         c, m = r["config"], r["metrics"]
-        d = ("", "", "") if r is base or base is None else (
-            delta(m["task1_mae"], base["metrics"]["task1_mae"]),
-            delta(m["task2a_mean_jaccard"], base["metrics"]["task2a_mean_jaccard"]),
-            delta(m["task2b_mean_jaccard"], base["metrics"]["task2b_mean_jaccard"]))
-        out.append(f"| {label(r)} | {c.get('selection') or '-'} | {c.get('seed') if c.get('seed') is not None else '-'} "
-                   f"| {c.get('k') or 0} | {c['run_id']} | {fmt(m['task1_mae'])} | {d[0]} "
-                   f"| {fmt(m['task2a_mean_jaccard'])} | {d[1]} | {fmt(m['task2b_mean_jaccard'])} | {d[2]} |")
-    out.append("")
-    out.append("Δ 是相对 zero-shot 的差。MAE 的 Δ 为负、Jaccard 的 Δ 为正表示变好。")
-    out.append("")
+        cells = ""
+        for key in metrics_shown:
+            d = "" if r is base or base is None else delta(m[key], base["metrics"][key])
+            cells += f" {fmt(m[key])} | {d} |"
+        out.append(f"| {label(r)} | {c.get('version', '-')} | {c.get('selection') or '-'} "
+                   f"| {c.get('seed') if c.get('seed') is not None else '-'} "
+                   f"| {c.get('k') or 0} | {c['run_id']} |" + cells)
+    base_name = label(base) if base is not None else "—"
+    out += ["", f"Δ 是相对 `{base_name}` 的差（表里第一个 zero-shot 运行）。"
+            "MAE 的 Δ 为负、Jaccard 的 Δ 为正表示变好。"
+            "跨输出格式线的行（例如 reason-* 对 answer-* 的 zero-shot）也按这个基准算，"
+            "要比同一条线内部的差，看第 2 节或用 `src/paired_bootstrap.py` 指定基准。", ""]
 
-    # 2. paired comparison with zero-shot
+    # 2. paired comparison with zero-shot, in the task's own metric
     if base is not None:
-        base_err = sev_errors(base)
-        out += ["## 2. 逐条对比 zero-shot（等级误差）", "",
-                "| 运行 | 总误差 | 变好的样本 | 变差的样本 | 不变 |", "| --- | --- | --- | --- | --- |"]
+        base_loss = sample_loss(base, task)
+        unit = "等级误差" if "risk_severity" in fields else "1 − Jaccard"
+        out += [f"## 2. 逐条对比 zero-shot（{unit}）", "",
+                "| 运行 | 总损失 | 变好的样本 | 变差的样本 | 不变 |", "| --- | --- | --- | --- | --- |"]
         for r in runs:
-            err = sev_errors(r)
-            better = sum(err[e] < base_err[e] for e in err)
-            worse = sum(err[e] > base_err[e] for e in err)
-            out.append(f"| {label(r)} | {sum(err.values())} | {better} | {worse} | {len(err) - better - worse} |")
-        out += ["", "总误差 = 所有样本 |预测等级 − 标准等级| 之和。变好的样本明显多于变差的样本，比 MAE 的差值更能说明改善是否稳定；两者相近则更可能是噪声。", ""]
+            loss = sample_loss(r, task)
+            better = sum(loss[e] < base_loss[e] - 1e-9 for e in loss)
+            worse = sum(loss[e] > base_loss[e] + 1e-9 for e in loss)
+            out.append(f"| {label(r)} | {fmt(sum(loss.values()), 2)} | {better} | {worse} "
+                       f"| {len(loss) - better - worse} |")
+        out += ["", "变好的样本明显多于变差的样本，比指标的差值更能说明改善是否稳定；两者相近则更可能是噪声。", ""]
 
-    # 3. MAE by gold level
-    out += ["## 3. 各标准等级的 MAE", "", "| 运行 | " + " | ".join(f"gold {lv}" for lv in LEVELS) + " | 平均偏差（预测−标准） |",
-            "| --- |" + " --- |" * (len(LEVELS) + 1)]
-    gold_counts = Counter(g["risk_severity"] for g in runs[0]["golds"].values()) if runs else Counter()
-    for r in runs:
-        by_level, bias = level_stats(r)
-        cells = [fmt(sum(v) / len(v)) if v else "-" for v in (by_level[lv] for lv in LEVELS)]
-        out.append(f"| {label(r)} | " + " | ".join(cells) + f" | {bias:+.3f} |")
-    out.append("")
-    out.append("各等级的样本数：" + "、".join(f"gold {lv}: {gold_counts[lv]}" for lv in LEVELS) + "。平均偏差为正表示整体高估。gold 2 和 gold 5 的样本太少，这两列只能看个大概。")
-    out.append("")
+    gold_counts = Counter(g["risk_severity"] for g in runs[0]["golds"].values())
 
-    # 4. prediction distribution
-    out += ["## 4. 预测的等级分布", "", "| 运行 | " + " | ".join(f"预测 {lv}" for lv in LEVELS) + " |", "| --- |" + " --- |" * len(LEVELS)]
-    out.append("| **标准答案** | " + " | ".join(str(gold_counts[lv]) for lv in LEVELS) + " |")
-    for r in runs:
-        cnt = Counter(p["risk_severity"] for p in r["preds"].values())
-        out.append(f"| {label(r)} | " + " | ".join(str(cnt[lv]) for lv in LEVELS) + " |")
-    out.append("")
+    if "risk_severity" in fields:
+        # 3. MAE by gold level
+        out += ["## 3. 各标准等级的 MAE", "",
+                "| 运行 | " + " | ".join(f"gold {lv}" for lv in LEVELS) + " | 平均偏差（预测−标准） |",
+                "| --- |" + " --- |" * (len(LEVELS) + 1)]
+        for r in runs:
+            by_level, bias = level_stats(r)
+            cells = [fmt(sum(v) / len(v)) if v else "-" for v in (by_level[lv] for lv in LEVELS)]
+            out.append(f"| {label(r)} | " + " | ".join(cells) + f" | {bias:+.3f} |")
+        out += ["", "各等级的样本数：" + "、".join(f"gold {lv}: {gold_counts[lv]}" for lv in LEVELS)
+                + "。平均偏差为正表示整体高估。gold 2 和 gold 5 的样本太少，这两列只能看个大概。", ""]
+
+        # 4. prediction distribution
+        out += ["## 4. 预测的等级分布", "", "| 运行 | " + " | ".join(f"预测 {lv}" for lv in LEVELS) + " |",
+                "| --- |" + " --- |" * len(LEVELS),
+                "| **标准答案** | " + " | ".join(str(gold_counts[lv]) for lv in LEVELS) + " |"]
+        for r in runs:
+            cnt = Counter(p["risk_severity"] for p in r["preds"].values())
+            out.append(f"| {label(r)} | " + " | ".join(str(cnt[lv]) for lv in LEVELS) + " |")
+        out.append("")
 
     # 5. label count (second label)
-    out += ["## 5. 每条样本给的标签个数", "", "| 运行 | domain 给 2 个 | driver 给 2 个 |", "| --- | --- | --- |"]
-    gd = sum(len(g["risk_domains"]) == 2 for g in runs[0]["golds"].values())
-    gr = sum(len(g["risk_drivers"]) == 2 for g in runs[0]["golds"].values())
-    out.append(f"| **标准答案** | {gd} | {gr} |")
-    for r in runs:
-        out.append(f"| {label(r)} | {sum(len(p['risk_domains']) == 2 for p in r['preds'].values())} "
-                   f"| {sum(len(p['risk_drivers']) == 2 for p in r['preds'].values())} |")
-    out.append("")
+    multi_fields = [f for f in fields if f != "risk_severity"]
+    if multi_fields:
+        names = {"risk_domains": "domain", "risk_drivers": "driver"}
+        out += ["## 5. 每条样本给的标签个数", "",
+                "| 运行 |" + "".join(f" {names[f]} 给 2 个 |" for f in multi_fields),
+                "| --- |" + " --- |" * len(multi_fields)]
+        out.append("| **标准答案** |" + "".join(
+            f" {sum(len(g[f]) == 2 for g in runs[0]['golds'].values())} |" for f in multi_fields))
+        for r in runs:
+            out.append(f"| {label(r)} |" + "".join(
+                f" {sum(len(p[f]) == 2 for p in r['preds'].values())} |" for f in multi_fields))
+        out.append("")
 
-    # 6. example agreement (diagnostic)
-    out += ["## 6. 示例的等级与待评估样本的标准等级一致的比例（离线诊断）", "",
-            "只用于解释结果，不参与选择。随机组的比例反映 train 的等级分布带来的“碰巧一致”。", "",
-            "| 运行 | 一致比例 | 示例等级分布 1/2/3/4/5 |", "| --- | --- | --- |"]
-    for r in runs:
-        res = example_agreement(r)
-        if res is None:
-            continue
-        share, cnt, total = res
-        out.append(f"| {label(r)} | {share:.3f} | " + " / ".join(f"{cnt[lv] / total:.2f}" for lv in LEVELS) + " |")
-    out.append("")
+    if "risk_severity" in fields:
+        # 6. example agreement (diagnostic)
+        out += ["## 6. 示例的等级与待评估样本的标准等级一致的比例（离线诊断）", "",
+                "只用于解释结果，不参与选择。随机组的比例反映 train 的等级分布带来的“碰巧一致”。", "",
+                "| 运行 | 一致比例 | 示例等级分布 1/2/3/4/5 |", "| --- | --- | --- |"]
+        for r in runs:
+            res = example_agreement(r)
+            if res is None:
+                continue
+            share, cnt, total = res
+            out.append(f"| {label(r)} | {share:.3f} | "
+                       + " / ".join(f"{cnt[lv] / total:.2f}" for lv in LEVELS) + " |")
+        out.append("")
 
     # 7. tokens
-    out += ["## 7. token 用量（含重试）", "", "| 运行 | 请求次数 | 输入 | 其中缓存未命中 | 输出 |", "| --- | --- | --- | --- | --- |"]
+    out += ["## 7. token 用量（含重试）", "", "| 运行 | 请求次数 | 输入 | 其中缓存未命中 | 输出 |",
+            "| --- | --- | --- | --- | --- |"]
     for r in runs:
         t = r["metrics"]["tokens"]
-        out.append(f"| {label(r)} | {t['attempts']} | {t['prompt_tokens']:,} | {t['prompt_cache_miss_tokens']:,} | {t['completion_tokens']:,} |")
+        out.append(f"| {label(r)} | {t['attempts']} | {t['prompt_tokens']:,} "
+                   f"| {t['prompt_cache_miss_tokens']:,} | {t['completion_tokens']:,} |")
     out.append("")
 
     # 8. acceptance checks
+    ref_hash = reference_hash(task)
     out += ["## 8. 完整性检查", "",
-            "| 运行 | 143/143 | system prompt hash | 模型 | 参数同 zero-shot | prompt_preview | messages |", "| --- | --- | --- | --- | --- | --- | --- |"]
+            f"| 运行 | {n_samples}/{n_samples} | 同 {REFERENCE_PROMPT[task]} | 模型 | 参数同 zero-shot | prompt_preview | messages |",
+            "| --- | --- | --- | --- | --- | --- | --- |"]
     for r in runs:
         c, m = r["config"], r["metrics"]
         few = c["strategy"] == "few-shot"
         ok = lambda b: "✓" if b else "✗"
-        out.append(f"| {label(r)} | {ok(m['complete'] and m['n_success'] == 143)} | {ok(c['prompt_sha256'].startswith(SYSTEM_HASH_PREFIX))} "
-                   f"| {','.join(c['returned_models'])} | {ok(base is None or c['params'] == base['config']['params'])} "
+        out.append(f"| {label(r)} | {ok(m['complete'] and m['n_success'] == m['n_total'])} "
+                   f"| {ok(ref_hash is not None and c['prompt_sha256'] == ref_hash)} "
+                   f"| {','.join(c['returned_models'])} "
+                   f"| {ok(base is None or c['params'] == base['config']['params'])} "
                    f"| {ok((r['dir'] / 'prompt_preview.txt').exists()) if few else '-'} "
                    f"| {ok((r['dir'] / 'messages.jsonl.gz').exists()) if few else '-'} |")
     out.append("")
 
-    path = RESULTS / "comparison.md"
+    name = "comparison.md" if task == "multi" else f"comparison-{task}.md"
+    path = RESULTS / name
     path.write_text("\n".join(out), encoding="utf-8")
-    print(f"wrote {path} ({len(runs)} runs)")
+    print(f"wrote {path} ({len(runs)} runs, task {task})")
 
 
 if __name__ == "__main__":

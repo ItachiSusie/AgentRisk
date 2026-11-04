@@ -1,0 +1,20 @@
+{
+  "task": "task2b",
+  "version": "answer-v1",
+  "prompt_id": "task2b-answer-v1",
+  "system_prompt_file": "prompts/single/task2b/zero_shot_answer_v1.txt",
+  "example_format": "chat_turns",
+  "preamble": "",
+  "user_payload_keys": [
+    "formatted_interaction",
+    "proposed_action"
+  ],
+  "assistant_output_keys": [
+    "risk_drivers"
+  ],
+  "order": {
+    "random": "as listed in the selection file",
+    "bm25": "ascending similarity, most similar last",
+    "bm25-action": "ascending similarity, most similar last"
+  }
+}

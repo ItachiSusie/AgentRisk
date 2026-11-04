@@ -9,11 +9,17 @@ Usage:
     python src/run.py --strategy few-shot --selection random --seed 0 --k 3 --version v1 --dry-run
     python src/run.py --strategy few-shot --selection bm25 --k 3 --version v1 --limit 5
 
-Every batch of one run writes into the same results/<model>/<experiment>/<run_id>/ directory, where
-<experiment> is zero-shot-v1, few-shot-random-s0-k3-v1, few-shot-bm25-k3-v1, ...
-Samples that already have a valid prediction are skipped, so a run can be stopped and resumed anytime.
+    # single-task: --task picks the subtask and the prompt family (docs/single-task/00-common.md)
+    python src/run.py --task task1 --version answer-v1 --strategy zero-shot
+    python src/run.py --task task1 --version reason-v1 --strategy few-shot --selection bm25 --k 10
+
+Every batch of one run writes into the same results/<model>/<task>/<experiment>/<run_id>/ directory,
+where <task> is multitask, task1, task2a or task2b, and <experiment> is zero-shot-v1,
+few-shot-bm25-k3-answer-v1, ... Samples that already have a valid prediction are skipped, so a run
+can be stopped and resumed anytime.
 Runs on a split other than dev, or with --smoke, go to results/_smoke/ (not committed).
 --dry-run builds every request, checks it and prints the first one, without calling the API.
+--concurrency N sends N requests at a time; the on-disk records and the resume logic are unchanged.
 """
 import argparse
 import gzip
@@ -22,8 +28,11 @@ import json
 import os
 import platform
 import random
+import re
 import sys
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -31,12 +40,21 @@ import openai
 from openai import OpenAI
 
 import fewshot
-from common import load_jsonl, unpack_prediction, validate_prediction
+from common import TASKS, load_jsonl, unpack_prediction, validate_prediction
 
 ROOT = Path(__file__).resolve().parent.parent
 MAX_ATTEMPTS = 3
-# v4 isolates a brief rationale before labels; all released earlier versions stay label-only.
-OUTPUT_FORMATS = {"v4": "reasoning-answer-v1"}
+# Multi-task versions, keyed by the exact version string: v4 isolates a brief rationale before
+# labels; all released earlier versions stay label-only. v4b is v4 with a format reminder on the
+# final user turn (prompts/few_shot_v4b.json): the label-only demonstrations otherwise pull the
+# model back to bare labels. Same output format. v5 is v4 plus rules distilled from v4's own
+# rationales (prompts/patches/v5), so it still answers in reasoning + answer.
+# Single-task versions do NOT use this table: their lineage (answer- / reason-) says the format,
+# which is why the naming is <lineage>-v<N> (docs/single-task/00-common.md section 3.2).
+OUTPUT_FORMATS = {"v4": "reasoning-answer-v1", "v4b": "reasoning-answer-v1",
+                  "v5": "reasoning-answer-v1"}
+SINGLE_VERSION_RE = re.compile(r"^(answer|reason)-v\d+$")
+LINEAGE_FORMATS = {"answer": "labels", "reason": "reasoning-answer-v1"}
 PARAMS = dict(
     model="deepseek-flash",
     temperature=0,
@@ -52,19 +70,42 @@ RETRYABLE = (
 )
 
 _client = None
+_client_lock = threading.Lock()
 
 
 def get_client():
     # created on first use so --dry-run works without an API key
     global _client
-    if _client is None:
-        _client = OpenAI(
-            api_key=os.environ["DEEPSEEK_API_KEY"],
-            base_url="https://api.deepseek.com",
-            timeout=120.0,
-            max_retries=0,  # 由 runner 统一记录并处理重试
-        )
+    with _client_lock:
+        if _client is None:
+            _client = OpenAI(
+                api_key=os.environ["DEEPSEEK_API_KEY"],
+                base_url="https://api.deepseek.com",
+                timeout=120.0,
+                max_retries=0,  # 由 runner 统一记录并处理重试
+            )
     return _client
+
+
+def file_version(version):
+    """Command line and directory names use hyphens; prompt file names use underscores."""
+    return version.replace("-", "_")
+
+
+def task_dir_name(task):
+    return "multitask" if task == "multi" else task
+
+
+def prompt_dir(task):
+    return ROOT / "prompts" if task == "multi" else ROOT / "prompts" / "single" / task
+
+
+def output_format_for(task, version):
+    if task == "multi":
+        return OUTPUT_FORMATS.get(version, "labels")
+    if not SINGLE_VERSION_RE.match(version):
+        sys.exit(f"single-task --version must look like answer-v1 or reason-v2, got {version!r}")
+    return LINEAGE_FORMATS[version.split("-", 1)[0]]
 
 
 def zero_shot_messages(row, system_prompt):
@@ -89,7 +130,7 @@ def parse(response):
     return json.loads(choice.message.content)
 
 
-def predict_one(row, system_prompt):
+def predict_one(row, system_prompt, task="multi"):
     response = request(zero_shot_messages(row, system_prompt))
     return parse(response), response.model_dump(mode="json")
 
@@ -119,9 +160,10 @@ def experiment_name(args):
 
 
 def setup_run_dir(args, prompt_text, prompt_path, data_path, manifest, extra):
-    """extra: few-shot fields recorded in config.json and checked again when a run is resumed."""
+    """extra: fields recorded in config.json and checked again when a run is resumed."""
     smoke = args.smoke or args.split != "dev"
-    exp_dir = ROOT / "results" / ("_smoke" if smoke else "deepseek-flash") / experiment_name(args)
+    exp_dir = (ROOT / "results" / ("_smoke" if smoke else "deepseek-flash")
+               / task_dir_name(args.task) / experiment_name(args))
     prompt_hash = hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()
 
     if args.run_id is None:
@@ -167,7 +209,7 @@ def setup_run_dir(args, prompt_text, prompt_path, data_path, manifest, extra):
 
 def few_shot_context(args, manifest):
     """Returns (system_prompt_path, build, extra); build(row) -> (messages, shot_ids)."""
-    spec_path, spec = fewshot.load_spec(args.version)
+    spec_path, spec = fewshot.load_spec(args.version, args.task)
     sel_path, sel = fewshot.load_selection(args.selection, args.seed, args.k, args.split)
     for name, key in (("train.jsonl", "train_sha256"), ("dev.jsonl", "dev_sha256")):
         recorded = sel["meta"].get(key)
@@ -215,13 +257,15 @@ def dry_run(args, rows, build, system_prompt):
         assert messages[0]["content"] == system_prompt
         for m in messages:
             if m["role"] == "assistant":
-                validate_prediction(json.loads(m["content"]))
+                validate_prediction(json.loads(m["content"]), args.task)
         n = sum(len(m["content"]) for m in messages)
         chars.append(n)
         longest = max(longest, n)
         first = first or (row["example_id"], messages, shot_ids)
     total = sum(chars)
     print(f"dry run OK: {len(rows)} requests built and checked, no API call")
+    print(f"task: {args.task}; version: {args.version}; "
+          f"output format: {output_format_for(args.task, args.version)}")
     print(f"system prompt sha256: {hashlib.sha256(system_prompt.encode('utf-8')).hexdigest()[:12]}")
     print(f"chars per request: mean {total // len(rows):,}, max {longest:,}; total {total:,}")
     print(f"rough input tokens (chars/4, not a tokenizer): total {total // 4:,}, longest {longest // 4:,}")
@@ -231,6 +275,8 @@ def dry_run(args, rows, build, system_prompt):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--task", choices=list(TASKS), default="multi",
+                        help="multi (joint prediction, the default) or one subtask")
     parser.add_argument("--strategy", choices=["zero-shot", "few-shot"], default="zero-shot")
     parser.add_argument("--version", default="v1")
     parser.add_argument("--split", default="dev",
@@ -242,6 +288,7 @@ def main():
     parser.add_argument("--seed", type=int, default=0, help="random selection only")
     parser.add_argument("--run-id", default=None, help="continue an existing run")
     parser.add_argument("--limit", type=int, default=None, help="process at most N more samples")
+    parser.add_argument("--concurrency", type=int, default=1, help="requests in flight at once")
     parser.add_argument("--smoke", action="store_true", help="write to results/_smoke/ (not committed)")
     parser.add_argument("--dry-run", action="store_true", help="build and check requests, no API call")
     args = parser.parse_args()
@@ -253,6 +300,8 @@ def main():
             parser.error("--k must be a positive integer")
     elif args.selection is not None or args.k is not None:
         parser.error("--selection and --k only apply to --strategy few-shot")
+    if args.concurrency < 1:
+        parser.error("--concurrency must be a positive integer")
 
     if args.data_file:
         data_path = Path(args.data_file)
@@ -266,18 +315,24 @@ def main():
     if pinned is not None and sha256_of(data_path) != pinned:
         sys.exit(f"{data_path.name} does not match data/MANIFEST.json; run src/download_data.py")
 
+    output_format = output_format_for(args.task, args.version)
+
     if args.strategy == "few-shot":
         prompt_path, build, extra = few_shot_context(args, manifest)
         prompt_text = prompt_path.read_text(encoding="utf-8")
     else:
-        prompt_path = ROOT / "prompts" / f"{args.strategy.replace('-', '_')}_{args.version}.txt"
+        prompt_path = prompt_dir(args.task) / f"{args.strategy.replace('-', '_')}_{file_version(args.version)}.txt"
+        if not prompt_path.exists():
+            sys.exit(f"prompt not found: {prompt_path.relative_to(ROOT)}")
         prompt_text = prompt_path.read_text(encoding="utf-8")
         extra = {}
 
         def build(row):
             return zero_shot_messages(row, prompt_text), None
 
-    output_format = OUTPUT_FORMATS.get(args.version, "labels")
+    # task and prompt_id are checked on resume, so a run can never mix two tasks
+    extra["task"] = args.task
+    extra["prompt_id"] = f"{args.task}-{args.version}"
     if output_format != "labels":
         extra["output_format"] = output_format
 
@@ -302,22 +357,31 @@ def main():
     todo = [r for r in rows if r["example_id"] not in done]
     if args.limit is not None:
         todo = todo[: args.limit]
-    print(f"run {run_dir.name}: {len(done)}/{len(rows)} done, processing {len(todo)} now", flush=True)
+    print(f"run {run_dir.name} [{args.task}/{experiment_name(args)}]: {len(done)}/{len(rows)} done, "
+          f"processing {len(todo)} now at concurrency {args.concurrency}", flush=True)
 
     started = now()
-    returned_models, failed, ok_count, fatal = set(), [], 0, None
-    usage = {"prompt_tokens": 0, "completion_tokens": 0}
+    lock = threading.Lock()
+    stop = threading.Event()
+    state = {"ok": 0, "failed": [], "models": set(), "fatal": None,
+             "usage": {"prompt_tokens": 0, "completion_tokens": 0}}
 
-    for row in todo:
+    def process(row):
         eid = row["example_id"]
+        if stop.is_set():
+            return
         messages, shot_ids = build(row)
-        if (shot_ids is not None or output_format != "labels") and eid not in recorded:
+        if shot_ids is not None or output_format != "labels":
             # the exact messages are saved before the request, so the record exists even if the call fails
-            with gzip.open(messages_path, "at", encoding="utf-8") as f:
-                f.write(json.dumps({"example_id": eid, "shot_ids": shot_ids, "messages": messages},
-                                   ensure_ascii=False) + "\n")
-            recorded.add(eid)
+            with lock:
+                if eid not in recorded:
+                    with gzip.open(messages_path, "at", encoding="utf-8") as f:
+                        f.write(json.dumps({"example_id": eid, "shot_ids": shot_ids,
+                                            "messages": messages}, ensure_ascii=False) + "\n")
+                    recorded.add(eid)
         for attempt in range(1, MAX_ATTEMPTS + 1):
+            if stop.is_set():
+                return
             t0 = time.time()
             rec = {"example_id": eid, "attempt": attempt, "time": now()}
             if shot_ids is not None:
@@ -326,11 +390,12 @@ def main():
             try:
                 response = request(messages)
                 rec["response"] = response.model_dump(mode="json")
-                returned_models.add(response.model)
-                if response.usage:
-                    usage["prompt_tokens"] += response.usage.prompt_tokens
-                    usage["completion_tokens"] += response.usage.completion_tokens
-                prediction, reasoning = unpack_prediction(parse(response), output_format)
+                with lock:
+                    state["models"].add(response.model)
+                    if response.usage:
+                        state["usage"]["prompt_tokens"] += response.usage.prompt_tokens
+                        state["usage"]["completion_tokens"] += response.usage.completion_tokens
+                prediction, reasoning = unpack_prediction(parse(response), output_format, args.task)
                 if reasoning is not None:
                     rec["reasoning"] = reasoning
                 rec["status"] = "ok"
@@ -344,40 +409,49 @@ def main():
             except ValueError as e:  # empty/truncated/invalid JSON/invalid labels
                 rec.update(status="invalid_output", error=repr(e))
             rec["seconds"] = round(time.time() - t0, 2)
-            append_jsonl(raw_path, rec)  # raw response is on disk before anything else happens
+            with lock:
+                append_jsonl(raw_path, rec)  # raw response is on disk before anything else happens
 
             if fatal is not None:
-                break
+                with lock:
+                    state["fatal"] = fatal
+                    state["failed"].append(eid)
+                stop.set()
+                return
             if rec["status"] == "ok":
-                append_jsonl(pred_path, {"example_id": eid, **prediction})
-                ok_count += 1
+                with lock:
+                    append_jsonl(pred_path, {"example_id": eid, **prediction})
+                    state["ok"] += 1
                 print(f"  {eid} ok", flush=True)
-                break
+                return
             print(f"  {eid} attempt {attempt} {rec['status']}: {rec['error']}", flush=True)
             if rec["status"] == "bad_request":  # retrying the same request cannot help
-                failed.append(eid)
-                break
+                with lock:
+                    state["failed"].append(eid)
+                return
             if attempt < MAX_ATTEMPTS:
                 time.sleep(2**attempt + random.random())
-        else:
-            failed.append(eid)
-        if fatal is not None:
-            failed.append(eid)
-            break
+        with lock:
+            state["failed"].append(eid)
 
+    with ThreadPoolExecutor(max_workers=args.concurrency) as pool:
+        for future in [pool.submit(process, row) for row in todo]:
+            future.result()  # re-raise anything the worker did not handle
+
+    failed = sorted(state["failed"])
     config_path = run_dir / "config.json"
     config = json.loads(config_path.read_text())
-    config["returned_models"] = sorted(set(config["returned_models"]) | returned_models)
+    config["returned_models"] = sorted(set(config["returned_models"]) | state["models"])
     config["invocations"].append(
-        {"started": started, "finished": now(), "limit": args.limit, "succeeded": ok_count,
-         "failed_ids": failed, **usage}
+        {"started": started, "finished": now(), "limit": args.limit, "succeeded": state["ok"],
+         "failed_ids": failed, **state["usage"]}
     )
     config_path.write_text(json.dumps(config, indent=2) + "\n")
 
-    total_done = len(done) + ok_count
-    print(f"this invocation: {ok_count} ok, {len(failed)} failed {failed}; tokens {usage}")
+    total_done = len(done) + state["ok"]
+    print(f"this invocation: {state['ok']} ok, {len(failed)} failed {failed}; tokens {state['usage']}")
     print(f"run total: {total_done}/{len(rows)} valid predictions in {run_dir}")
-    if fatal is not None:
+    if state["fatal"] is not None:
         sys.exit("stopped on a non-retryable API error; see raw_responses.jsonl")
 
 

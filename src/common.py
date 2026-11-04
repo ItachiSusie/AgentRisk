@@ -24,6 +24,26 @@ DRIVERS = (
     "No Material Risk",
 )
 
+# Which output fields a task asks for. "multi" is the historical joint prediction and is the
+# default everywhere, so every multi-task path behaves exactly as it did before single-task
+# support was added. See docs/single-task/00-common.md.
+TASK_FIELDS = {
+    "multi": ("risk_severity", "risk_domains", "risk_drivers"),
+    "task1": ("risk_severity",),
+    "task2a": ("risk_domains",),
+    "task2b": ("risk_drivers",),
+}
+TASKS = tuple(TASK_FIELDS)
+# metrics.json key per field, so a single-task run reports only its own metric
+METRIC_KEYS = {"risk_severity": "task1_mae", "risk_domains": "task2a_mean_jaccard",
+               "risk_drivers": "task2b_mean_jaccard"}
+
+
+def task_fields(task):
+    if task not in TASK_FIELDS:
+        raise ValueError(f"unknown task: {task}; expected one of {', '.join(TASKS)}")
+    return TASK_FIELDS[task]
+
 
 def load_jsonl(path):
     with open(path, encoding="utf-8") as f:
@@ -41,21 +61,25 @@ def _check_labels(labels, allowed, exclusive, name):
         raise ValueError(f"{exclusive} must be used alone")
 
 
-def validate_prediction(pred):
-    """Raise ValueError if the prediction does not follow the output schema."""
-    if not isinstance(pred, dict) or set(pred) != {"risk_severity", "risk_domains", "risk_drivers"}:
-        raise ValueError("prediction must have exactly risk_severity, risk_domains, risk_drivers")
-    sev = pred["risk_severity"]
-    if isinstance(sev, bool) or not isinstance(sev, int) or not 1 <= sev <= 5:
-        raise ValueError("risk_severity must be an integer 1-5")
-    _check_labels(pred["risk_domains"], DOMAINS, "No Material Harm", "risk_domains")
-    _check_labels(pred["risk_drivers"], DRIVERS, "No Material Risk", "risk_drivers")
+def validate_prediction(pred, task="multi"):
+    """Raise ValueError if the prediction does not follow the output schema for this task."""
+    fields = task_fields(task)
+    if not isinstance(pred, dict) or set(pred) != set(fields):
+        raise ValueError(f"prediction must have exactly {', '.join(fields)}")
+    if "risk_severity" in fields:
+        sev = pred["risk_severity"]
+        if isinstance(sev, bool) or not isinstance(sev, int) or not 1 <= sev <= 5:
+            raise ValueError("risk_severity must be an integer 1-5")
+    if "risk_domains" in fields:
+        _check_labels(pred["risk_domains"], DOMAINS, "No Material Harm", "risk_domains")
+    if "risk_drivers" in fields:
+        _check_labels(pred["risk_drivers"], DRIVERS, "No Material Risk", "risk_drivers")
 
 
-def unpack_prediction(output, output_format="labels"):
+def unpack_prediction(output, output_format="labels", task="multi"):
     """Validate a model output and return (labels, optional brief rationale)."""
     if output_format == "labels":
-        validate_prediction(output)
+        validate_prediction(output, task)
         return output, None
     if output_format != "reasoning-answer-v1":
         raise ValueError(f"unknown output format: {output_format}")
@@ -63,7 +87,7 @@ def unpack_prediction(output, output_format="labels"):
         raise ValueError("output must have exactly reasoning and answer")
     if not isinstance(output["reasoning"], str) or not output["reasoning"].strip():
         raise ValueError("reasoning must be a non-empty string")
-    validate_prediction(output["answer"])
+    validate_prediction(output["answer"], task)
     return output["answer"], output["reasoning"]
 
 
@@ -72,18 +96,23 @@ def jaccard(a, b):
     return len(a & b) / len(a | b)
 
 
-def compute_metrics(preds, golds):
-    """preds, golds: dict example_id -> record. Aligns on example_id over all gold ids."""
+def compute_metrics(preds, golds, task="multi"):
+    """preds, golds: dict example_id -> record. Aligns on example_id over all gold ids.
+
+    Only the metrics belonging to `task` are returned, so a single-task run never reports
+    a number it did not predict.
+    """
+    fields = task_fields(task)
     n = len(golds)
     scored = [i for i in golds if i in preds]
-    mae = sum(abs(preds[i]["risk_severity"] - golds[i]["risk_severity"]) for i in scored) / len(scored)
-    dom = sum(jaccard(preds[i]["risk_domains"], golds[i]["risk_domains"]) for i in scored) / len(scored)
-    drv = sum(jaccard(preds[i]["risk_drivers"], golds[i]["risk_drivers"]) for i in scored) / len(scored)
-    return {
-        "n_total": n,
-        "n_success": len(scored),
-        "n_failed": n - len(scored),
-        "task1_mae": mae,
-        "task2a_mean_jaccard": dom,
-        "task2b_mean_jaccard": drv,
-    }
+    out = {"n_total": n, "n_success": len(scored), "n_failed": n - len(scored)}
+    if "risk_severity" in fields:
+        out["task1_mae"] = sum(
+            abs(preds[i]["risk_severity"] - golds[i]["risk_severity"]) for i in scored) / len(scored)
+    if "risk_domains" in fields:
+        out["task2a_mean_jaccard"] = sum(
+            jaccard(preds[i]["risk_domains"], golds[i]["risk_domains"]) for i in scored) / len(scored)
+    if "risk_drivers" in fields:
+        out["task2b_mean_jaccard"] = sum(
+            jaccard(preds[i]["risk_drivers"], golds[i]["risk_drivers"]) for i in scored) / len(scored)
+    return out
