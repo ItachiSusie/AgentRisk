@@ -1,0 +1,58 @@
+{
+  "run_id": "20261104-094832",
+  "experiment": "zero-shot-reason-v1",
+  "task": "multi",
+  "assembled_from_single_tasks": true,
+  "strategy": "zero-shot",
+  "version": "reason-v1",
+  "split": "dev",
+  "created_at": "2026-11-04T09:48:32.256530+08:00",
+  "params": {
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "max_tokens": 1024,
+    "response_format": {
+      "type": "json_object"
+    },
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    "stream": false
+  },
+  "data_file": "data/raw/dev.jsonl",
+  "data_sha256": "27922c8974c458d6dd481eba5d8a3a99f2ceca63fef5863030e38543fa8b9dd8",
+  "data_hf_commit_sha": "bc7cbf702846e53ecbb31abcdb387ae4ec9f9392",
+  "prompt_file": null,
+  "prompt_sha256": "",
+  "sources": {
+    "task1": {
+      "run_dir": "results/deepseek-flash/task1/zero-shot-reason-v1/20261104-081746",
+      "run_id": "20261104-081746",
+      "prompt_id": "task1-reason-v1",
+      "prompt_file": "prompts/single/task1/zero_shot_reason_v1.txt",
+      "prompt_sha256": "f299c719c092a7fbd2c6d129db5f2fea19c41d57ceb0a4c76ba0a29808702675"
+    },
+    "task2a": {
+      "run_dir": "results/deepseek-flash/task2a/zero-shot-reason-v1/20261104-085349",
+      "run_id": "20261104-085349",
+      "prompt_id": "task2a-reason-v1",
+      "prompt_file": "prompts/single/task2a/zero_shot_reason_v1.txt",
+      "prompt_sha256": "b68acc3db19d1ea856c60de778b423a25a23601127d3893daf14daacbe7c527b"
+    },
+    "task2b": {
+      "run_dir": "results/deepseek-flash/task2b/zero-shot-reason-v1/20261104-092410",
+      "run_id": "20261104-092410",
+      "prompt_id": "task2b-reason-v1",
+      "prompt_file": "prompts/single/task2b/zero_shot_reason_v1.txt",
+      "prompt_sha256": "4fffb391a2e969d7f083fd85fa319a0e476430d6cbcce945f72f38840881dba9"
+    }
+  },
+  "n_merged": 143,
+  "incomplete_example_ids": {},
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "invocations": []
+}

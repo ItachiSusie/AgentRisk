@@ -1,0 +1,32 @@
+{
+  "n_total": 143,
+  "n_success": 132,
+  "n_failed": 11,
+  "task1_mae": 0.21212121212121213,
+  "task2a_mean_jaccard": 0.8623737373737373,
+  "task2b_mean_jaccard": 0.7550505050505051,
+  "run_id": "20261103-075342",
+  "split": "dev",
+  "complete": false,
+  "failed_ids": [
+    "AGENTRISK-048",
+    "AGENTRISK-194",
+    "AGENTRISK-334",
+    "AGENTRISK-364",
+    "AGENTRISK-374",
+    "AGENTRISK-384",
+    "AGENTRISK-431",
+    "AGENTRISK-520",
+    "AGENTRISK-526",
+    "AGENTRISK-609",
+    "AGENTRISK-673"
+  ],
+  "tokens": {
+    "attempts": 270,
+    "prompt_tokens": 2278313,
+    "completion_tokens": 23940,
+    "prompt_cache_hit_tokens": 1236693,
+    "prompt_cache_miss_tokens": 1041620
+  },
+  "note": "diagnostic only: not every sample has a valid prediction"
+}

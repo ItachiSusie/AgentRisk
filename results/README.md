@@ -28,6 +28,11 @@
 
 ## 汇总
 
+- **[SUMMARY.md](SUMMARY.md)：单任务 vs 多任务的主表**（`python src/make_summary.py` 生成，不要手改）。
+  每个子任务一张表，行是配置（zero-shot / few-shot random / few-shot BM25 / trace2skill），
+  两列是无推理与有推理两条输出格式线，另有三任务合并后的「三字段全对」对照和 run_id 附录。
+- [comparison-task1.md](comparison-task1.md) / [comparison-task2a.md](comparison-task2a.md) /
+  [comparison-task2b.md](comparison-task2b.md)：单任务的逐条样本细表（`python src/compare.py --task <task>` 生成）。
 - [comparison.md](comparison.md)：11 个配置并排对比（`python src/compare.py` 生成，不要手改）。
 - [comparison.html](comparison.html)：同一批运行的交互版（`python src/compare_html.py` 生成）。k 曲线可切三个指标、排行榜可点开混淆矩阵、样本级对比可选任意两个运行。单文件，离线可开。
 - [few-shot-error-analysis.md](few-shot-error-analysis.md)：10 月 25 日的错误分析草稿，**已被取代**，现行做法是每个 run 目录下的 `triage/summary.md`（`python src/triage.py <run_dir>`）。
