@@ -1,0 +1,73 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>v4 / v4b / v5 指标对比</title><style>body{font:14px/1.65 system-ui,-apple-system,"PingFang SC",sans-serif;color:#1b3043;background:#f5f7fa;margin:0;padding:28px}main{max-width:1250px;margin:auto}h1{font-size:25px}h2{font-size:18px;margin-top:30px}p{color:#617385;font-size:12px}section{overflow:auto;background:white;border:1px solid #dde5ed;border-radius:10px;margin-top:12px}table{border-collapse:collapse;width:100%;white-space:nowrap;font-variant-numeric:tabular-nums}th,td{padding:11px 14px;text-align:right;border-bottom:1px solid #e8edf2;font-size:13px}th{background:#eaf0f5;color:#526779}td:first-child,th:first-child{text-align:left}tr:last-child td{border-bottom:0}tr.partial{background:#fff6e6}a{color:#2563a6;text-decoration:none}.best{font-weight:700;color:#087e69}.muted{color:#8b6a29}footer{margin-top:24px;font-size:12px;color:#617385}</style></head><body><main><h1>v4 → v4b → v5 · 多任务指标对比</h1><p>平均绝对误差（Mean Absolute Error / MAE，预测风险等级与标准等级的绝对差取平均）越低越好；平均交并比（Mean Jaccard，逐条计算标签交集占并集比例后取平均）越高越好。</p><p>无示例提示（zero-shot，不提供已标注示例）；少样本提示（few-shot，在输入中提供 k 条已标注示例）；BM25（Best Matching 25，按文本相关性检索示例的方法）；random 为随机选择，s0 表示固定随机种子 0。v4b 沿用 v4 系统指令并加入少样本输出格式提醒；v5 是 v4 加入提炼规则。</p><p>绿色粗体仅表示同一数据表内完整运行的最佳观测值；未完成运行标为浅黄色，其指标只覆盖成功样本，不参与最佳值标记。分数来自预测文件，使用 src/evaluate.py 相同的计算函数。</p>
+<h2>开发集（development set / dev，官方提供的开发评估数据）</h2><p>来源：data/raw/dev.jsonl</p><section><table><thead><tr><th>配置</th><th>run_id</th><th>完成数</th><th>task1_mae ↓</th><th>task2a_mean_jaccard ↑</th><th>task2b_mean_jaccard ↑</th></tr></thead><tbody>
+<tr><td>zero-shot-v4</td><td><a href="../../zero-shot-v4/20261103-074636/metrics.json">20261103-074636</a></td><td>143/143</td>
+<td>0.2378</td>
+<td>0.8205</td>
+<td>0.7401</td>
+</tr>
+<tr class="partial"><td>few-shot-bm25-k5-v4</td><td><a href="../../few-shot-bm25-k5-v4/20261103-075342/metrics.json">20261103-075342</a></td><td>132/143</td>
+<td>0.2121</td>
+<td>0.8624</td>
+<td>0.7551</td>
+</tr>
+<tr><td>few-shot-bm25-k3-v4b</td><td><a href="../../few-shot-bm25-k3-v4b/20261104-084243/metrics.json">20261104-084243</a></td><td>143/143</td>
+<td>0.2308</td>
+<td>0.8438</td>
+<td>0.7599</td>
+</tr>
+<tr><td>few-shot-bm25-k5-v4b</td><td><a href="../../few-shot-bm25-k5-v4b/20261103-083817/metrics.json">20261103-083817</a></td><td>143/143</td>
+<td class="best">0.2098</td>
+<td>0.8590</td>
+<td>0.7634</td>
+</tr>
+<tr><td>few-shot-bm25-k10-v4b</td><td><a href="../../few-shot-bm25-k10-v4b/20261103-084725/metrics.json">20261103-084725</a></td><td>143/143</td>
+<td>0.2168</td>
+<td>0.8566</td>
+<td>0.7646</td>
+</tr>
+<tr><td>few-shot-random-s0-k3-v4b</td><td><a href="../../few-shot-random-s0-k3-v4b/20261104-084300/metrics.json">20261104-084300</a></td><td>143/143</td>
+<td>0.2378</td>
+<td class="best">0.8800</td>
+<td>0.7564</td>
+</tr>
+<tr><td>few-shot-random-s0-k5-v4b</td><td><a href="../../few-shot-random-s0-k5-v4b/20261104-084409/metrics.json">20261104-084409</a></td><td>143/143</td>
+<td>0.2727</td>
+<td>0.8345</td>
+<td>0.7494</td>
+</tr>
+<tr><td>few-shot-random-s0-k10-v4b</td><td><a href="../../few-shot-random-s0-k10-v4b/20261104-084417/metrics.json">20261104-084417</a></td><td>143/143</td>
+<td>0.2378</td>
+<td>0.8462</td>
+<td class="best">0.7657</td>
+</tr>
+<tr><td>zero-shot-v5</td><td><a href="metrics.json">20261104-084436</a></td><td>143/143</td>
+<td>0.3636</td>
+<td>0.7296</td>
+<td>0.6329</td>
+</tr>
+</tbody></table></section>
+<h2>训练内部验证集（train_val，不参与规则提炼的训练数据子集）</h2><p>来源：data/splits/train_val.jsonl</p><section><table><thead><tr><th>配置</th><th>run_id</th><th>完成数</th><th>task1_mae ↓</th><th>task2a_mean_jaccard ↑</th><th>task2b_mean_jaccard ↑</th></tr></thead><tbody>
+<tr><td>zero-shot-v4</td><td><a href="../../../../_smoke/multitask/zero-shot-v4/20261103-102236/metrics.json">20261103-102236</a></td><td>107/107</td>
+<td class="best">0.2336</td>
+<td class="best">0.8738</td>
+<td class="best">0.6947</td>
+</tr>
+<tr class="partial"><td>zero-shot-v5</td><td><a href="../../../../_smoke/multitask/zero-shot-v5/20261103-102602/config.json">20261103-102602</a></td><td>0/107</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr><td>zero-shot-v5</td><td><a href="../../../../_smoke/multitask/zero-shot-v5/20261103-113649/metrics.json">20261103-113649</a></td><td>107/107</td>
+<td>0.4019</td>
+<td>0.7695</td>
+<td>0.6558</td>
+</tr>
+</tbody></table></section>
+<h2>训练提炼集（train_evolve，用于提炼规则的训练数据子集）</h2><p>来源：data/splits/train_evolve.jsonl</p><section><table><thead><tr><th>配置</th><th>run_id</th><th>完成数</th><th>task1_mae ↓</th><th>task2a_mean_jaccard ↑</th><th>task2b_mean_jaccard ↑</th></tr></thead><tbody>
+<tr><td>zero-shot-v4</td><td><a href="../../../../_smoke/multitask/zero-shot-v4/20261103-085910/config.json">20261103-085910</a></td><td>461/461</td>
+<td class="best">0.2473</td>
+<td class="best">0.8268</td>
+<td class="best">0.7364</td>
+</tr>
+</tbody></table></section>
+<footer>run_id（运行标识，每次实验的独立目录名）链接到对应指标或配置文件。不同数据集不合并排名。单组分数可通过 .venv/bin/python src/evaluate.py &lt;运行目录&gt; 复算。</footer></main></body></html>

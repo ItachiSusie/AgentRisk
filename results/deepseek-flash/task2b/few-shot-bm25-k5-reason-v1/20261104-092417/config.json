@@ -1,0 +1,62 @@
+{
+  "run_id": "20261104-092417",
+  "experiment": "few-shot-bm25-k5-reason-v1",
+  "strategy": "few-shot",
+  "version": "reason-v1",
+  "split": "dev",
+  "created_at": "2026-11-04T01:24:17.057361+00:00",
+  "params": {
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "max_tokens": 1024,
+    "response_format": {
+      "type": "json_object"
+    },
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    "stream": false
+  },
+  "prompt_file": "prompts/single/task2b/zero_shot_reason_v1.txt",
+  "prompt_sha256": "4fffb391a2e969d7f083fd85fa319a0e476430d6cbcce945f72f38840881dba9",
+  "data_file": "data/raw/dev.jsonl",
+  "data_sha256": "27922c8974c458d6dd481eba5d8a3a99f2ceca63fef5863030e38543fa8b9dd8",
+  "data_hf_commit_sha": "bc7cbf702846e53ecbb31abcdb387ae4ec9f9392",
+  "selection": "bm25",
+  "seed": null,
+  "k": 5,
+  "selection_file": "data/fewshot/bm25_dev_top10.json",
+  "selection_sha256": "bbfe3aa92f86e3f5d104e2fd27126106c8f0583ded32a0f3a93fa39f8f303a58",
+  "spec_file": "prompts/single/task2b/few_shot_reason_v1.json",
+  "spec_sha256": "e6402b6d5997dabf462dff0da11e4d6e6b3683c393a4666f3dc70d7c1cd5daec",
+  "task": "task2b",
+  "prompt_id": "task2b-reason-v1",
+  "output_format": "reasoning-answer-v1",
+  "openai_sdk_version": "3.36.0",
+  "python_version": "3.13.2",
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "invocations": [
+    {
+      "started": "2026-11-04T01:24:17.057965+00:00",
+      "finished": "2026-11-04T01:24:19.313075+00:00",
+      "limit": 5,
+      "succeeded": 5,
+      "failed_ids": [],
+      "prompt_tokens": 36174,
+      "completion_tokens": 540
+    },
+    {
+      "started": "2026-11-04T01:29:33.588384+00:00",
+      "finished": "2026-11-04T01:30:07.813355+00:00",
+      "limit": null,
+      "succeeded": 138,
+      "failed_ids": [],
+      "prompt_tokens": 1138056,
+      "completion_tokens": 15776
+    }
+  ]
+}

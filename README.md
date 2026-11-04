@@ -110,13 +110,13 @@ cp .env.example .env        # 然后在 .env 里填入自己的 DEEPSEEK_API_KEY
 .venv/bin/python src/run.py --strategy few-shot --selection bm25 --k 3 --version v1 --run-id <run_id>
 
 # 查看某条样本实际收到的完整消息（含示例）
-.venv/bin/python src/fewshot.py render --run-dir results/deepseek-flash/few-shot-bm25-k3-v1/<run_id> --id AGENTRISK-004
+.venv/bin/python src/fewshot.py render --run-dir results/deepseek-flash/multitask/few-shot-bm25-k3-v1/<run_id> --id AGENTRISK-004
 
 # 打分：生成 <run_dir>/metrics.json
-.venv/bin/python src/evaluate.py results/deepseek-flash/zero-shot-v1/<run_id>
+.venv/bin/python src/evaluate.py results/deepseek-flash/multitask/zero-shot-v1/<run_id>
 
 # 交互式分析报告：生成 <run_dir>/report.html，用浏览器打开
-.venv/bin/python src/analyze.py results/deepseek-flash/zero-shot-v1/<run_id>
+.venv/bin/python src/analyze.py results/deepseek-flash/multitask/zero-shot-v1/<run_id>
 
 # 多个运行并排对比：生成 results/comparison.md
 .venv/bin/python src/compare.py
@@ -150,6 +150,98 @@ make dev-final                         # 最终测试，只跑一次
 - few-shot 的示例选择文件在 `data/fewshot/`，已入库；换随机种子请生成新文件（`random_seed1.json`），不要覆盖旧的。
 - 每次运行写进新的 `run_id` 目录，不覆盖旧结果。
 
+### 实验命名约定
+
+**状态：约定已定，代码改动尚未实现**（改动清单见 [单任务共用设计](docs/single-task/00-common.md) §4，耦合点见 §3.5）。
+下面写的是单任务轮次开始后统一遵守的命名；现有多任务运行保持原样，不改名、不移动文件。
+
+提示词标识是三段式 **`<task>-<lineage>-v<N>`**，沿用业界「名字 + 单调递增整数版本」的做法
+（MLflow Model Registry 的 `name/version`、LangSmith Prompt Hub 的 `prompt-name:commit`、
+容器镜像的 `image:tag`）。要点是：**版本号只表示同一条输出格式线的第几次迭代，内容上的分叉放进名字，不放进版本号。**
+
+| 段 | 取值 | 含义 |
+| --- | --- | --- |
+| task | `task1` / `task2a` / `task2b` / `multi` | 哪个子任务；`multi` 是现有的多任务联合预测 |
+| lineage（输出格式线） | `answer` / `reason` | `answer` 只输出标签；`reason` 先输出简短判断依据再输出标签。两条线各自独立迭代版本号 |
+| v`N` | `v1`, `v2`, … | 同一条输出格式线的第几版。`v1` 基础版，`v2` 加入蒸馏规则版 |
+
+例：`task1-answer-v1`、`task2b-reason-v2`。和现有多任务版本的对应：
+`<task>-answer-v1` ↔ `v1`，`<task>-answer-v2` ↔ `v2`，`<task>-reason-v1` ↔ `v4`/`v4b`，`<task>-reason-v2` ↔ `v5`。
+
+现有的 `v1`–`v5` 这条序列之所以要查表才说得清，是因为一条序列里混了两种含义：
+`v1→v2→v3` 是「逐步加蒸馏规则」，`v3→v4` 却是「换输出格式」。单任务这一轮不重复这个错误。
+
+文件与目录：
+
+```
+prompts/zero_shot_v1.txt                          # 多任务，原地不动
+prompts/single/<task>/zero_shot_<lineage>_v<N>.txt
+prompts/single/<task>/few_shot_<lineage>_v<N>.json
+prompts/patches/single/<task>/<lineage>_v<N>/     # 蒸馏出的规则
+results/deepseek-flash/multitask/<experiment>/<run_id>/
+results/deepseek-flash/<task>/<experiment>/<run_id>/
+results/_smoke/<task>/<experiment>/<run_id>/      # 非 dev 的 split，不提交
+results/analysis/<task>/<run_id>/
+```
+
+文件名用下划线，命令行与结果目录名用连字符：
+
+```bash
+.venv/bin/python src/run.py --task task1 --version answer-v1 --strategy zero-shot
+# -> prompts/single/task1/zero_shot_answer_v1.txt
+# -> results/deepseek-flash/task1/zero-shot-answer-v1/<run_id>/
+```
+
+不带 `--task` 时默认 `multi`，走原来的路径，**现有命令一条都不用改**。
+
+### 单任务实验状态（2026-11-04，三个任务已全部完成）
+
+Task 1、2a、2b 各 20 格，**合计 60 格 dev 运行，全部 143/143 合法预测**。
+
+**结果看这一份：[results/SUMMARY.md](results/SUMMARY.md)** —— 每个任务一张表，
+行是配置、两列是「无推理 / 有推理」，附 run_id 与 token（`python src/make_summary.py` 生成）。
+逐条样本的细表仍在 [comparison-task1.md](results/comparison-task1.md)、
+[comparison-task2a.md](results/comparison-task2a.md)、
+[comparison-task2b.md](results/comparison-task2b.md)；
+方案、关卡判读与进展日志见 [docs/single-task/](docs/single-task/)，总结见
+[00-common.md §12](docs/single-task/00-common.md)。
+
+**最重要的一条：单项都是噪声，合起来才显著。**
+每个子任务单独比，拆分的改善都在噪声内；把三个任务的预测按 `example_id` 合并
+（`src/assemble_single.py`），用多任务表里的「三字段全对」比，差异是确定的：
+
+| 配置 | MAE↓ | 2a J↑ | 2b J↑ | 三字段全对 | prompt token |
+| --- | --- | --- | --- | --- | --- |
+| 多任务 `v1` zero-shot | 0.301 | 0.811 | 0.726 | 70（49.0%） | 0.25 M |
+| 多任务 `v4` zero-shot | 0.238 | 0.821 | 0.740 | 71（49.7%） | 0.28 M |
+| 单任务合并 `answer-v1` | 0.266 | 0.837 | 0.711 | 74（51.7%） | 0.64 M |
+| **单任务合并 `reason-v1`** | **0.238** | 0.832 | **0.753** | **79（55.2%）** | 0.72 M |
+
+配对自举（`--metric exact`）：单任务合并 `reason-v1` 对多任务 `v1` −0.063，CI [−0.119, −0.014]；
+对 `v4` −0.056，CI [−0.112, −0.007]。参照多任务最优的 few-shot（bm25 k=10）是 56.6%、2.11 M token，
+**单任务 zero-shot 用不到三分之一的成本接近了它**。
+
+**各任务最好的单格**（都是选择后的乐观上界）：
+
+| 任务 | 指标 | 最优格 | 分数 | 多任务最优 |
+| --- | --- | --- | --- | --- |
+| Task 1 | MAE↓ | bm25 k=20 + `reason-v1` | **0.154** | 0.189 |
+| Task 2a | J↑ | random k=3 + `reason-v1` | **0.869** | 0.873 |
+| Task 2b | J↑ | bm25 k=10 + `answer-v1` | **0.786** | 0.795 |
+
+**总分之外的三个偏置改善**：Task 1 的高估偏置从 +0.189 压到 −0.056；
+Task 2a 的「多给第二个标签」从 55 条（标准答案 29）降到 27 条；
+Task 2b 的判断依据让 zero-shot 显著变好（−0.042，CI [−0.083, −0.002]）。
+
+**trace2skill 三个任务三种结果**：Task 1 负收益（两条线两个集合全变差），
+Task 2a 正收益（四项方向一致，一项显著），Task 2b 在 train_val 上拿到全项目最大收益
+（−0.111，CI [−0.185, −0.040]）但**到 dev 上消失**。两条经验：归因阶段的
+`reasoning_fault` 分布能预判方向（`wrong_rule` 高→有机会，`misread/missed_evidence` 高→无效），
+但 train_val 只能排除有害规则、不能确认收益幅度。
+
+dev 使用次数：多任务 27 + 单任务 60 = **87**。表里所有最优值都是选择后的乐观上界，
+不是泛化成绩，真正的泛化成绩看官方隐藏测试集。
+
 ### 当前状态
 
 dev 143 条上共跑过 **11 个配置**，全部 143/143 合法预测。完整对比见 [results/comparison.md](results/comparison.md)；方法、切分与逐阶段结论见 [docs/next-round-plan.md](docs/next-round-plan.md)。
@@ -178,7 +270,7 @@ dev 143 条上共跑过 **11 个配置**，全部 143/143 合法预测。完整�
 
 ### 当前状态
 
-Zero-shot v1（`deepseek-flash`）已跑完完整 dev，143/143 条均有合法预测，正式运行是 `results/deepseek-flash/zero-shot-v1/20261022-051556/`：
+Zero-shot v1（`deepseek-flash`）已跑完完整 dev，143/143 条均有合法预测，正式运行是 `results/deepseek-flash/multitask/zero-shot-v1/20261022-051556/`：
 
 | Task 1 MAE | Task 2a Mean Jaccard | Task 2b Mean Jaccard |
 | ---------- | -------------------- | -------------------- |
