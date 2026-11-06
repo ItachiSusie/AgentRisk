@@ -1,0 +1,5 @@
+# 不计入 GitHub 语言统计（Linguist）的 HTML
+# 生成的报告与对比页：标记为生成文件（也会在 diff 中默认折叠）
+results/**/*.html linguist-generated=true
+# 其余 HTML（模板、slides、Pages 入口）：不参与语言检测
+*.html linguist-detectable=false
