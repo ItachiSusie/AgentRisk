@@ -1,0 +1,1 @@
+{"run_id":"20261104-dev-smoke-03","status":"interrupted_after_six_labels","reason":"judge returned object rather than string in evidence_refs","recovered_by":"20261104-dev-smoke-04"}

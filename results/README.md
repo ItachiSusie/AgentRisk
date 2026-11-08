@@ -28,6 +28,7 @@
 
 ## 汇总
 
+- **[EXPERIMENTS_ALL.md](EXPERIMENTS_ALL.md)：覆盖所有已归档开发集实验的大表**，每个任务并列无推理与有推理分数，含缺失配置、未完成运行说明和每格的 run_id 来源。[CSV 明细](EXPERIMENTS_ALL.csv) 保留未舍入分数；由 `python3 src/make_experiment_table.py` 生成，加 `--gold data/raw/dev.jsonl` 可复核全部指标且不修改历史运行。
 - **[SUMMARY.md](SUMMARY.md)：单任务 vs 多任务的主表**（`python src/make_summary.py` 生成，不要手改）。
   每个子任务一张表，行是配置（zero-shot / few-shot random / few-shot BM25 / trace2skill），
   两列是无推理与有推理两条输出格式线，另有三任务合并后的「三字段全对」对照和 run_id 附录。
