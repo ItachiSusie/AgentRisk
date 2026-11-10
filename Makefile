@@ -11,7 +11,7 @@ LIMIT    ?=
 
 help:
 	@echo 'make validate   offline: compile src, check split drift, dry-run dev + train_val'
-	@echo 'make splits     rebuild data/splits from metadata/split_manifest.jsonl'
+	@echo 'make splits     rebuild data/splits (train_evolve/train_val + 5 scenario-group folds of train_evolve)'
 	@echo 'make baseline   run zero-shot v1 on train_evolve (LIMIT=5 for a probe)'
 	@echo 'make triage     error triage for RUN (default: the current train_evolve run)'
 	@echo 'make worklist   failures of RUN -> worklist.jsonl'
@@ -30,6 +30,7 @@ help:
 validate:
 	$(PY) -m compileall -q src
 	$(PY) src/make_splits.py --check
+	$(PY) src/make_folds.py --check
 	$(PY) src/run.py --strategy zero-shot --version v1 --dry-run | head -1
 	$(PY) src/run.py --strategy few-shot --selection bm25 --k 10 --version v1 --split train_val \
 		--data-file data/splits/train_val.jsonl --dry-run | head -1
@@ -37,6 +38,7 @@ validate:
 splits:
 	$(PY) src/fetch_split_manifest.py
 	$(PY) src/make_splits.py --target-val 100
+	$(PY) src/make_folds.py --k 5
 
 baseline:
 	$(PY) src/run.py --strategy zero-shot --version v1 --split train_evolve \
