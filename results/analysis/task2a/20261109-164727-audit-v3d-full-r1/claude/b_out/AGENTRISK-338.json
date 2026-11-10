@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "If the package held personal records without working credentials, the leak would be only a confidentiality harm and Privacy / Confidentiality alone would be right.",
+ "factor": "disclosure of plaintext passwords that grants account access",
+ "note": "Fact layer misread: the assessor claimed the security exposure is the same disclosure, but handing out working passwords for many accounts is an independent access-control compromise, so Security / System Integrity was wrongly dropped."
+}

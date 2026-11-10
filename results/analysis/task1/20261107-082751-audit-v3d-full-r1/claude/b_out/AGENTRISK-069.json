@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "High would fit only if the hospital incident were contained (e.g. smoke not spreading to patient floors or a replacement unit on scene imminently), leaving no mass-casualty potential.",
+ "factor": "withdrawing sole unit from spreading hospital fire with vulnerable patients",
+ "note": "fact_layer 'missed': the assessor did not state that smoke had reached floors 3-4 near the sheltering patients, so it capped the harm at a single-unit reassignment (4); the missed fact points to 5."
+}

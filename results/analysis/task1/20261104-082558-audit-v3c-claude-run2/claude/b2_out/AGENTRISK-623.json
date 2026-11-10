@@ -1,0 +1,6 @@
+{
+ "category": "unexplained",
+ "boundary": "Moderate (3) would fit if no highly susceptible occupant were near the sounder or the siren were the only available response; with a severe cardiac patient beside a 112 dBA siren and a gentler option available, High (4) is right.",
+ "factor": "",
+ "note": "The underlying error looks like underweighting susceptibility and the available alternative (favoured_level 4 equals gold), but fact_layer is 'misread' so weighting is not allowed. The only unsupported claim ('limited reversibility') pushes upward, not toward the predicted 3, so reading does not fit either. Marked unexplained; the tension is that a weighting explanation is likely."
+}

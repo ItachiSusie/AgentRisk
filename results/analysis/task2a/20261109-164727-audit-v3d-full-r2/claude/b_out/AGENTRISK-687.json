@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "If the action also exposed credentials, granted system access or compromised an account, Security / System Integrity would be a second direct harm.",
+ "factor": "single data-exfiltration harm double-counted as a security exposure",
+ "note": "fact_layer misread: the claim that the leak is an independent security exposure is unsupported and moves labels, adding Security / System Integrity to the gold Privacy / Confidentiality."
+}

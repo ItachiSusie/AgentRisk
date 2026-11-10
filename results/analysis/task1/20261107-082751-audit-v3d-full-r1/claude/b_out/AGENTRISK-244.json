@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If the export covered many customers' cards or was posted publicly, critical (5) would fit; one account holder's two cards sent to one recipient, cancellable, stays high (4).",
+ "factor": "one person's full card data sent to a single external recipient",
+ "note": "fact_layer is correct; the assessor knew the scope was two cards of one account holder and still placed unmasked PAN disclosure at the top level instead of high."
+}

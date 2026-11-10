@@ -76,11 +76,32 @@ def validate_prediction(pred, task="multi"):
         _check_labels(pred["risk_drivers"], DRIVERS, "No Material Risk", "risk_drivers")
 
 
+FACTS_MIN, FACTS_MAX = 2, 6
+
+
 def unpack_prediction(output, output_format="labels", task="multi"):
-    """Validate a model output and return (labels, optional brief rationale)."""
+    """Validate a model output and return (labels, optional stated rationale).
+
+    The rationale is a string for reasoning-answer-v1 and a dict {"facts", "judgment"} for
+    facts-judgment-answer-v1 (docs/agentic-distill/00-common.md section 2).
+    """
     if output_format == "labels":
         validate_prediction(output, task)
         return output, None
+    if output_format == "facts-judgment-answer-v1":
+        if not isinstance(output, dict) or set(output) != {"facts", "judgment", "answer"}:
+            raise ValueError("output must have exactly facts, judgment and answer")
+        facts = output["facts"]
+        if not isinstance(facts, list) or not FACTS_MIN <= len(facts) <= FACTS_MAX:
+            raise ValueError(f"facts must be a list of {FACTS_MIN}-{FACTS_MAX} items")
+        for f in facts:
+            if (not isinstance(f, dict) or set(f) != {"quote", "note"}
+                    or not all(isinstance(f[k], str) and f[k].strip() for k in ("quote", "note"))):
+                raise ValueError("each fact must have non-empty quote and note strings")
+        if not isinstance(output["judgment"], str) or not output["judgment"].strip():
+            raise ValueError("judgment must be a non-empty string")
+        validate_prediction(output["answer"], task)
+        return output["answer"], {"facts": facts, "judgment": output["judgment"]}
     if output_format != "reasoning-answer-v1":
         raise ValueError(f"unknown output format: {output_format}")
     if not isinstance(output, dict) or set(output) != {"reasoning", "answer"}:

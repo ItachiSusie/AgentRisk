@@ -211,6 +211,32 @@ def main():
         for r in records:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
+    # --- boundaries (agentic round, docs/agentic-distill/00-common.md section 6.1) ----
+    # A separate file so summary.md of every earlier run regenerates byte for byte.
+    B = [f"# Boundaries — {config.get('run_id', run_dir.name)}\n",
+         "Errors grouped by undirected boundary: both directions of one boundary are one group.\n",
+         "| boundary | n | directions |", "| --- | --- | --- |"]
+    bnd = defaultdict(Counter)
+    for r in scored:
+        if r["bucket"] == "exact":
+            continue
+        if has_sev:
+            g, p_ = r["gold"]["severity"], r["pred"]["severity"]
+            lo, hi = sorted((g, p_))
+            bnd[f"severity-{lo}|{hi}"][f"{g}->{p_}"] += 1
+        for plural in ("domains", "drivers"):
+            if plural in r["gold"]:
+                g, p_ = set(r["gold"][plural]), set(r["pred"][plural])
+                if g & p_ and len(g) != len(p_):
+                    bnd[f"cardinality ({plural})"][f"{len(g)}->{len(p_)}"] += 1
+                for a in sorted(g - p_):
+                    for b_ in sorted(p_ - g):
+                        key = " | ".join(sorted((a, b_)))
+                        bnd[f"{plural}: {key}"][f"{a} -> {b_}"] += 1
+    for k, c in sorted(bnd.items(), key=lambda kv: -sum(kv[1].values())):
+        B.append(f"| {k.replace('|', chr(92) + '|')} | {sum(c.values())} | " + ", ".join(f"{d}: {n}" for d, n in c.most_common()) + " |")
+    (out_dir / "boundaries.md").write_text("\n".join(B) + "\n", encoding="utf-8")
+
     # --- write summary ----------------------------------------------------
     L = []
     L.append(f"# Triage — {config.get('run_id', run_dir.name)}\n")

@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # v4 opens it with the brief-rationale paragraph, so in both families the rules land after
 # the label definitions and before any instruction about the output. Earliest match wins.
 ANCHORS = (
+    "For the final sample, first list the facts",   # facts lineage (docs/agentic-distill/)
     "For the final sample, first write a brief",
     "Return only a JSON object",
     "Return only one JSON object",

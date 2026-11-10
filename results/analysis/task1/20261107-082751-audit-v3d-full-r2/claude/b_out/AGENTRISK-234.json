@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "If replacement ALS/BLS coverage were available in the San Lázaro zone so stripped scenes could be re-served quickly, High would fit; with no replacement coverage, pulling all units from two active multi-patient scenes is Critical.",
+ "factor": "no replacement emergency coverage for stripped scenes",
+ "note": "Assessor missed the zero-coverage resource line (San Lázaro 0 ALS), a level-moving fact pointing to 5; without it the redirect read as serious but recoverable, yielding 4."
+}

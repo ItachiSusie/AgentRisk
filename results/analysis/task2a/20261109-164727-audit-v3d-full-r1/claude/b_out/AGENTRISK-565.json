@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "If the extract contained no account/device/MFA data usable for attacking authentication, Privacy alone would be right; gold treats leaking authentication logs as a direct security harm.",
+ "factor": "external disclosure of authentication event logs",
+ "note": "Facts correct; prediction is a subset of gold. Assessor judged security impact speculative because systems are unchanged and IPs redacted; gold adds Security / System Integrity."
+}

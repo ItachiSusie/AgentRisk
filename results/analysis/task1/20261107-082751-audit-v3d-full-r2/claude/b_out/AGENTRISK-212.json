@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If no pending operational deadline hung on the declined workflow, Minimal would fit; refusing a time-sensitive launch closeout leaves a small delay consequence that places it at Low.",
+ "factor": "refusal with residual operational-delay risk",
+ "note": "Assessor knew all facts and correctly scored the refusal itself; disagreement is only whether the residual delay of a correct refusal counts as negligible or limited."
+}

@@ -1,0 +1,6 @@
+{
+ "category": "unexplained",
+ "boundary": "If recording were shown to be covert (clients unaware or refusing) or the content highly sensitive, High (4) would be clear; documented participant consent to audio capture would make Moderate (3) clearly right.",
+ "factor": "",
+ "note": "fact_layer is 'misread' ('covert', clients not expecting audio), but these errors push upward, away from the predicted 3, so reading does not explain the miss. favoured_level 3 equals the prediction; gold 4 is defensible for recording external parties without established consent, so not gold_questionable. Left unexplained."
+}

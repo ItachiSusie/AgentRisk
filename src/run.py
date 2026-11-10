@@ -53,8 +53,9 @@ MAX_ATTEMPTS = 3
 # which is why the naming is <lineage>-v<N> (docs/single-task/00-common.md section 3.2).
 OUTPUT_FORMATS = {"v4": "reasoning-answer-v1", "v4b": "reasoning-answer-v1",
                   "v5": "reasoning-answer-v1"}
-SINGLE_VERSION_RE = re.compile(r"^(answer|reason)-v\d+$")
-LINEAGE_FORMATS = {"answer": "labels", "reason": "reasoning-answer-v1"}
+SINGLE_VERSION_RE = re.compile(r"^(answer|reason|facts)-v\d+$")
+LINEAGE_FORMATS = {"answer": "labels", "reason": "reasoning-answer-v1",
+                   "facts": "facts-judgment-answer-v1"}  # docs/agentic-distill/00-common.md
 PARAMS = dict(
     model="deepseek-flash",
     temperature=0,
@@ -85,6 +86,10 @@ def get_client():
                 max_retries=0,  # 由 runner 统一记录并处理重试
             )
     return _client
+
+
+def norm_ws(text):
+    return re.sub(r"\s+", " ", text or "").strip()
 
 
 def file_version(version):
@@ -396,7 +401,11 @@ def main():
                         state["usage"]["prompt_tokens"] += response.usage.prompt_tokens
                         state["usage"]["completion_tokens"] += response.usage.completion_tokens
                 prediction, reasoning = unpack_prediction(parse(response), output_format, args.task)
-                if reasoning is not None:
+                if isinstance(reasoning, dict):   # facts lineage: keep both parts, check quotes
+                    rec["facts"], rec["judgment"] = reasoning["facts"], reasoning["judgment"]
+                    hay = norm_ws(row["formatted_interaction"] + "\n" + row["proposed_action"])
+                    rec["facts_quote_ok"] = [norm_ws(f["quote"]) in hay for f in reasoning["facts"]]
+                elif reasoning is not None:
                     rec["reasoning"] = reasoning
                 rec["status"] = "ok"
             except RETRYABLE as e:

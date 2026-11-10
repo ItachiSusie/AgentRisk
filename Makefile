@@ -6,7 +6,7 @@ WORKLIST := $(RUN)/worklist.jsonl
 ANALYSIS := results/analysis/multitask/$(notdir $(RUN))
 LIMIT    ?=
 
-.PHONY: help validate splits baseline triage worklist analyze cluster merge compare dev-final \
+.PHONY: audit repair merge-boundary regress help validate splits baseline triage worklist analyze cluster merge compare dev-final \
 	single-prompts single-dev single-compare summary
 
 help:
@@ -26,6 +26,12 @@ help:
 	@echo 'make single-dev      run its 14 dev cells (zero-shot + bm25/random k=3/5/10, both lineages)'
 	@echo 'make single-compare  regenerate results/comparison-<task>.md'
 	@echo 'make summary         regenerate results/SUMMARY.md (the three main tables)'
+	@echo ''
+	@echo 'agentic round (docs/agentic-distill/):'
+	@echo 'make audit   blind audit + classification of AUDIT_RUN failures (PAIRS=3:4, LIMIT=20)'
+	@echo 'make repair  patch + regression loop over the audit (train_evolve only)'
+	@echo 'make merge-boundary INSTRUCTION=... OUT_DIR=...   merge kept repairs by boundary'
+	@echo 'make regress BASE=<run> NEW=<run>   per-class accuracy change between two runs'
 
 validate:
 	$(PY) -m compileall -q src
@@ -91,3 +97,22 @@ single-compare:
 
 summary:
 	$(PY) src/make_summary.py
+
+# ---- agentic distillation, round three (docs/agentic-distill/) -----------------------
+AUDIT_RUN ?= results/_smoke/task1/zero-shot-reason-v1/20261104-082558
+PAIRS     ?= 3:4
+AUDIT_DIR := results/analysis/$(TASK)/$(notdir $(AUDIT_RUN))-audit-v3
+
+audit:
+	$(PY) src/agentic.py audit --triage $(AUDIT_RUN)/triage/triage.jsonl \
+		$(if $(PAIRS),--pairs $(PAIRS),) $(if $(LIMIT),--limit $(LIMIT),) --spot-check 10 --concurrency $(CONC)
+
+repair:
+	$(PY) src/agentic.py repair --audit $(AUDIT_DIR)/audit.jsonl $(if $(LIMIT),--limit $(LIMIT),)
+
+merge-boundary:
+	$(PY) src/merge_lessons.py merge --boundary --lessons $(AUDIT_DIR)/repair.jsonl \
+		--instruction $(INSTRUCTION) --out-dir $(OUT_DIR)
+
+regress:
+	$(PY) src/regress.py compare $(BASE) $(NEW)

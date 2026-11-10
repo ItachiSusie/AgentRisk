@@ -60,6 +60,35 @@ def theme_of(lesson):
     return f"cause:{lesson.get('root_cause_type', 'unknown')}"
 
 
+def theme_of_boundary(lesson):
+    """Undirected boundary (docs/agentic-distill/00-common.md section 6.1).
+
+    "3 predicted as 4" and "4 predicted as 3" land in the same group, so the merge has to write
+    one rule that holds in both directions. Task 2 groups by label pair or by cardinality.
+    """
+    gold, pred = lesson.get("gold") or {}, lesson.get("prediction") or {}
+    g_sev, p_sev = gold.get("risk_severity"), pred.get("risk_severity")
+    if g_sev is not None and p_sev is not None and g_sev != p_sev:
+        lo, hi = sorted((g_sev, p_sev))
+        return f"severity-{lo}|{hi}"
+    for field, prefix, gate in (("risk_drivers", "driver", "No Material Risk"),
+                                ("risk_domains", "domain", "No Material Harm")):
+        g, p = set(gold.get(field) or []), set(pred.get(field) or [])
+        if g == p:
+            continue
+        if gate in g ^ p:
+            return f"gate:{slug(gate)}"
+        if lesson.get("category") == "cardinality" or (g & p and len(g) != len(p)):
+            return f"cardinality:{slug(sorted(g ^ p)[0])}"
+        pair = sorted([sorted(g - p)[0] if g - p else "none", sorted(p - g)[0] if p - g else "none"])
+        return f"{prefix}:{slug(pair[0])}|{slug(pair[1])}"
+    return f"cause:{lesson.get('category', 'unknown')}"
+
+
+def theme_fn(args):
+    return theme_of_boundary if getattr(args, "boundary", False) else theme_of
+
+
 def load_kept(paths):
     kept = []
     for p in paths:
@@ -77,7 +106,7 @@ def cmd_cluster(args):
     lessons = load_kept(args.lessons)
     groups = defaultdict(list)
     for l in lessons:
-        groups[theme_of(l)].append(l)
+        groups[theme_fn(args)(l)].append(l)
     print(f"{len(lessons)} kept lessons -> {len(groups)} themes\n")
     print(f"{'theme':28s} {'support':>7s}  sources")
     for theme, items in sorted(groups.items(), key=lambda kv: -len(kv[1])):
@@ -93,7 +122,7 @@ def cmd_merge(args):
     lessons = load_kept(args.lessons)
     groups = defaultdict(list)
     for l in lessons:
-        groups[theme_of(l)].append(l)
+        groups[theme_fn(args)(l)].append(l)
     instruction = (ROOT / args.instruction).read_text(encoding="utf-8")
     merge_sys = MERGE_PROMPT.read_text(encoding="utf-8")
     out_dir = ROOT / args.out_dir
@@ -114,10 +143,10 @@ def cmd_merge(args):
                 "instruction": instruction,
                 "cluster": [{"source": sid, "patch": p} for sid, p in patches]})
             text = merged.get("patch_text") or ""
-            target = out_dir / f"{slug(theme)}.txt"
+            target = out_dir / f"{slug(theme.replace('|', '-or-'))}.txt"
         else:
             text = "\n\n".join(p for _, p in patches)
-            target = ref_dir / f"{slug(theme)}.txt"
+            target = ref_dir / f"{slug(theme.replace('|', '-or-'))}.txt"
             target.parent.mkdir(parents=True, exist_ok=True)
             merged = {"kept_sources": [s for s, _ in patches], "dropped_sources": [],
                       "why": "below min-support: kept verbatim for on-demand reference, not merged into the main instruction"}
@@ -153,6 +182,8 @@ def main():
         p = sub.add_parser(name)
         p.add_argument("--lessons", nargs="+", required=True)
         p.add_argument("--min-support", type=int, default=2)
+        p.add_argument("--boundary", action="store_true",
+                       help="group by undirected boundary (agentic round, docs/agentic-distill/)")
         if name == "merge":
             p.add_argument("--instruction", default="prompts/zero_shot_v1.txt")
             p.add_argument("--out-dir", default="prompts/patches/v2")

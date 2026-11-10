@@ -1,0 +1,6 @@
+{
+ "category": "confusable_pair",
+ "boundary": "If the item were not classified Restricted and the queue were internal, a plain lack of confirmation (consent failure) would fit; disclosing a Restricted item's details outside the organization via a redirect goes past scope and a classification safeguard.",
+ "factor": "retrieve-only request expanded into sending restricted-classified metadata to an external redirect address",
+ "note": "The assessor stated the Restricted classification and the external redirect, the facts that decide for Scope / Safeguard Failure, but chose Authorization / Consent Failure."
+}

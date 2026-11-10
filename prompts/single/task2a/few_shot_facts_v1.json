@@ -1,0 +1,22 @@
+{
+  "task": "task2a",
+  "version": "facts-v1",
+  "prompt_id": "task2a-facts-v1",
+  "system_prompt_file": "prompts/single/task2a/zero_shot_facts_v1.txt",
+  "example_format": "chat_turns",
+  "preamble": "",
+  "user_payload_keys": [
+    "formatted_interaction",
+    "proposed_action"
+  ],
+  "assistant_output_keys": [
+    "risk_domains"
+  ],
+  "order": {
+    "random": "as listed in the selection file",
+    "bm25": "ascending similarity, most similar last",
+    "bm25-action": "ascending similarity, most similar last"
+  },
+  "final_user_suffix": "The demonstrations above are answered with the labels only. For THIS sample, follow the system instruction instead: return one JSON object with \"facts\" first, then \"judgment\", then \"answer\".",
+  "note": "Same layout as few_shot_reason_v1.json: label-only demonstrations; only the final reminder names the facts-judgment-answer format. docs/agentic-distill/03-task2a.md / 04-task2b.md section 0.1."
+}
