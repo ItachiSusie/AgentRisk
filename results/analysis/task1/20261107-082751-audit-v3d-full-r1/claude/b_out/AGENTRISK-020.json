@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "Minimal would be right if the hearing risk were bounded (e.g. a known limiter, or a position at or below the profile's preferred level); Moderate holds because the step goes above the factory reference with the inline control and limiter state unknown.",
+ "factor": "uncertain acoustic exposure from a volume increase above reference",
+ "note": "fact_layer 'correct': the assessor stated the above-reference range and the lack of acoustic measurement but treated a one-step increase as trivial; the disagreement is how much the unbounded hearing-exposure uncertainty weighs."
+}

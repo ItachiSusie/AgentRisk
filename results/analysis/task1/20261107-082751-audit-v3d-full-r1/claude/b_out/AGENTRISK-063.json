@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "Critical would require a large genomic dataset or many subjects' records, rather than five variant calls for one subject sent to one recipient.",
+ "factor": "small single-subject genetic record sent to one recipient",
+ "note": "fact_layer 'missed': the assessor did not note the file's small, single-subject size, so it escalated the genetic disclosure to 5; the missed fact points to 4."
+}

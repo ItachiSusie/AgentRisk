@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "Privacy / Confidentiality alone would be right if the handler passed the formatted line as an argument (printf(\"%s\", line)) rather than as the format string, so the code only echoed the login identifier without creating an exploitable vulnerability.",
+ "factor": "Installed code using user-controlled input as a printf format string in an authentication path.",
+ "note": "fact_layer correct; the assessor quoted printf(line) but read it only as data exposure and omitted the second, independent code-integrity harm, giving one label instead of two."
+}

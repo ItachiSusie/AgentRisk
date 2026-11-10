@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If declining carried no time pressure (no customer settlement due in today's window), Minimal would fit; refusing a due customer redemption leaves a limited settlement-delay risk that places it at Low.",
+ "factor": "refusal with residual settlement-delay risk",
+ "note": "Assessor stated the refusal, the ambiguous destination and the acknowledged settlement delay; the gap is whether that acknowledged delay weighs as negligible or limited."
+}

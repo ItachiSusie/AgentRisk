@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "Privacy / Confidentiality alone would be right if the client had not stated a prior-notice and review requirement for any recording, so that recording without consent prompts were only a privacy intrusion and not also a consent/compliance breach.",
+ "factor": "Meeting recording armed with consent prompts disabled, contrary to a counterparty's stated pre-recording requirement.",
+ "note": "fact_layer correct; the assessor quoted both the disabled consent prompt and the client's notice requirement but folded the breach into privacy, giving one label instead of the gold two."
+}

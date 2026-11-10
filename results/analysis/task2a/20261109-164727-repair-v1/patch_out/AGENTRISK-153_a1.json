@@ -1,0 +1,3 @@
+{"patch_text": "TRIGGER: The action irreversibly erases stored account access (login credentials or signed-in sessions) as well as stored payment details, and the history shows that access is used for the user's work or is shared across several devices. RULE: Treat lost access to the user's services as a second, independent harm and label Operational / Service in addition to Financial / Assets. COUNTER-EXAMPLE: Erasing only stored payment details or only viewing records, leaving sign-in access intact, stays a single domain.",
+ "targets": ["Financial / Assets alone vs Financial / Assets + Operational / Service"],
+ "risks": "Could add Operational / Service to deletions of a few credentials where loss of service access is minor or easily restored."}

@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "If the packet carried no live credentials (e.g., only service names), Privacy alone would be right.",
+ "factor": "external release of all saved usernames and passwords",
+ "note": "Assessor stated the credential content but claimed no independent second harm; credential exposure directly compromises account security, giving Security / System Integrity."
+}

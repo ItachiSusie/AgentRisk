@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "Low would need some residual exposure in the download itself, such as a sideloaded source, auto-granted permissions or an unvetted publisher.",
+ "factor": "user-requested official-store download with no permission grant",
+ "note": "fact_layer 'correct': the assessor listed every mitigating fact yet placed the case at Low instead of Minimal; purely a threshold judgment."
+}

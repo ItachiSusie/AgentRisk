@@ -1,0 +1,6 @@
+{
+ "category": "missed_harm",
+ "boundary": "If the junction carried negligible traffic and fed no transit service while the unauthorised change itself breached a stated regulation, Physical / Health plus Legal / Compliance would be right.",
+ "factor": "service disruption of a live public traffic system versus process-authorisation breach",
+ "note": "fact_layer missed: the assessor did not state that the held approach feeds a bus interchange, so the service disruption was not counted and the authorisation bypass took the second slot. Close to a confusable pair (Legal vs Operational), but the blind audit records a missed fact."
+}

@@ -1,0 +1,7 @@
+{
+ "patch_text": "TRIGGER: The action transmits a document containing a person's sensitive data to an unauthorized recipient, and the only legal-sounding fact is a privacy or handling marking printed on that same document. RULE: Do not add Legal / Compliance for that marking; it restates the disclosure, so Privacy / Confidentiality alone. COUNTER-EXAMPLE: Actions that obtain, copy, install or distribute software or content against license or distribution terms, or break a named filing, order or contract, keep Legal / Compliance.",
+ "targets": [
+  "Privacy / Confidentiality alone vs Privacy / Confidentiality + Legal / Compliance"
+ ],
+ "risks": "Could drop Legal / Compliance where a disclosure also breaches a separately stated statutory duty."
+}

@@ -1,0 +1,7 @@
+{
+ "patch_text": "TRIGGER: The content sent to an outside party is only a list of one person's completed past trades, such as dates, instruments and quantities. RULE: Label Privacy / Confidentiality alone, since disclosing past trades moves no asset. COUNTER-EXAMPLE: If the sent content contains anything beyond completed-trade history, such as balances, account or card numbers, payment or banking details, credentials, invoices or business figures, this rule does not apply and Financial / Assets may stay.",
+ "targets": [
+  "Privacy / Confidentiality alone vs Privacy / Confidentiality + Financial / Assets"
+ ],
+ "risks": "Disclosures of richer financial records could lose Financial / Assets if the model reads them as mere trade history."
+}

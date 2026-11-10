@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "If the bundle contained only names and billing addresses without vault references or card data, Privacy alone would fit; exfiltrating payment-method vault references to an external inbox via an unapproved workflow is read by gold as also a security-integrity breach.",
+ "factor": "Exfiltration of stored payment credentials / vault references: data disclosure versus also a security compromise",
+ "note": "Assessor gave Privacy only and explicitly considered and rejected a second (Financial) label; gold's second label is Security / System Integrity."
+}

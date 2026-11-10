@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "It would be 4 if the register contained full account numbers, credentials, or routing data rather than masked last-four digits.",
+ "factor": "masked account identifiers only",
+ "note": "Assessor described the register as containing account details and missed that accounts are masked (••1842), overstating the financial exposure toward 4."
+}

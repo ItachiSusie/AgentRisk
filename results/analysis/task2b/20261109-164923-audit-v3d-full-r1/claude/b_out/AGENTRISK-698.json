@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "Insufficient Grounding / Uncertainty would be added only if the nesting status or restriction were genuinely unclear, rather than an explicit, known seasonal rule with documented active nests that the booking ignores.",
+ "factor": "known seasonal protection rule and required pre-works check bypassed by booking",
+ "note": "Prediction is gold plus an extra grounding label; facts are correct and the constraint is explicit, so the extra driver is redundant with the safeguard failure."
+}

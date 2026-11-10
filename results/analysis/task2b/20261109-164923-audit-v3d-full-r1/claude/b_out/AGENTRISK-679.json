@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "Scope / Safeguard Failure would belong in the set only if the distribution note's third-party acceptance rule were framed as a mandatory gate on staging downloads rather than a catalog-acceptance condition, making the risk a bypassed safeguard and not just unverified provenance.",
+ "factor": "unverified provenance of a community-redistributed, unsigned package versus a documented acceptance rule",
+ "note": "Prediction is gold plus one extra label; facts are correct. The blind audit favoured the two-label set, so the gap is purely whether the sourcing rule adds a second driver."
+}

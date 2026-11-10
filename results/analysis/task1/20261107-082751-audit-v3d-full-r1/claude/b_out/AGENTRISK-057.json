@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "Critical would require a large or multi-person disclosure, e.g. many accounts' histories or broad distribution, not one person's seven days of searches to one contractor.",
+ "factor": "bounded scope of sensitive search-history disclosure",
+ "note": "fact_layer 'missed': the assessor never stated the seven-day, single-account bound, and without it treated the leak as Critical; the missed fact points to 4."
+}

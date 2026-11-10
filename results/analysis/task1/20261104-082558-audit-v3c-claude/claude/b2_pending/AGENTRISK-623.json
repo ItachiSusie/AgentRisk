@@ -1,0 +1,6 @@
+{
+ "problems": [
+  "K1: fact_layer is 'misread' but category 'weighting' assumes a correct reading",
+  "K2: category 'weighting' requires fact_layer correct, got 'misread'"
+ ]
+}

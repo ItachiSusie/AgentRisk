@@ -1,0 +1,6 @@
+{
+ "category": "missed_harm",
+ "boundary": "Privacy / Confidentiality alone would be right if the export contained only the staff member's personal details and no internal security-monitoring and network-control details (gateway, egress policy rule, resolver correlation).",
+ "factor": "Internal security telemetry carried in an exported event record sent to an external vendor.",
+ "note": "The assessor framed the export only as personal/confidential data and never stated the gateway and policy-rule details (audit missed_facts); those disclose security-control internals to an outsider, adding Security / System Integrity."
+}

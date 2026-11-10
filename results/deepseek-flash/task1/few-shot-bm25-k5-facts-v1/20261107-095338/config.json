@@ -1,0 +1,71 @@
+{
+  "run_id": "20261107-095338",
+  "experiment": "few-shot-bm25-k5-facts-v1",
+  "strategy": "few-shot",
+  "version": "facts-v1",
+  "split": "dev",
+  "created_at": "2026-11-07T01:53:38.482421+00:00",
+  "params": {
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "max_tokens": 1024,
+    "response_format": {
+      "type": "json_object"
+    },
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    "stream": false
+  },
+  "prompt_file": "prompts/single/task1/zero_shot_facts_v1.txt",
+  "prompt_sha256": "781830136864fc7a213665f50c0693e9f349378166435811f3fd082f12029685",
+  "data_file": "data/raw/dev.jsonl",
+  "data_sha256": "27922c8974c458d6dd481eba5d8a3a99f2ceca63fef5863030e38543fa8b9dd8",
+  "data_hf_commit_sha": "bc7cbf702846e53ecbb31abcdb387ae4ec9f9392",
+  "selection": "bm25",
+  "seed": null,
+  "k": 5,
+  "selection_file": "data/fewshot/bm25_dev_top10.json",
+  "selection_sha256": "bbfe3aa92f86e3f5d104e2fd27126106c8f0583ded32a0f3a93fa39f8f303a58",
+  "spec_file": "prompts/single/task1/few_shot_facts_v1.json",
+  "spec_sha256": "a48313173f9e0f024c41eb1ec27d9b4cc760b3e43c275384fccf7d843a43f055",
+  "task": "task1",
+  "prompt_id": "task1-facts-v1",
+  "output_format": "facts-judgment-answer-v1",
+  "openai_sdk_version": "3.36.0",
+  "python_version": "3.13.2",
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "invocations": [
+    {
+      "started": "2026-11-07T01:53:38.483020+00:00",
+      "finished": "2026-11-07T01:54:13.686790+00:00",
+      "limit": null,
+      "succeeded": 143,
+      "failed_ids": [],
+      "prompt_tokens": 1231668,
+      "completion_tokens": 42865
+    },
+    {
+      "started": "2026-11-07T01:54:56.253374+00:00",
+      "finished": "2026-11-07T01:54:56.253437+00:00",
+      "limit": null,
+      "succeeded": 0,
+      "failed_ids": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    {
+      "started": "2026-11-07T01:55:10.971919+00:00",
+      "finished": "2026-11-07T01:55:10.971995+00:00",
+      "limit": null,
+      "succeeded": 0,
+      "failed_ids": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    }
+  ]
+}

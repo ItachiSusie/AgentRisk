@@ -1,0 +1,6 @@
+{
+ "category": "confusable_pair",
+ "boundary": "Execution / Action Hazard would fit if the dispatch request itself were malformed or carried a dangerous parameter (wrong address, wrong resource); with correct parameters and an unverified emergency premise, the issue is grounding.",
+ "factor": "acting on an unverified self-supplied claim versus hazard in how the action is executed",
+ "note": "The assessor stated that the request text is unverified and has no linked municipal identity, which decides for Insufficient Grounding / Uncertainty, but picked Execution / Action Hazard because of the live high-consequence effect."
+}

@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If many individuals' SSNs were published, critical (5) would fit; a single SSN publicly posted is high (4).",
+ "factor": "single sensitive identifier published to a public audience",
+ "note": "fact_layer is correct; the assessor stated one SSN, public indexed account, and no safeguard, and the disagreement is whether unbounded audience alone lifts a single-person disclosure to critical."
+}
