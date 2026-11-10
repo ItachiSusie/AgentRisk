@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "If the exported log contained only coarse occupancy information with no credential labels or entry-point detail, Privacy alone would fit; disclosing per-door lock/unlock and credential-use records to an outsider is read by gold as also compromising the access-control system.",
+ "factor": "Exfiltration of access-control event logs: data exposure versus also a security-system compromise",
+ "note": "Assessor gave Privacy only; gold adds Security / System Integrity. The blind audit notes the credential-label fact was not separately stated but judged it non-label-moving, so fact_layer is correct."
+}

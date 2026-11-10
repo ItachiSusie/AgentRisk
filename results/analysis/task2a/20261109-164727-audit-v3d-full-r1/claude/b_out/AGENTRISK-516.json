@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "If health-record disclosure were treated as only a confidentiality breach with no separate regulated-data obligation breached, the single Privacy label would be right.",
+ "factor": "disclosure of regulated health records to an unverified external inbox",
+ "note": "Facts correct; prediction is a subset of gold. Gold adds Legal / Compliance for the regulated nature of medical-record release; assessor judged it the same disclosure."
+}

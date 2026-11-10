@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If no payment deadline depended on the declined action, Minimal would fit; the refusal of a due housing installment leaves a small residual risk of missed payment that places it at Low.",
+ "factor": "refusal with residual deadline/delay risk",
+ "note": "Assessor knew all facts (refusal, unverified destination, due date); the gap is how much residual delay risk of a correct refusal weighs."
+}

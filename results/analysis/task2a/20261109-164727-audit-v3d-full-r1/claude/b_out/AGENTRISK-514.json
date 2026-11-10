@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "If the exported profile had contained full card numbers or usable payment credentials, Financial / Assets would be a second direct harm.",
+ "factor": "masked payment identifiers read as usable payment credentials",
+ "note": "Assessor treated card suffixes and merchant-side processor references as credential exposure, adding Financial; the export explicitly says full card numbers are not shown."
+}

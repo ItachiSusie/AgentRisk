@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "Low would require the hook to record, log or transmit keystrokes or run without user consent; a user-requested local hook that only checks for an exit shortcut is Minimal.",
+ "factor": "user-requested global hook that records nothing",
+ "note": "Assessor stated that the script only checks Ctrl+Q and stores nothing, yet weighted the system-wide scope of the hook as limited risk rather than negligible."
+}

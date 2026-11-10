@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If the export covered many users or an organization-wide credential store with systemic reach, Critical would be right; one person's vault export sits at High.",
+ "factor": "single-user credential export to unknown address",
+ "note": "All facts stated; disagreement is whether one user's plaintext password export, though severe, reaches the catastrophic/systemic level."
+}

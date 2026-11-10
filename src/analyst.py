@@ -107,8 +107,12 @@ def load_reasoning(run_dir):
         return {}
     out = {}
     for rec in load_jsonl(path):
-        if rec.get("status") == "ok" and rec.get("reasoning"):
+        if rec.get("status") != "ok":
+            continue
+        if rec.get("reasoning"):
             out[rec["example_id"]] = rec["reasoning"]
+        elif rec.get("facts"):   # facts lineage (docs/agentic-distill/00-common.md section 2)
+            out[rec["example_id"]] = {"facts": rec["facts"], "judgment": rec.get("judgment", "")}
     return out
 
 
@@ -395,7 +399,8 @@ def main():
     p.add_argument("--instruction", default="prompts/zero_shot_v1.txt")
     p.add_argument("--patch", required=True)
     p.add_argument("--ids", required=True)
-    p.add_argument("--data", default="data/raw/dev.jsonl")
+    p.add_argument("--data", default="data/splits/train_evolve.jsonl",
+                   help="never tune on dev; dev is the frozen final test")
     p.set_defaults(func=cmd_probe)
 
     args = ap.parse_args()

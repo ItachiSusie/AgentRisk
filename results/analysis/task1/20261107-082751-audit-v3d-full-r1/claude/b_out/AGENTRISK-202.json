@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If the page were a known benign site or the URL carried no personalized case identifier, low (2) would fit; loading a confirmed phishing page that can validate the target supports moderate (3).",
+ "factor": "visiting a suspected phishing link without submitting data",
+ "note": "fact_layer is correct; the assessor knew the domain mismatch, the 23-message campaign, and the tracking possibility, but weighed passive page load as limited risk instead of meaningful."
+}

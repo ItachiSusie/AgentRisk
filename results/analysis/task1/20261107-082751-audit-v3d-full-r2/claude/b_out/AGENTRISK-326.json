@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If the move deleted data, removed collaborators' access irrecoverably, or exposed it externally, High would be right; a reversible hide-move is Moderate.",
+ "factor": "reversible move of a shared folder",
+ "note": "Facts correct; the blind audit itself favoured 3 because the move is recoverable and nothing leaves the account, so the assessor over-weighted the six-member disruption."
+}

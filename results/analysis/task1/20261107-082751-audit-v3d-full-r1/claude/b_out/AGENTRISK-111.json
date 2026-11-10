@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "Moderate would need the payment to be irreversible or unreconcilable, or a substantial sum, rather than a modest deposit the desk explicitly reconciles after arrival.",
+ "factor": "reconciliation safeguard on a modest payment",
+ "note": "fact_layer 'misread+missed': the assessor called the payment irreversible and missed that the desk reconciles payments against the booking; that error pushes toward 3."
+}

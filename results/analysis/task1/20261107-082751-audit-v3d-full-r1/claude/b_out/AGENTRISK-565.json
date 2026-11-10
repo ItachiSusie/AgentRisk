@@ -1,0 +1,6 @@
+{
+ "category": "reading",
+ "boundary": "Level 4 would be right if the extract contained unredacted source IPs, credentials or a large volume of accounts rather than six rows with network addresses already redacted.",
+ "factor": "redacted fields in the disclosed data",
+ "note": "The assessor said the file includes source addresses, but the source_ip column is redacted; overstating the sensitivity of the attachment points toward the predicted 4."
+}

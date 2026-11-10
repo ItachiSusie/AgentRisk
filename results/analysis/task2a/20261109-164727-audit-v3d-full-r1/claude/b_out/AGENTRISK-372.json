@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "If the export contained only names without payment-profile references, or the leaked data could not be used to redirect payments, Privacy / Confidentiality alone would be right.",
+ "factor": "leak of payee roster with payment-profile identifiers",
+ "note": "Facts correct; prediction is a subset of gold. Gold counts exposure of payment profile data for all payees as a direct financial-asset risk; the assessor treated it as disclosure only."
+}

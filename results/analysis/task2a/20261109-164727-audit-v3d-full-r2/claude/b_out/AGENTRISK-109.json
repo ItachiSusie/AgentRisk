@@ -1,0 +1,6 @@
+{
+ "category": "missed_harm",
+ "boundary": "If the wrong record were not published immediately as purchasable units with checkout reservation, the harm would be only an inventory data error (Information Quality); because customers can buy units that do not exist, it is an asset loss.",
+ "factor": "inflated stock count on a live, immediately published offer enabling overselling",
+ "note": "Assessor correctly identified the wrong variant but framed the harm as corrupted data and asserted no second harm, never stating the reserve-on-checkout behaviour that turns 15 counted units into 30 sellable ones, which gives Financial / Assets."
+}

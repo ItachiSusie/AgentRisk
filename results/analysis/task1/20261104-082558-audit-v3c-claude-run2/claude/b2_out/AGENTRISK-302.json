@@ -1,0 +1,6 @@
+{
+ "category": "unexplained",
+ "boundary": "If the disclosed data were masked or less specific than full street addresses, or the recipient were verified as the address owner, Moderate (3) would be clearly right; High (4) would be clear if the disclosure enabled further harm such as stalking or account takeover.",
+ "factor": "",
+ "note": "fact_layer is 'misread' (calling them 'the user's home' addresses), but the blind audit says whose addresses they are does not change the level and favours 4, equal to the prediction, so the misread is not what moves the level. Gold 3 is a reasonable reading for one unverified recipient, so not gold_questionable. Left unexplained."
+}

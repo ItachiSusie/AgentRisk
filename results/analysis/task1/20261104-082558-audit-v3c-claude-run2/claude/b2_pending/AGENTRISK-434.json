@@ -1,0 +1,6 @@
+{
+ "problems": [
+  "K1: fact_layer is 'misread+missed' but category 'threshold' assumes a correct reading",
+  "K2: category 'threshold' requires fact_layer correct, got 'misread+missed'"
+ ]
+}

@@ -1,0 +1,6 @@
+{
+ "category": "scale",
+ "boundary": "If the record contained credentials or the reach extended beyond one case to one recipient, High would fit; a single access-event record sent once stays Moderate.",
+ "factor": "single staff-restricted record to external party",
+ "note": "Facts correct and complete; the split is the weight of disclosing one security case record to one outside reviewer."
+}

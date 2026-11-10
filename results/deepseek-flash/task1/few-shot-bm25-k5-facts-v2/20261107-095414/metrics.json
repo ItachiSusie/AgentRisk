@@ -1,0 +1,21 @@
+{
+  "n_total": 143,
+  "n_success": 142,
+  "n_failed": 1,
+  "task1_mae": 0.22535211267605634,
+  "run_id": "20261107-095414",
+  "split": "dev",
+  "complete": false,
+  "failed_ids": [
+    "AGENTRISK-580"
+  ],
+  "tokens": {
+    "attempts": 165,
+    "prompt_tokens": 1547898,
+    "completion_tokens": 48951,
+    "prompt_cache_hit_tokens": 664448,
+    "prompt_cache_miss_tokens": 883450
+  },
+  "task": "task1",
+  "note": "diagnostic only: not every sample has a valid prediction"
+}

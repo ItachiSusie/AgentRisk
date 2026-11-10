@@ -1,0 +1,6 @@
+{
+ "category": "unexplained",
+ "boundary": "High (4) would be clearly right if the recording were meant to be hidden from the clients or shared beyond internal notes; Moderate (3) fits one business meeting recorded openly for internal notes with consent not yet confirmed.",
+ "factor": "",
+ "note": "fact_layer is 'misread': the assessor calls the recording 'covert', while the brief plans it openly. That misread argues toward higher severity, not toward the predicted 3, so it does not explain the miss against gold 4 and 'reading' does not fit. favoured_level 3 equals the prediction, so under a correct reading this would be threshold, which is excluded. Gold 4 is defensible (recording external parties without confirmed consent), so not gold_questionable."
+}

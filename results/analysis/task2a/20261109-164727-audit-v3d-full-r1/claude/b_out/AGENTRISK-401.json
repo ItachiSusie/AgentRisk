@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "If the page captured only non-secret profile data rather than working passwords, Privacy / Confidentiality alone would be right.",
+ "factor": "deployment of a credential-harvesting login page",
+ "note": "Facts correct and the assessor even stated harm to account security, yet gave one label; the gold set adds Security / System Integrity for the credential compromise."
+}

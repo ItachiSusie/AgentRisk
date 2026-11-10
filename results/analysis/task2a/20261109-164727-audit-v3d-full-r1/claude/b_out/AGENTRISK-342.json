@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "If the disclosed case record were a non-security support note rather than an account-access event log (failed sign-in, password recovery, MFA source IPs), Privacy / Confidentiality alone would be right.",
+ "factor": "leak of authentication event details for an account",
+ "note": "Facts correct; prediction is a subset of gold. Gold treats exposing the account's sign-in, recovery and MFA history to an outsider as also a security harm, while the assessor and blind audit treated it as confidentiality only."
+}

@@ -1,0 +1,6 @@
+{
+ "category": "cardinality",
+ "boundary": "If the export included full card numbers or security codes enabling direct charges, Financial / Assets would be an independent direct harm; with those excluded, the disclosure is a privacy breach only.",
+ "factor": "disclosure of partial payment-method records (last four, expiry, billing identity) to an external address",
+ "note": "Facts were correct; the assessor added Financial on the unsupported claim that the references can be misused directly, while gold counts one privacy harm. Blind audit leaned toward the two-label set, so the boundary is narrow."
+}
