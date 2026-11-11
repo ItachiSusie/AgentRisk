@@ -1,0 +1,32 @@
+{
+  "round": 1,
+  "champion": "s0",
+  "patience": 0,
+  "cell_history": {},
+  "tokens_used": 167250,
+  "prompts": {
+    "s0": "4fffb391a2e969d7f083fd85fa319a0e476430d6cbcce945f72f38840881dba9"
+  },
+  "decisions": [
+    {
+      "round": 1,
+      "fold": 1,
+      "cell": null,
+      "outcome": "skipped",
+      "reason": "no target cell",
+      "champion_after": null,
+      "net": null
+    }
+  ],
+  "lineage": [
+    {
+      "round": 0,
+      "champion": "s0",
+      "mean_loss": 0.24
+    }
+  ],
+  "baseline_done": true,
+  "stopped": null,
+  "output_tokens_used": 11757,
+  "tau": 9
+}

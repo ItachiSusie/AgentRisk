@@ -1,0 +1,51 @@
+{
+  "seed_mean_loss": {
+    "s0": 0.2833333333333333
+  },
+  "tau": 26,
+  "tau_ids": [
+    "AGENTRISK-109",
+    "AGENTRISK-119",
+    "AGENTRISK-084",
+    "AGENTRISK-106",
+    "AGENTRISK-166",
+    "AGENTRISK-168",
+    "AGENTRISK-261",
+    "AGENTRISK-014",
+    "AGENTRISK-061",
+    "AGENTRISK-069",
+    "AGENTRISK-129",
+    "AGENTRISK-195",
+    "AGENTRISK-199",
+    "AGENTRISK-227",
+    "AGENTRISK-016",
+    "AGENTRISK-112",
+    "AGENTRISK-169",
+    "AGENTRISK-176",
+    "AGENTRISK-198",
+    "AGENTRISK-243",
+    "AGENTRISK-007",
+    "AGENTRISK-017",
+    "AGENTRISK-067",
+    "AGENTRISK-153",
+    "AGENTRISK-171",
+    "AGENTRISK-184"
+  ],
+  "repeat_mean_loss": [
+    0.2833333333333333,
+    0.27222222222222225
+  ],
+  "repeat_ledger": {
+    "n": 150,
+    "improved": 9,
+    "worsened": 8,
+    "net": 1,
+    "right_to_wrong": 2,
+    "wrong_to_right": 5,
+    "base_correct": 90,
+    "base_mean": 0.2833333333333333,
+    "cand_mean": 0.27222222222222225
+  },
+  "champion": "s0",
+  "n_items": 150
+}

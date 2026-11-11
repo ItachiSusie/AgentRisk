@@ -1,0 +1,34 @@
+{
+  "seed_mean_loss": {
+    "s0": 0.24
+  },
+  "tau": 9,
+  "tau_ids": [
+    "AGENTRISK-040",
+    "AGENTRISK-014",
+    "AGENTRISK-061",
+    "AGENTRISK-016",
+    "AGENTRISK-073",
+    "AGENTRISK-007",
+    "AGENTRISK-017",
+    "AGENTRISK-027",
+    "AGENTRISK-067"
+  ],
+  "repeat_mean_loss": [
+    0.24,
+    0.26
+  ],
+  "repeat_ledger": {
+    "n": 50,
+    "improved": 2,
+    "worsened": 4,
+    "net": -2,
+    "right_to_wrong": 2,
+    "wrong_to_right": 1,
+    "base_correct": 33,
+    "base_mean": 0.24,
+    "cand_mean": 0.26
+  },
+  "champion": "s0",
+  "n_items": 50
+}

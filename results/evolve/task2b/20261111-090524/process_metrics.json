@@ -1,0 +1,52 @@
+{
+  "rounds": [
+    {
+      "round": 1,
+      "outcome": "skipped",
+      "fault_mix": {},
+      "n_edits": 0,
+      "n_valid": 0,
+      "diverse": 0,
+      "quick_pass": null,
+      "quick_tested": 0,
+      "rw_accepted": null
+    }
+  ],
+  "accepted_edits": 0,
+  "edit_validity": null,
+  "quick_gate_pass_rate": null,
+  "prompt_growth_words": 0,
+  "fault_mix_total": {},
+  "tokens_used": 167250,
+  "output_tokens_used": 11757,
+  "champion_vs_seed_train_evolve": {
+    "note": "in-sample for the selection, not a clean OOF estimate (see implementation.md)",
+    "seed_mean": 0.24,
+    "champion_mean": 0.24,
+    "diff": 0.0,
+    "ci": [
+      0.0,
+      0.0
+    ],
+    "p_better": 0.0,
+    "per_fold_diff": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+      "4": 0.0
+    },
+    "folds_better": 0,
+    "ledger": {
+      "n": 50,
+      "improved": 0,
+      "worsened": 0,
+      "net": 0,
+      "right_to_wrong": 0,
+      "wrong_to_right": 0,
+      "base_correct": 33,
+      "base_mean": 0.24,
+      "cand_mean": 0.24
+    }
+  }
+}
