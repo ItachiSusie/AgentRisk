@@ -6,7 +6,7 @@ WORKLIST := $(RUN)/worklist.jsonl
 ANALYSIS := results/analysis/multitask/$(notdir $(RUN))
 LIMIT    ?=
 
-.PHONY: audit repair merge-boundary regress help validate splits baseline triage worklist analyze cluster merge compare dev-final \
+.PHONY: test evolve-dry audit repair merge-boundary regress help validate splits baseline triage worklist analyze cluster merge compare dev-final \
 	single-prompts single-dev single-compare summary
 
 help:
@@ -32,6 +32,10 @@ help:
 	@echo 'make repair  patch + regression loop over the audit (train_evolve only)'
 	@echo 'make merge-boundary INSTRUCTION=... OUT_DIR=...   merge kept repairs by boundary'
 	@echo 'make regress BASE=<run> NEW=<run>   per-class accuracy change between two runs'
+	@echo ''
+	@echo 'evolve (docs/evolve/spec.md):'
+	@echo 'make test         offline unit tests (no API call)'
+	@echo 'make evolve-dry   fake predictor + proposer end to end on EVOLVE_TASK (default task2b), no API call'
 
 validate:
 	$(PY) -m compileall -q src
@@ -118,3 +122,15 @@ merge-boundary:
 
 regress:
 	$(PY) src/regress.py compare $(BASE) $(NEW)
+
+# ---- evolve (docs/evolve/spec.md) ------------------------------------------------------
+EVOLVE_TASK ?= task2b
+
+test:
+	$(PY) -m unittest discover -s tests -q
+
+evolve-dry:
+	@R=$$($(PY) src/evolve.py init --dry-run --task $(EVOLVE_TASK) \
+		--seed prompts/single/$(EVOLVE_TASK)/zero_shot_reason_v1.txt | tail -1) && \
+	$(PY) src/evolve.py baseline --run-dir $$R && $(PY) src/evolve.py step --run-dir $$R && \
+	$(PY) src/evolve.py status --run-dir $$R

@@ -8,3 +8,4 @@ __pycache__/
 results/_smoke/
 results/**/messages.jsonl.gz
 results/**/raw_responses.jsonl
+results/evolve/**/cache/

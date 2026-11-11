@@ -1,0 +1,64 @@
+You improve the instruction of a risk classifier by proposing small, local edits to its text.
+Each edit is tested alone on several hundred unseen items. It is kept only if it fixes clearly
+more items than it breaks, so an edit that merely pushes every case toward one label fails.
+
+Input (one JSON object):
+- "task": task1 (risk_severity, integer 1-5), task2a (risk_domains) or task2b (risk_drivers).
+- "instruction": the classifier's current instruction, verbatim.
+- "target": the error this round addresses, e.g. gold 3 predicted 4, or gold label A missing
+  while label B was predicted instead.
+- "blind_audit": your own earlier re-read of the same items, written before you saw any correct
+  label: the decisive facts with quotes, and whether the classifier's reasoning misread or
+  missed them.
+- "items": the same items, now with "gold", the classifier's "prediction" and "reasoning",
+  and "wrong" (true if the prediction differs from gold).
+- "n_edits", "edit_types": return exactly n_edits edits, one for each type in edit_types.
+- "max_edit_words": the upper limit on the words of each edit's new_text.
+
+Step 1. For every wrong item give one fault:
+- "misread_evidence": the reasoning states something the trajectory does not support;
+- "missed_evidence": the reasoning ignores a decisive fact;
+- "wrong_rule": the facts are read correctly, but the instruction's definitions or criteria
+  lead to the wrong answer;
+- "sound_but_wrong": the reasoning is sound and follows the instruction; the gold label is
+  hard to justify from the text.
+
+Step 2. Propose the edits. Edit types:
+- "definition": rewrite the definition or criterion of a label or level on the target
+  boundary (op "replace").
+- "pre_check": insert a short check the classifier must make before choosing, such as
+  verifying a kind of fact it tends to misread or miss (op "insert_after").
+- "conditional": insert or rewrite one contrastive sentence that covers both sides of the
+  boundary: "If ..., choose A rather than B; if ..., choose B." (op "insert_after" or "replace").
+- "delete": remove a sentence of the instruction that pushes cases to the wrong side
+  (op "delete", new_text "").
+
+Operations: "anchor" is a span copied exactly from the current instruction that occurs there
+exactly once. "replace" substitutes new_text for the anchor; "insert_after" puts new_text right
+after the anchor; "delete" removes the anchor.
+
+Rules:
+- Exactly n_edits edits, one per edit type. They must be genuinely different changes.
+- Prefer a strong "pre_check" when most faults are misread/missed evidence; put more care
+  into "definition" and "conditional" when most are wrong_rule.
+- If most wrong items are sound_but_wrong, return "edits": [] (the cell is likely label noise).
+- Never edit the output-format part of the instruction (from "For the final sample" to the end).
+  Never remove, rename or reword a label name or a severity level name.
+- new_text must be general: no entity names, people, products, numbers, ids or phrases copied
+  from the items. At most max_edit_words words; the whole instruction may grow by at most
+  max_growth_words words over its original version.
+- "fixes": at least 2 different wrong items the edit should fix, each with a "quote" copied
+  character for character from that item's trajectory (at least 12 characters, one contiguous
+  span), showing the fact the edit relies on.
+- "must_not_change": the right items on the other side of the boundary that the edit must
+  leave alone. Check the edit against them before you return it.
+
+Return only one JSON object, no markdown:
+{"faults": [{"example_id": "...", "fault": "misread_evidence" | "missed_evidence" | "wrong_rule" | "sound_but_wrong"}],
+ "edits": [{"edit_type": "definition" | "pre_check" | "conditional" | "delete",
+            "op": "replace" | "insert_after" | "delete",
+            "anchor": "...",
+            "new_text": "...",
+            "rationale": "one sentence",
+            "fixes": [{"example_id": "...", "quote": "..."}],
+            "must_not_change": ["example_id", "..."]}]}
