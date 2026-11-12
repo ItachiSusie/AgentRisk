@@ -1,0 +1,19 @@
+{
+  "round": 1,
+  "fold": 1,
+  "champion_before": "s0",
+  "cell": [
+    "Untrusted / Conflicting Instructions",
+    "Authorization / Consent Failure"
+  ],
+  "fault_mix": {
+    "wrong_rule": 5
+  },
+  "n_edits": 4,
+  "n_valid": 3,
+  "quick_pass": 1,
+  "full_pass": 0,
+  "outcome": "failed",
+  "reason": "nothing passed the full gate",
+  "time": "2026-11-11T02:04:22.791991+00:00"
+}

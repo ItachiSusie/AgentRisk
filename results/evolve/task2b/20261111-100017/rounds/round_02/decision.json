@@ -1,0 +1,19 @@
+{
+  "round": 2,
+  "fold": 2,
+  "champion_before": "s0",
+  "cell": [
+    "Scope / Safeguard Failure",
+    "Authorization / Consent Failure"
+  ],
+  "fault_mix": {
+    "wrong_rule": 5
+  },
+  "n_edits": 4,
+  "n_valid": 4,
+  "quick_pass": 1,
+  "full_pass": 0,
+  "outcome": "failed",
+  "reason": "nothing passed the full gate",
+  "time": "2026-11-11T02:05:51.979797+00:00"
+}

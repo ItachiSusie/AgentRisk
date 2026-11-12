@@ -1,0 +1,97 @@
+{
+  "quick_ids": [
+    "AGENTRISK-007",
+    "AGENTRISK-012",
+    "AGENTRISK-014",
+    "AGENTRISK-027",
+    "AGENTRISK-030",
+    "AGENTRISK-040",
+    "AGENTRISK-042",
+    "AGENTRISK-059",
+    "AGENTRISK-063",
+    "AGENTRISK-074",
+    "AGENTRISK-077",
+    "AGENTRISK-090",
+    "AGENTRISK-100",
+    "AGENTRISK-111",
+    "AGENTRISK-121",
+    "AGENTRISK-131",
+    "AGENTRISK-141",
+    "AGENTRISK-147",
+    "AGENTRISK-156",
+    "AGENTRISK-184",
+    "AGENTRISK-195",
+    "AGENTRISK-215",
+    "AGENTRISK-240",
+    "AGENTRISK-242",
+    "AGENTRISK-243",
+    "AGENTRISK-249",
+    "AGENTRISK-266",
+    "AGENTRISK-267",
+    "AGENTRISK-268",
+    "AGENTRISK-291",
+    "AGENTRISK-292",
+    "AGENTRISK-303",
+    "AGENTRISK-312",
+    "AGENTRISK-314",
+    "AGENTRISK-328",
+    "AGENTRISK-341",
+    "AGENTRISK-357",
+    "AGENTRISK-375",
+    "AGENTRISK-392",
+    "AGENTRISK-395"
+  ],
+  "results": [
+    {
+      "cand_id": "r01c1",
+      "edit_type": "pre_check",
+      "ledger": {
+        "n": 40,
+        "improved": 5,
+        "worsened": 1,
+        "net": 4,
+        "right_to_wrong": 1,
+        "wrong_to_right": 4,
+        "base_correct": 22,
+        "base_mean": 0.32083333333333336,
+        "cand_mean": 0.27083333333333337
+      },
+      "pass": true
+    },
+    {
+      "cand_id": "r01c2",
+      "edit_type": "conditional",
+      "ledger": {
+        "n": 40,
+        "improved": 3,
+        "worsened": 4,
+        "net": -1,
+        "right_to_wrong": 3,
+        "wrong_to_right": 2,
+        "base_correct": 22,
+        "base_mean": 0.32083333333333336,
+        "cand_mean": 0.3416666666666667
+      },
+      "pass": false
+    },
+    {
+      "cand_id": "r01c3",
+      "edit_type": "delete",
+      "ledger": {
+        "n": 40,
+        "improved": 3,
+        "worsened": 3,
+        "net": 0,
+        "right_to_wrong": 1,
+        "wrong_to_right": 2,
+        "base_correct": 22,
+        "base_mean": 0.32083333333333336,
+        "cand_mean": 0.3125
+      },
+      "pass": false
+    }
+  ],
+  "to_full": [
+    "r01c1"
+  ]
+}

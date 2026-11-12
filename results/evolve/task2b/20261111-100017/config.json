@@ -1,0 +1,87 @@
+{
+  "run_id": "20261111-100017",
+  "task": "task2b",
+  "created_at": "2026-11-11T02:00:17.483254+00:00",
+  "lineage": "reason",
+  "output_format": "reasoning-answer-v1",
+  "params": {
+    "max_rounds": 8,
+    "max_patience": 2,
+    "n_candidates": 4,
+    "m_wrong": 8,
+    "m_right": 8,
+    "min_wrong": 4,
+    "quick_n": 40,
+    "quick_max_rw": 2,
+    "max_full": 2,
+    "min_net": 5,
+    "p_better": 0.9,
+    "max_rw_frac": 0.03,
+    "max_gold1_loss": 2,
+    "max_edit_words": 60,
+    "max_growth_words": 150,
+    "proposer_temperature": 0.7,
+    "budget_tokens": 30000000,
+    "bootstrap_iterations": 3000,
+    "g3_sev_shift": 0.05,
+    "g3_count_shift": 0.1,
+    "g3_min_level_n": 10,
+    "g5_min_folds": 3,
+    "traj_chars": 6000,
+    "copy_ngram": 4,
+    "proposer_max_tokens": 8192,
+    "placebo": 0,
+    "noise_share": 0.5,
+    "predictor_batch": 64
+  },
+  "limit_per_fold": 50,
+  "dry_run": false,
+  "check_folds": true,
+  "seeds": [
+    {
+      "id": "s0",
+      "file": "prompts/single/task2b/zero_shot_reason_v1.txt",
+      "sha256": "4fffb391a2e969d7f083fd85fa319a0e476430d6cbcce945f72f38840881dba9"
+    }
+  ],
+  "predictor_params": {
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "max_tokens": 1024,
+    "response_format": {
+      "type": "json_object"
+    },
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    "stream": false
+  },
+  "predictor_max_attempts": 3,
+  "proposer_prompts": {
+    "blind": {
+      "file": "prompts/evolve/proposer_blind_v1.txt",
+      "sha256": "71f708cf73a90b9cd9f0046e69715d5159901676bc0c1d0d749b182f67322ce7"
+    },
+    "edit": {
+      "file": "prompts/evolve/proposer_edit_v1.txt",
+      "sha256": "badd581e4f600a6dbad3495bea94a88cde2fe11b5db2599b7d5b752c5adc27be"
+    }
+  },
+  "data": {
+    "train_sha256": "6b29bd16a1a41d22db78fabe0e77eb4ca64e10ccc7f57216f83c3e09c21bc08b",
+    "folds_file": "data/splits/train_evolve_folds.json",
+    "folds_sha256": "a6edaa45b6aa8fe27ed69ad5c234a20499c8ea0a2f5b701c15494a4bbd32a027",
+    "manifest_sha256": "239f8e041b8a9694b6853f1db9bc3d8fa6b95b27d0c6acdfa90adc8a35dc2c99",
+    "train_evolve_sha256": "7879f64c823392f8f7330730e53180438c751975e6963d14f2a4346d2de5dc14",
+    "fold_sizes": [
+      50,
+      50,
+      50,
+      50,
+      50
+    ]
+  },
+  "code_git_sha": "67411ab60f9e301310a2d4135980de5bf08cf97f"
+}

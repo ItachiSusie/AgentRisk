@@ -1,0 +1,61 @@
+{
+  "round": 2,
+  "champion": "s0",
+  "patience": 2,
+  "cell_history": {
+    "[\"Untrusted / Conflicting Instructions\", \"Authorization / Consent Failure\"]": [
+      "failed"
+    ],
+    "[\"Scope / Safeguard Failure\", \"Authorization / Consent Failure\"]": [
+      "failed"
+    ]
+  },
+  "tokens_used": 1864177,
+  "prompts": {
+    "s0": "4fffb391a2e969d7f083fd85fa319a0e476430d6cbcce945f72f38840881dba9",
+    "r01c1": "976cb4a49148ae999ccb934ae6eeb0ed16661d4c0e8a9ee675bab8d670309472",
+    "r01c2": "7ebec5d064c06c0098c0d96be647fbaa47f2afdc8c9c7f3e2effef5a6d5db351",
+    "r01c3": "043763ff15c226fb3e85286817092cc8fb955be3f8698925a7e943d9c3b61a3f",
+    "r02c1": "9081fbb68d5dced39cbe0006f6ba433ff26d145a65f0083672b5f285c869f30b",
+    "r02c2": "29508a7ff77ae5ed6e690a70228359792c45e9f528fcb5877752484d23a9737f",
+    "r02c3": "2427c0a8dcf1fbf7a5b95527da9109b386b7f05b188cc6fa751d6f24122c230e",
+    "r02c4": "85232456801cbc4e1fcf8534e2f4a9441685d4716b8ec2cceb524b9c38f5ad47"
+  },
+  "decisions": [
+    {
+      "round": 1,
+      "fold": 1,
+      "cell": [
+        "Untrusted / Conflicting Instructions",
+        "Authorization / Consent Failure"
+      ],
+      "outcome": "failed",
+      "reason": "nothing passed the full gate",
+      "champion_after": null,
+      "net": null
+    },
+    {
+      "round": 2,
+      "fold": 2,
+      "cell": [
+        "Scope / Safeguard Failure",
+        "Authorization / Consent Failure"
+      ],
+      "outcome": "failed",
+      "reason": "nothing passed the full gate",
+      "champion_after": null,
+      "net": null
+    }
+  ],
+  "lineage": [
+    {
+      "round": 0,
+      "champion": "s0",
+      "mean_loss": 0.2733333333333334
+    }
+  ],
+  "baseline_done": true,
+  "stopped": "patience",
+  "output_tokens_used": 137125,
+  "tau": 39
+}

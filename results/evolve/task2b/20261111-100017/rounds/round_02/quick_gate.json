@@ -1,0 +1,113 @@
+{
+  "quick_ids": [
+    "AGENTRISK-001",
+    "AGENTRISK-005",
+    "AGENTRISK-012",
+    "AGENTRISK-032",
+    "AGENTRISK-050",
+    "AGENTRISK-053",
+    "AGENTRISK-063",
+    "AGENTRISK-073",
+    "AGENTRISK-093",
+    "AGENTRISK-096",
+    "AGENTRISK-127",
+    "AGENTRISK-140",
+    "AGENTRISK-142",
+    "AGENTRISK-146",
+    "AGENTRISK-149",
+    "AGENTRISK-153",
+    "AGENTRISK-168",
+    "AGENTRISK-181",
+    "AGENTRISK-182",
+    "AGENTRISK-184",
+    "AGENTRISK-200",
+    "AGENTRISK-201",
+    "AGENTRISK-224",
+    "AGENTRISK-237",
+    "AGENTRISK-240",
+    "AGENTRISK-261",
+    "AGENTRISK-292",
+    "AGENTRISK-296",
+    "AGENTRISK-298",
+    "AGENTRISK-302",
+    "AGENTRISK-303",
+    "AGENTRISK-304",
+    "AGENTRISK-313",
+    "AGENTRISK-316",
+    "AGENTRISK-323",
+    "AGENTRISK-333",
+    "AGENTRISK-357",
+    "AGENTRISK-422",
+    "AGENTRISK-428",
+    "AGENTRISK-432"
+  ],
+  "results": [
+    {
+      "cand_id": "r02c1",
+      "edit_type": "definition",
+      "ledger": {
+        "n": 40,
+        "improved": 9,
+        "worsened": 12,
+        "net": -3,
+        "right_to_wrong": 11,
+        "wrong_to_right": 6,
+        "base_correct": 21,
+        "base_mean": 0.3791666666666667,
+        "cand_mean": 0.4333333333333334
+      },
+      "pass": false
+    },
+    {
+      "cand_id": "r02c2",
+      "edit_type": "pre_check",
+      "ledger": {
+        "n": 40,
+        "improved": 10,
+        "worsened": 9,
+        "net": 1,
+        "right_to_wrong": 9,
+        "wrong_to_right": 7,
+        "base_correct": 21,
+        "base_mean": 0.3791666666666667,
+        "cand_mean": 0.37500000000000006
+      },
+      "pass": false
+    },
+    {
+      "cand_id": "r02c3",
+      "edit_type": "conditional",
+      "ledger": {
+        "n": 40,
+        "improved": 9,
+        "worsened": 9,
+        "net": 0,
+        "right_to_wrong": 9,
+        "wrong_to_right": 6,
+        "base_correct": 21,
+        "base_mean": 0.3791666666666667,
+        "cand_mean": 0.39583333333333337
+      },
+      "pass": false
+    },
+    {
+      "cand_id": "r02c4",
+      "edit_type": "delete",
+      "ledger": {
+        "n": 40,
+        "improved": 4,
+        "worsened": 1,
+        "net": 3,
+        "right_to_wrong": 1,
+        "wrong_to_right": 1,
+        "base_correct": 21,
+        "base_mean": 0.3791666666666667,
+        "cand_mean": 0.3541666666666667
+      },
+      "pass": true
+    }
+  ],
+  "to_full": [
+    "r02c4"
+  ]
+}

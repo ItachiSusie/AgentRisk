@@ -1,0 +1,32 @@
+{
+  "wrong": [
+    "AGENTRISK-032",
+    "AGENTRISK-300",
+    "AGENTRISK-304",
+    "AGENTRISK-372",
+    "AGENTRISK-389"
+  ],
+  "right": [
+    "AGENTRISK-429",
+    "AGENTRISK-413",
+    "AGENTRISK-200",
+    "AGENTRISK-323",
+    "AGENTRISK-432",
+    "AGENTRISK-095",
+    "AGENTRISK-146"
+  ],
+  "order": [
+    "AGENTRISK-300",
+    "AGENTRISK-032",
+    "AGENTRISK-146",
+    "AGENTRISK-304",
+    "AGENTRISK-323",
+    "AGENTRISK-200",
+    "AGENTRISK-432",
+    "AGENTRISK-413",
+    "AGENTRISK-389",
+    "AGENTRISK-429",
+    "AGENTRISK-372",
+    "AGENTRISK-095"
+  ]
+}
