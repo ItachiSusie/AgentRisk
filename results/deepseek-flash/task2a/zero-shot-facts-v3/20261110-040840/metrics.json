@@ -1,0 +1,18 @@
+{
+  "n_total": 143,
+  "n_success": 143,
+  "n_failed": 0,
+  "task2a_mean_jaccard": 0.8543123543123543,
+  "run_id": "20261110-040840",
+  "split": "dev",
+  "complete": true,
+  "failed_ids": [],
+  "tokens": {
+    "attempts": 143,
+    "prompt_tokens": 310150,
+    "completion_tokens": 41921,
+    "prompt_cache_hit_tokens": 147200,
+    "prompt_cache_miss_tokens": 162950
+  },
+  "task": "task2a"
+}
