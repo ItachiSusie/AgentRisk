@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AgentRisk 进展汇报</title><style>
+:root{--ink:#172431;--muted:#60717d;--accent:#087f79;--accent-soft:#e1efec;--bg:#f7f8f5;--line:#d6dfd8;--bad:#b44d32;--bad-soft:#f6e6e0;--good-soft:#dcefe6}
+*{box-sizing:border-box}body{margin:0;background:#e7ece8;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+main{width:100vw;height:100dvh;display:grid;place-items:center}
+.slide{display:none;width:min(1200px,96vw);height:min(750px,88dvh);background:var(--bg);padding:40px 60px 36px;position:relative;overflow:auto;border-top:7px solid var(--accent)}
+.slide.active{display:flex;flex-direction:column}
+header{font-size:13px;letter-spacing:2px;color:var(--accent);font-weight:700;display:flex;justify-content:space-between}
+header .time{color:var(--muted);font-weight:500;letter-spacing:1px}
+h1{font-size:34px;line-height:1.2;margin:16px 0 20px;letter-spacing:-.5px}
+h2{font-size:20px;margin:0 0 10px}
+p{font-size:19px;line-height:1.6;margin:0 0 14px}
+b{font-weight:650}.muted{color:var(--muted)}.lead{font-size:24px;line-height:1.55}
+.formula{font:22px/1.7 ui-monospace,SFMono-Regular,monospace;padding:14px 0;margin:4px 0 18px;color:var(--accent);border-top:1px solid #cbd7d1;border-bottom:1px solid #cbd7d1}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px}.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+ul{padding-left:22px;margin:0}li{font-size:18px;line-height:1.55;margin:5px 0}
+.small{font-size:15px;line-height:1.5}.xs{font-size:13px;line-height:1.45}
+.source{font-size:11.5px;color:var(--muted);margin-top:auto;padding-top:14px;line-height:1.5}
+code{font:14px/1.5 ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere;background:#eaf0ea;padding:1px 4px}
+pre{white-space:pre-wrap;background:#eaf0ea;padding:12px 14px;margin:8px 0;font:13px/1.5 ui-monospace,SFMono-Regular,monospace}
+.note{color:var(--accent);font-size:18px;line-height:1.5;margin-top:14px}
+.warn{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:16px;line-height:1.4}
+td,th{text-align:left;vertical-align:top;padding:8px 8px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--muted)}
+table.num td,table.num th{text-align:center;padding:5px 4px;font-variant-numeric:tabular-nums}
+table.num td:first-child,table.num th:first-child{text-align:left;padding-left:6px}
+table.num{font-size:14px}
+table.num thead tr:first-child th{color:var(--ink);font-size:14px;border-bottom:2px solid var(--ink)}
+table.num .grp{border-left:2px solid #b9c8bf}
+table.num tr.sep td{border-top:1.5px solid #9fb2a7}
+table.num .best{font-weight:700;color:var(--accent)}
+table.num .dash{color:#a9b5bb}
+table.num .worse{color:var(--bad)}
+table.num .t2s{background:#eef3ef}
+.sig{font-size:10px;vertical-align:super;color:var(--accent);font-weight:700}
+.sig.bad{color:var(--bad)}
+.labels{font-size:15px;line-height:1.5;display:grid;grid-template-columns:1fr 1fr;gap:2px 22px}
+.labels span{border-bottom:1px solid #dce3dd;padding:3px 0}
+.card{background:white;border:1px solid var(--line);padding:14px 16px}
+.card h2{font-size:17px;margin-bottom:6px}
+.card.dim{opacity:.55}
+.card.hl{border:2px solid var(--accent)}
+.tag{display:inline-block;font-size:12px;font-weight:650;padding:2px 8px;background:var(--accent-soft);color:var(--accent);margin-right:6px}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}
+.tag.grey{background:#e6eae7;color:var(--muted)}
+/* flow diagrams */
+.flowrow{display:flex;align-items:stretch;gap:0;margin:8px 0}
+.flowrow .box{flex:1;background:white;border:1px solid var(--line);border-top:3px solid var(--accent);padding:10px 12px;font-size:14px;line-height:1.45}
+.flowrow .box b{display:block;font-size:15px;margin-bottom:4px;color:var(--ink)}
+.flowrow .box.alt{border-top-color:#b9c8bf}
+.flowrow .box.bad{border-top-color:var(--bad)}
+.flowrow .arrow{flex:0 0 26px;display:grid;place-items:center;color:var(--accent);font-size:22px}
+.timeline{display:flex;gap:0;margin:10px 0 18px}
+.timeline div{flex:1;padding:10px 10px 10px 12px;border-left:3px solid var(--accent);font-size:14px;line-height:1.4}
+.timeline div b{display:block;font-size:15px}
+.timeline div span{color:var(--muted);font-size:12px}
+.big{font-size:40px;color:var(--accent);font-weight:650;line-height:1.1}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:6px 0 14px}
+.kpis div{border-top:1px solid var(--line);padding-top:10px}
+.kpis small{display:block;font-size:14px;color:var(--muted);line-height:1.4;margin-top:4px}
+.controls{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:20px}
+button{background:var(--ink);color:white;border:0;border-radius:50%;width:40px;height:40px;font-size:23px;cursor:pointer}
+button:disabled{opacity:.25;cursor:default}button:focus-visible{outline:3px solid #11a69c;outline-offset:3px}
+#count{font-size:13px;min-width:50px;text-align:center;font-variant-numeric:tabular-nums}
+.title-slide{justify-content:center}.title-slide h1{font-size:44px;margin:18px 0 14px}
+@media(max-width:760px){.slide{padding:22px 18px;height:86dvh}h1{font-size:26px}p,.lead{font-size:17px}.cols,.cols3,.kpis{grid-template-columns:1fr;gap:14px}.flowrow{flex-direction:column}.flowrow .arrow{transform:rotate(90deg);height:24px}.timeline{flex-direction:column}table{font-size:13px}table.num{font-size:11px}.source{font-size:10px}}
+@media print{body{background:white}main{display:block;height:auto}.slide,.slide.active{display:flex;width:100%;height:185mm;break-after:page;padding:12mm;overflow:hidden}.controls{display:none}@page{size:A4 landscape;margin:0}}
+</style></head><body><main>
+
+<!-- 0 · 标题 -->
+<section class="slide title-slide"><header>AGENTRISK · SEMEVAL 2027 · 组会 2026-11-12</header>
+<h1>从 Prompt 基线到轨迹蒸馏：<br>Task 1 / 2a / 2b 的进展</h1>
+<p class="lead muted">零样本 → 少样本 → Trace2Skill 蒸馏 → 诊断（上限测试、盲测探针）→ 先事实再蒸馏 → 补官方定义</p>
+<div class="kpis" style="margin-top:30px">
+<div><span class="big">143</span><small>dev 样本，只作最终测试<br>train 568 = train_evolve 461 + train_val 107</small></div>
+<div><span class="big">deepseek-flash</span><small>预测模型，温度 0；分析器（第二轮）为 Claude Opus 5.5</small></div>
+<div><span class="big">~0.03</span><small>143 条下的最小可分辨差：更小的差基本是噪声，显著性用配对自助法（paired bootstrap）</small></div>
+</div>
+<footer class="source">所有数字可由 <code>src/evaluate.py &lt;run_dir&gt;</code> 复算；主表见 <code>results/SUMMARY.md</code>、<code>results/comparison.md</code>，讨论稿见 <code>docs/group-meeting-2026-11-11.md</code>。</footer></section>
+
+<!-- 1 · 背景 -->
+<section class="slide"><header><span>背景 · 问题定义</span><span class="time">≈1 min</span></header>
+<h1>给定历史，评估 agent 的下一个动作</h1>
+<div class="formula">x = (h, a) &nbsp;&nbsp; h = 历史轨迹（history） &nbsp; a = 待评估动作（proposed_action）</div>
+<div class="cols"><div>
+<h2>输入</h2>
+<p><b>h</b>：用户请求、agent 思考、工具调用（Action）与工具返回（Observation），即 ReAct（Reasoning + Acting，推理与行动交替的 agent 循环）格式的轨迹。</p>
+<p><b>a</b>：agent 下一步准备执行的动作，可以是命令，也可以是一段自然语言回复。</p>
+<p class="small muted">只评估 a：历史里有人诱导泄露数据，但 a 是拒绝 → a 是安全的。</p>
+</div><div>
+<h2>输出：四个函数</h2>
+<table>
+<tr><td style="width:84px;color:var(--accent);font-weight:650">Task 1</td><td>f₁(h, a) = r，r ∈ {1,…,5}<br><span class="small muted">风险等级；MAE（Mean Absolute Error，平均绝对误差）↓</span></td></tr>
+<tr><td style="color:var(--accent);font-weight:650">Task 2a</td><td>f₂ₐ(h, a) = D，D ⊆ 11 个危害领域，|D| ∈ {1,2}<br><span class="small muted">「会伤到什么」；Mean Jaccard（集合交并比均值）↑</span></td></tr>
+<tr><td style="color:var(--accent);font-weight:650">Task 2b</td><td>f₂ᵦ(h, a) = K，K ⊆ 7 个风险驱动因素，|K| ∈ {1,2}<br><span class="small muted">「风险从哪来」；Mean Jaccard ↑</span></td></tr>
+<tr style="opacity:.5"><td style="color:var(--muted);font-weight:650">Task 3</td><td>f₃(h, a, p) = (i, m)，按 policy p 选干预 i 并给反馈 m<br><span class="small">官方尚无 policy 与 gold 标注 → <b>本阶段不做</b></span></td></tr>
+</table></div></div>
+<p class="note">计划：先把 Task 1 / 2a / 2b 做扎实，再接 Task 3。</p>
+<footer class="source"><a href="https://agentrisk-semeval.lovable.app/#tasks">AgentRisk 任务说明</a> · <a href="https://huggingface.co/datasets/AgentRisk/agentrisk-data-2027">官方数据集</a> · 标签空间与例子见 <code>slides/10-20-agentrisk-slides.html</code></footer></section>
+
+<!-- 2 · 标签空间 -->
+<section class="slide"><header><span>背景 · 标签空间</span><span class="time">≈0.5 min</span></header>
+<h1>同一个动作，三个角度打分</h1>
+<div class="cols3">
+<div><h2>Task 1 · 风险等级</h2><div class="labels" style="grid-template-columns:1fr"><span>1 Minimal</span><span>2 Low</span><span>3 Moderate</span><span>4 High</span><span>5 Critical</span></div>
+<p class="small" style="margin-top:12px">dev 分布：1 级 66、2 级 8、3 级 32、4 级 35、5 级 2。<br><b class="warn">主要误差来自 3 ↔ 4 的边界。</b></p></div>
+<div><h2>Task 2a · 危害领域（11 选 1–2）</h2><div class="labels" style="grid-template-columns:1fr;font-size:14px"><span>Privacy / Confidentiality</span><span>Security / System Integrity</span><span>Financial / Assets</span><span>Operational / Service</span><span>Legal / Compliance</span><span>Physical / Health · Information Quality</span><span>Reputational · Discrimination · Environmental</span><span>No Material Harm（只能单独出现）</span></div></div>
+<div><h2>Task 2b · 风险驱动因素（7 选 1–2）</h2><div class="labels" style="grid-template-columns:1fr;font-size:14px"><span>Risky Requested Outcome</span><span>Untrusted / Conflicting Instructions</span><span>Authorization / Consent Failure</span><span>Insufficient Grounding / Uncertainty</span><span>Scope / Safeguard Failure</span><span>Execution / Action Hazard</span><span>No Material Risk（只能单独出现）</span></div>
+<p class="small" style="margin-top:12px">最大混淆：<b>Scope ↔ Authorization</b>。</p></div>
+</div>
+<footer class="source">dev 等级分布见 <code>results/comparison.md</code> §3；混淆对见 <code>docs/next-round-plan.md</code> §1。</footer></section>
+
+<!-- 3 · 方法总览 -->
+<section class="slide"><header><span>方法 · 总览</span><span class="time">≈0.5 min</span></header>
+<h1>实验路线：每一步都由上一步的结果引出</h1>
+<div class="timeline">
+<div><b>① Zero-shot</b>5 个变体<br><span>10/22 – 11/04</span></div>
+<div><b>② Few-shot</b>Random / BM25 × k<br><span>10/25 – 11/04</span></div>
+<div><b>③ Trace2Skill v1</b>错例蒸馏成规则<br><span>10/27 – 11/04</span></div>
+<div><b>④ 诊断</b>上限测试 · 盲测探针<br><span>11/07 – 11/10</span></div>
+<div><b>⑤ 先事实再蒸馏</b>facts + 智能体式蒸馏<br><span>11/07 – 11/10</span></div>
+<div style="border-left-color:#b9c8bf"><b>⑥ 补官方定义</b>初步，未正式分析<br><span>11/10 –</span></div>
+</div>
+<div class="cols"><div>
+<h2>数据口径</h2>
+<ul class="small" style="font-size:16px">
+<li><b>train_evolve 461</b>：跑错例、做诊断和蒸馏</li>
+<li><b>train_val 107</b>：中间验证（与 evolve 按场景组 scenario group 切分，零重叠）</li>
+<li><b>dev 143</b>：最终测试</li>
+</ul></div><div>
+<h2>固定不变的部分</h2>
+<ul class="small" style="font-size:16px">
+<li>预测模型 <code>deepseek-flash</code>，温度 0，不做微调</li>
+<li>所有改动只发生在 prompt 里：指令、示例、规则、输出格式</li>
+<li>每次运行写入新 <code>run_id</code>，旧 prompt 不改</li>
+</ul></div></div>
+<footer class="source">注意：dev 已被用于多轮配置选择（多任务 27 次 + 单任务 60 次），表中最好的数是选择后的乐观上界。</footer></section>
+
+<!-- 4 · zero-shot 变体 -->
+<section class="slide"><header><span>方法 · ① Zero-shot</span><span class="time">≈1 min</span></header>
+<h1>Zero-shot：两个维度 × 输出格式</h1>
+<p>零样本（zero-shot，prompt 里只有任务指令和当前样本，没有已标注示例）。两个维度：</p>
+<table style="font-size:15px">
+<tr><th style="width:24%"></th><th>无推理 w/o reasoning<br><span class="xs">只输出标签 JSON</span></th><th>有推理 w/ reasoning<br><span class="xs">先写 ≤120 词依据，再给标签</span></th><th>先事实 facts<br><span class="xs">先引原文事实，再判断，再给标签</span></th></tr>
+<tr><td style="color:var(--accent);font-weight:650">多任务 multi-task<br><span class="xs muted" style="font-weight:400">一次调用同时输出 r、D、K</span></td><td>① <code>zero-shot-v1</code></td><td>② <code>zero-shot-v4</code></td><td class="muted">—</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">单任务 single-task<br><span class="xs muted" style="font-weight:400">每个任务独立一次调用</span></td><td>③ <code>&lt;task&gt;-answer-v1</code></td><td>④ <code>&lt;task&gt;-reason-v1</code></td><td>⑤ <code>&lt;task&gt;-facts-v1</code> <span class="tag grey">第 ⑤ 步再讲</span></td></tr>
+</table>
+<div class="cols" style="margin-top:14px;gap:24px"><div>
+<pre>// ② / ④ 有推理
+{"reasoning": "The action sends the payment roster
+  to an external alias taken from a note …",
+ "answer": {"risk_severity": 4}}</pre></div><div>
+<pre>// ⑤ 先事实（代码检查 quote 是否为原文子串）
+{"facts": [{"quote": "Mailbox type: external",
+            "note": "收件方在外部"}, …],
+ "judgment": "≤80 词，只能引用上面的事实",
+ "answer": {"risk_severity": 4}}</pre></div></div>
+<p class="note">①–④ 的标签定义完全相同，只差「一次预测几个字段」和「输出格式」，构成单变量对照。</p>
+<footer class="source">prompt：<code>prompts/zero_shot_v1.txt</code>、<code>prompts/zero_shot_v4.txt</code>、<code>prompts/single/&lt;task&gt;/zero_shot_{answer,reason,facts}_v1.txt</code>；格式说明见 <code>docs/reasoning-answer-experiment.md</code>。</footer></section>
+
+<!-- 5 · few-shot -->
+<section class="slide"><header><span>方法 · ② Few-shot</span><span class="time">≈1 min</span></header>
+<h1>Few-shot：从 train 里给每条 dev 样本选 k 个示例</h1>
+<p>少样本（few-shot，在当前样本前放 k 个已标注的 train 样例，示例只给标签）。对 ①–④ 每个 zero-shot 变体都跑一遍。</p>
+<div class="cols"><div>
+<h2>两种选法 × 四个 k</h2>
+<table style="font-size:16px">
+<tr><td style="width:120px;color:var(--accent);font-weight:650">Random</td><td>随机抽 k 个（seed 0）</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">BM25</td><td>BM25（Best Matching 25，基于词频的文本检索打分）按轨迹文本检索最相似的 k 个</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">k</td><td>3 / 5 / 10 / 20</td></tr>
+</table>
+<p class="small muted" style="margin-top:10px">成本随 k 线性增长：单任务 zero-shot 约 0.22 M 输入 token，k=10 约 2.0 M，k=20 约 3.8 M。</p>
+</div><div>
+<h2>检索文本要不要额外拼上 action？</h2>
+<p class="small">对照：<code>bm25</code>（只用 <code>formatted_interaction</code>）vs <code>bm25-action</code>（再拼一次 <code>proposed_action</code>）。</p>
+<table class="num" style="font-size:14px"><thead><tr><th>k</th><th>BM25 MAE / 2a / 2b</th><th>+action</th></tr></thead>
+<tr><td>3</td><td>0.266 / 0.853 / 0.752</td><td>0.273 / 0.853 / 0.744</td></tr>
+<tr><td>5</td><td>0.231 / 0.867 / 0.779</td><td>0.259 / 0.860 / 0.759</td></tr>
+<tr><td>10</td><td>0.189 / 0.862 / 0.793</td><td>0.196 / 0.855 / 0.784</td></tr></table>
+<p class="small" style="margin-top:8px">差距都在噪声内；两种检索选出的示例集合 Jaccard 平均 0.873，84% 的 top-1 相同。<br><b>→ 采用不带 action 的 BM25</b>：history 里已经包含了动作的上下文，单独加权 action 反而会把「同样是 send email、语境完全不同」的样本拉进来。</p>
+</div></div>
+<footer class="source">多任务 dev，few-shot v1。来源：<code>results/comparison.md</code> §1、<code>docs/next-round-plan.md</code> §8「bm25-action 对照」。</footer></section>
+
+<!-- 6 · Trace2Skill 论文 -->
+<section class="slide"><header><span>方法 · ③ Trace2Skill（论文）</span><span class="time">≈0.5 min</span></header>
+<h1>Trace2Skill：把很多条轨迹一次性归纳成一份 skill</h1>
+<p>轨迹蒸馏（trajectory distillation）：不更新模型参数，把 agent 在训练题上的执行轨迹归纳成一份可直接加载的技能文档（skill，SKILL.md + references）。</p>
+<div class="flowrow">
+<div class="box"><b>Stage 1 · 生成轨迹</b>固定模型 + 初始 skill 𝒮₀ 跑完全部 evolve 题，记录每条轨迹和二值对错</div>
+<div class="arrow">→</div>
+<div class="box"><b>Stage 2 · 并行提补丁</b>一条轨迹一个分析师，产出<b style="display:inline">轨迹级补丁</b>（patch）<br>· 错误分析师 𝒜⁻：ReAct 循环，能对答案、<b style="display:inline">重跑验证</b>修法<br>· 成功分析师 𝒜⁺：提炼可复用做法<br>· 给不出因果解释的失败 → <b style="display:inline">丢弃</b></div>
+<div class="arrow">→</div>
+<div class="box"><b>Stage 3 · 层次合并</b>每层最多 32 个补丁合成一个：去重、<b style="display:inline">消解冲突</b>、保留高频模式、丢掉一次性怪招</div>
+<div class="arrow">→</div>
+<div class="box alt"><b>产物：𝒮*</b>静态 skill 目录，测试时直接加载，不做检索</div>
+</div>
+<p class="note">论文报告：SpreadsheetBench-Verified 上 Qwen3.5-122B 从人写 skill 的 48.33 提升到 69.83（Vrf）。核心思想是「多个独立补丁反复改同一处 = 系统性规律」。</p>
+<footer class="source">Ni et al., <i>Trace2Skill</i>, arXiv:2603.25158v5，§2.2–2.4、表 1；读稿见 <code>docs/reading-notes-trace2skill.md</code> §3–4。</footer></section>
+
+<!-- 7 · 我们的 Trace2Skill v1 -->
+<section class="slide"><header><span>方法 · ③ 我们的第一版 Trace2Skill</span><span class="time">≈1 min</span></header>
+<h1>第一版：只用错例，按主题合并成规则</h1>
+<div class="flowrow">
+<div class="box"><b>1 · 基线</b>train_evolve 461 条上跑 zero-shot v1</div>
+<div class="arrow">→</div>
+<div class="box"><b>2 · 错误分诊 triage</b>把错例分进互斥的桶：等级高估 / 等级低估 / driver 错 / domain 错 / 两个都错</div>
+<div class="arrow">→</div>
+<div class="box"><b>3 · 逐条归因</b>分析器（DeepSeek）两次调用：先解释标准答案，再写补丁；根因归三类 ↓</div>
+<div class="arrow">→</div>
+<div class="box"><b>4 · 主题合并</b>按主题聚类，支持度 ≥10 的主题合成「触发条件 → 规则 → 反例」</div>
+<div class="arrow">→</div>
+<div class="box alt"><b>5 · 选版本</b>train_val 上选最好的规则组合 → dev 测一次（v2）</div>
+</div>
+<div class="cols" style="margin-top:10px;gap:28px"><div>
+<h2>255 条错例的根因（多任务）</h2>
+<table style="font-size:15px">
+<tr><td style="width:150px;color:var(--accent);font-weight:650">severity_anchor</td><td>等级锚点不清 · 118（46%）</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">label_definition</td><td>标签定义边界 · 109（43%）</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">evidence_reading</td><td>轨迹证据读错 · 28（11%）</td></tr>
+</table>
+<p class="small muted" style="margin-top:6px">最大的主题：3 vs 4（65 条）、Scope vs Authorization（35 条）。</p>
+</div><div>
+<h2>和论文的差异（事后看是问题所在）</h2>
+<ul style="font-size:15px">
+<li>只做错误分析师 𝒜⁻（论文的 +Error 变体），没有成功分析师</li>
+<li>两次固定调用，不是循环，<b>修法没有真回测</b></li>
+<li>255/255 错例全部保留，<b>没有丢弃</b>解释不了的</li>
+<li>按错误方向分组合并，<b>组间不查冲突</b></li>
+</ul></div></div>
+<footer class="source">代码 <code>src/triage.py</code>、<code>src/analyst.py</code>、<code>src/merge_lessons.py</code>；规则 <code>prompts/patches/v2/</code>、<code>prompts/patches/single/task1/</code>；过程见 <code>docs/next-round-plan.md</code> §3、§8。</footer></section>
+
+<!-- 8 · 多任务结果表 -->
+<section class="slide"><header><span>结果 · 多任务</span><span class="time">≈1 min</span></header>
+<h1 style="margin-bottom:10px">表 1 · 多任务（一次调用预测三个字段），dev 143</h1>
+<table class="num">
+<thead><tr><th rowspan="2" style="vertical-align:bottom">设置</th><th colspan="4" class="grp">Task 1 · MAE ↓</th><th colspan="4" class="grp">Task 2a · Jaccard ↑</th><th colspan="4" class="grp">Task 2b · Jaccard ↑</th></tr>
+<tr><th class="grp">w/o</th><th class="t2s">+T2S</th><th>w/</th><th class="t2s">+T2S</th><th class="grp">w/o</th><th class="t2s">+T2S</th><th>w/</th><th class="t2s">+T2S</th><th class="grp">w/o</th><th class="t2s">+T2S</th><th>w/</th><th class="t2s">+T2S</th></tr></thead>
+<tr><td>Zero-shot</td><td class="grp">0.301</td><td class="t2s">0.287</td><td>0.238</td><td class="t2s worse">0.364<span class="sig bad">▼</span></td><td class="grp">0.811</td><td class="t2s">0.831</td><td>0.821</td><td class="t2s worse">0.730</td><td class="grp">0.726</td><td class="t2s">0.732</td><td>0.740</td><td class="t2s worse">0.633</td></tr>
+<tr class="sep"><td>Random k=3</td><td class="grp">0.273</td><td class="t2s dash">—</td><td>0.238</td><td class="t2s dash">—</td><td class="grp">0.854</td><td class="t2s dash">—</td><td class="best">0.880</td><td class="t2s dash">—</td><td class="grp">0.724</td><td class="t2s dash">—</td><td>0.756</td><td class="t2s dash">—</td></tr>
+<tr><td>Random k=5</td><td class="grp">0.266</td><td class="t2s dash">—</td><td>0.273</td><td class="t2s dash">—</td><td class="grp">0.839</td><td class="t2s dash">—</td><td>0.834</td><td class="t2s dash">—</td><td class="grp">0.733</td><td class="t2s dash">—</td><td>0.749</td><td class="t2s dash">—</td></tr>
+<tr><td>Random k=10</td><td class="grp">0.245</td><td class="t2s">0.238</td><td>0.238</td><td class="t2s dash">—</td><td class="grp">0.843</td><td class="t2s">0.860</td><td>0.846</td><td class="t2s dash">—</td><td class="grp">0.740</td><td class="t2s">0.767</td><td class="best">0.766</td><td class="t2s dash">—</td></tr>
+<tr><td>Random k=20</td><td class="grp">0.217</td><td class="t2s dash">—</td><td class="dash">—</td><td class="t2s dash">—</td><td class="grp">0.850</td><td class="t2s dash">—</td><td class="dash">—</td><td class="t2s dash">—</td><td class="grp">0.754</td><td class="t2s dash">—</td><td class="dash">—</td><td class="t2s dash">—</td></tr>
+<tr class="sep"><td>BM25 k=3</td><td class="grp">0.266</td><td class="t2s">0.252</td><td>0.231</td><td class="t2s dash">—</td><td class="grp">0.853</td><td class="t2s best">0.873</td><td>0.844</td><td class="t2s dash">—</td><td class="grp">0.752</td><td class="t2s">0.790</td><td>0.760</td><td class="t2s dash">—</td></tr>
+<tr><td>BM25 k=5</td><td class="grp">0.231</td><td class="t2s">0.231</td><td class="best">0.210</td><td class="t2s dash">—</td><td class="grp best">0.867</td><td class="t2s">0.872</td><td>0.859</td><td class="t2s dash">—</td><td class="grp">0.779</td><td class="t2s best">0.795</td><td>0.763</td><td class="t2s dash">—</td></tr>
+<tr><td>BM25 k=10</td><td class="grp best">0.189</td><td class="t2s best">0.189</td><td>0.217</td><td class="t2s dash">—</td><td class="grp">0.862</td><td class="t2s">0.862</td><td>0.857</td><td class="t2s dash">—</td><td class="grp best">0.793</td><td class="t2s">0.783</td><td>0.765</td><td class="t2s dash">—</td></tr>
+<tr><td>BM25 k=20</td><td class="grp">0.196</td><td class="t2s best">0.189</td><td class="dash">—</td><td class="t2s dash">—</td><td class="grp">0.852</td><td class="t2s">0.864</td><td class="dash">—</td><td class="t2s dash">—</td><td class="grp">0.759</td><td class="t2s">0.762</td><td class="dash">—</td><td class="t2s dash">—</td></tr>
+</table>
+<p class="small" style="margin-top:10px">w/o = 无推理，w/ = 有推理；<span style="background:#eef3ef;padding:0 4px">+T2S</span> = 加上第一版 Trace2Skill 规则（w/o 线 v1→v2，w/ 线 v4→v5）。<b class="best" style="color:var(--accent)">绿色粗体</b> = 该列最好；— = 未跑。<span class="sig bad">▼</span> = 相对同线 zero-shot 显著变差（+0.126，95% CI [+0.028, +0.224]）。</p>
+<footer class="source">run_id：zero-shot v1 <code>20261022-051556</code>、v2 <code>20261028-002357</code>、v4 <code>20261103-074636</code>、v5 <code>20261104-084436</code>；few-shot 有推理用拼装规范 <code>few_shot_v4b.json</code>。全部在 <code>results/deepseek-flash/multitask/</code>。</footer></section>
+
+<!-- 9 · 单任务结果表 -->
+<section class="slide"><header><span>结果 · 单任务</span><span class="time">≈1 min</span></header>
+<h1 style="margin-bottom:10px">表 2 · 单任务（每个任务独立调用），dev 143</h1>
+<table class="num">
+<thead><tr><th rowspan="2" style="vertical-align:bottom">设置</th><th colspan="4" class="grp">Task 1 · MAE ↓</th><th colspan="4" class="grp">Task 2a · Jaccard ↑</th><th colspan="4" class="grp">Task 2b · Jaccard ↑</th></tr>
+<tr><th class="grp">w/o</th><th class="t2s">+T2S</th><th>w/</th><th class="t2s">+T2S</th><th class="grp">w/o</th><th class="t2s">+T2S</th><th>w/</th><th class="t2s">+T2S</th><th class="grp">w/o</th><th class="t2s">+T2S</th><th>w/</th><th class="t2s">+T2S</th></tr></thead>
+<tr><td>Zero-shot</td><td class="grp">0.266</td><td class="t2s worse">0.350<span class="sig bad">‡</span></td><td>0.238</td><td class="t2s">0.336</td><td class="grp">0.837</td><td class="t2s">0.862</td><td>0.832</td><td class="t2s">0.866</td><td class="grp">0.711</td><td class="t2s">0.716</td><td>0.753</td><td class="t2s">0.703</td></tr>
+<tr class="sep"><td>Random k=3</td><td class="grp">0.287</td><td class="t2s">0.315</td><td>0.189</td><td class="t2s worse">0.343<span class="sig bad">‡</span></td><td class="grp">0.829</td><td class="t2s">0.862<span class="sig">†</span></td><td class="best">0.869</td><td class="t2s">0.851</td><td class="grp">0.719</td><td class="t2s">0.763</td><td>0.741</td><td class="t2s">0.734</td></tr>
+<tr><td>Random k=5</td><td class="grp">0.259</td><td class="t2s">0.308</td><td>0.252</td><td class="t2s worse">0.357<span class="sig bad">‡</span></td><td class="grp">0.840</td><td class="t2s">0.850</td><td>0.860</td><td class="t2s">0.852</td><td class="grp">0.716</td><td class="t2s">0.749</td><td class="best">0.772</td><td class="t2s">0.721</td></tr>
+<tr><td>Random k=10</td><td class="grp">0.224</td><td class="t2s">0.280</td><td>0.217</td><td class="t2s worse">0.343<span class="sig bad">‡</span></td><td class="grp">0.838</td><td class="t2s">0.859</td><td>0.832</td><td class="t2s">0.852</td><td class="grp">0.732</td><td class="t2s">0.754</td><td>0.746</td><td class="t2s">0.760</td></tr>
+<tr><td>Random k=20</td><td class="grp">0.224</td><td class="t2s">0.252</td><td>0.231</td><td class="t2s worse">0.350<span class="sig bad">‡</span></td><td class="grp">0.851</td><td class="t2s">0.846</td><td>0.853</td><td class="t2s">0.845</td><td class="grp">0.751</td><td class="t2s">0.768</td><td>0.769</td><td class="t2s best">0.781</td></tr>
+<tr class="sep"><td>BM25 k=3</td><td class="grp">0.273</td><td class="t2s">0.336</td><td>0.273</td><td class="t2s">0.343</td><td class="grp">0.845</td><td class="t2s best">0.866</td><td>0.861</td><td class="t2s">0.859</td><td class="grp">0.741</td><td class="t2s">0.770</td><td>0.756</td><td class="t2s">0.749</td></tr>
+<tr><td>BM25 k=5</td><td class="grp">0.238</td><td class="t2s">0.273</td><td>0.210</td><td class="t2s worse">0.322<span class="sig bad">‡</span></td><td class="grp">0.839</td><td class="t2s">0.858</td><td>0.850</td><td class="t2s">0.858</td><td class="grp">0.765</td><td class="t2s">0.770</td><td>0.762</td><td class="t2s">0.763</td></tr>
+<tr><td>BM25 k=10</td><td class="grp best">0.196<span class="sig">▲</span></td><td class="t2s">0.217</td><td>0.189</td><td class="t2s best">0.266</td><td class="grp best">0.857</td><td class="t2s">0.854</td><td>0.850</td><td class="t2s">0.861</td><td class="grp best">0.786<span class="sig">▲</span></td><td class="t2s best">0.787</td><td>0.770</td><td class="t2s">0.758</td></tr>
+<tr><td>BM25 k=20</td><td class="grp">0.203</td><td class="t2s best">0.203</td><td class="best">0.154<span class="sig">▲</span></td><td class="t2s worse">0.308<span class="sig bad">‡</span></td><td class="grp">0.843</td><td class="t2s best">0.866<span class="sig">†</span></td><td>0.867</td><td class="t2s best">0.871</td><td class="grp">0.772</td><td class="t2s">0.786</td><td>0.769</td><td class="t2s">0.762</td></tr>
+</table>
+<p class="xs" style="margin-top:8px">列含义同表 1（w/o = <code>answer</code> 线，w/ = <code>reason</code> 线，+T2S = v2）。<b style="color:var(--accent)">绿色粗体</b> = 该列最好。<span class="sig">▲</span> = 相对同线 zero-shot 显著变好；<span class="sig">†</span> / <span class="sig bad">‡</span> = 相对同设置的 v1 显著变好 / 变差（配对自助法，95% CI 不跨 0）。<b>Task 1 加规则后有推理线 6 / 9 格显著变差</b>；2a、2b 的 +T2S 方向多数为正，但基本都在噪声内。</p>
+<footer class="source">run_id 见 <code>results/SUMMARY.md</code>（v1）；+T2S few-shot 为 <code>results/deepseek-flash/&lt;task&gt;/few-shot-*-{answer,reason}-v2/2026111x-…</code> 中较早的一次。每个配置在 11/10 03:0x–03:3x 还有一次温度 0 重跑（未入表），同配置两次相差可达 ±0.02。</footer></section>
+
+<!-- 10 · 结果小结 -->
+<section class="slide"><header><span>结果 · 三条结论</span><span class="time">≈0.5 min</span></header>
+<h1>示例有用，拆单任务 + 推理有用，蒸馏规则没用</h1>
+<div class="cols3">
+<div class="card"><span class="tag">结论 1</span><h2 style="margin-top:8px">BM25 few-shot 有效</h2><p class="small">Task 1：0.266 → 0.196（w/o），0.238 → 0.154（w/），均显著。<br>Task 2b：0.711 → 0.786，显著。<br>Task 2a：0.837 → 0.857，<b>噪声</b>（zero-shot 已经很高）。</p></div>
+<div class="card"><span class="tag">结论 2</span><h2 style="margin-top:8px">单任务 + 有推理最稳</h2>
+<table class="num" style="font-size:13px"><thead><tr><th>方式</th><th>三字段全对</th></tr></thead>
+<tr><td>多任务 w/o</td><td>49.0%</td></tr><tr><td>多任务 w/</td><td>49.7%</td></tr><tr><td>单任务 w/o</td><td>51.7%</td></tr><tr><td><b>单任务 w/</b></td><td class="best">55.2%</td></tr></table>
+<p class="xs" style="margin-top:6px">相对两种多任务都显著；代价是 3 次调用。</p></div>
+<div class="card"><span class="tag bad">结论 3</span><h2 style="margin-top:8px">Trace2Skill v1 不起作用</h2><p class="small">单任务 Task 1：0.266 → 0.350，<b class="warn">显著变差</b>。<br>多任务有推理：0.238 → 0.364，显著变差。<br>2a / 2b 都在噪声内。<br>train_val 上规则曾有效，<b>到 dev 消失</b>；示例在场时规则零增量。</p></div>
+</div>
+<p class="note">→ 疑问：few-shot 一给示例就好，蒸馏规则却不行。模型到底是<b>读不懂轨迹</b>，还是<b>不知道线划在哪</b>？以及，三个任务该合起来做还是分开做？</p>
+<footer class="source">三字段全对（exact match）= 三个字段同时判对；拼接用 <code>src/assemble_single.py</code>，run_id <code>20261104-094832</code>。CI 见 <code>results/SUMMARY.md</code>「主要结论」。</footer></section>
+
+<!-- 11 · 上限测试 -->
+<section class="slide"><header><span>发现 · 上限测试</span><span class="time">≈0.5 min</span></header>
+<h1>上限测试：把另一个任务的答案直接告诉模型</h1>
+<div class="cols" style="grid-template-columns:1fr 1.15fr"><div>
+<p>上限测试（oracle upper bound，把一个任务的<b>标准答案</b>当作已知输入，看另一个任务最多能涨多少）。</p>
+<ul style="font-size:16px">
+<li>如果知道 D 能大幅帮到 K（或反过来），就值得做联合 / 串联预测，多任务有意义</li>
+<li>这是理想情况；实际只能拿到模型自己预测、会出错的标签，收益只会更小</li>
+<li>做法：<code>src/make_oracle_splits.py</code> 把 gold 写进输入，prompt <code>answer-v3</code> / <code>reason-v3</code></li>
+</ul>
+<p class="note" style="font-size:16px">结论：即使给正确答案，最多涨约 0.025，有两格反而下降 → 2a、2b 基本独立，<b>选单任务</b>，与表 2 的结果一致。</p>
+</div><div>
+<table class="num" style="font-size:14px"><thead><tr><th>任务（已知）</th><th>线</th><th>数据</th><th>不给</th><th>给答案</th><th>差</th></tr></thead>
+<tr><td>2a（已知 K）</td><td>w/o</td><td>train_val</td><td>0.799</td><td>0.824</td><td>+0.025</td></tr>
+<tr><td></td><td>w/o</td><td>train_evolve</td><td>0.822</td><td>0.794</td><td class="worse">−0.028</td></tr>
+<tr><td></td><td>w/</td><td>train_val</td><td>0.838</td><td>0.860</td><td>+0.022</td></tr>
+<tr><td></td><td>w/</td><td>train_evolve</td><td>0.809</td><td>0.834</td><td>+0.025</td></tr>
+<tr class="sep"><td>2b（已知 D）</td><td>w/o</td><td>train_val</td><td>0.625</td><td>0.631</td><td>+0.006</td></tr>
+<tr><td></td><td>w/o</td><td>train_evolve</td><td>0.675</td><td>0.701</td><td>+0.026</td></tr>
+<tr><td></td><td>w/</td><td>train_val</td><td>0.681</td><td>0.668</td><td class="worse">−0.013</td></tr>
+<tr><td></td><td>w/</td><td>train_evolve</td><td>0.738</td><td>0.738</td><td>0.000</td></tr>
+</table>
+<p class="xs muted" style="margin-top:8px">Task 1 的上限测试（已知 D、K 预测 r）这一轮<b>没有跑</b>；Task 1 与 Task 2 是否相关，目前只有「单任务不差于多任务」这一间接证据。</p>
+</div></div>
+<footer class="source">zero-shot，同一时间重跑 v1 作对照。run_id 在 <code>results/_smoke/task2{a,b}/zero-shot-{answer,reason}-v{1,3}/20261110-0303xx</code>；分数由预测文件直接算出，尚未生成 metrics.json。</footer></section>
+
+<!-- 12 · 盲测探针 -->
+<section class="slide"><header><span>发现 · 盲测探针</span><span class="time">≈1 min</span></header>
+<h1>盲测探针：错在「读错了」还是「线划得不一样」？</h1>
+<div class="cols" style="grid-template-columns:1.1fr 1fr;gap:30px"><div>
+<p class="small">Task 1 错误集中在 3/4 边界（train_evolve 上 3→4 有 34 条，4→3 有 21 条）。两种解释对应完全不同的改法：</p>
+<table style="font-size:14px"><tr><th>错误类型</th><th>含义</th><th>改法</th></tr>
+<tr><td style="color:var(--accent);font-weight:650">理解错误</td><td>事实读错或漏读</td><td>让模型读仔细：先列事实</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">尺度错误</td><td>事实都对，线和标注者划得不同</td><td>把线展示出来：对比示例</td></tr></table>
+<h2 style="margin-top:14px;font-size:17px">做法：先盲审，后揭晓</h2>
+<div class="flowrow" style="margin:4px 0">
+<div class="box"><b>A · 盲审</b>更强的分析器（Opus 5.5）看轨迹 + 模型推理，<b style="display:inline">等级词全遮成 [LEVEL]</b>；逐条核对事实是否有原文依据；在两个候选等级（升序，不说哪个是答案）里<b style="display:inline">强制二选一</b></div>
+<div class="arrow">→</div>
+<div class="box"><b>B · 揭晓归类</b>告诉它真实值和预测值，再归类；代码做一致性检查</div>
+</div>
+<p class="xs muted">为什么有用：盲选在不知道答案时做出，不受事后合理化（hindsight bias）影响。若强模型只看定义都选不准，说明线不在定义的文字里。</p>
+</div><div>
+<h2>结果（41 条，Opus 跑两次）</h2>
+<div class="kpis" style="grid-template-columns:1fr 1fr"><div><span class="big">~50%</span><small>盲选与真实等级一致（20/41、22/41），<b>相当于随机</b></small></div><div><span class="big">~1/3</span><small>被判为阅读错误（两次都是 13/41）</small></div></div>
+<ul style="font-size:15px">
+<li><b>主体是尺度问题</b>：线是标注约定（或噪声），要靠示例展示 → 解释了为什么 few-shot 在 Task 1 上有效、写规则改不动</li>
+<li><b>约 1/3 是阅读错误</b>：如把「住宅楼」读成「家庭住址」、把可撤销授权说成「不可逆」 → 可以用「先列事实」修</li>
+<li>用 DeepSeek 自己当分析器几乎看不出阅读错误（盲判 19/20 等于预测值）→ <b>分析器必须换成更强、不同的模型</b></li>
+</ul>
+<p class="xs muted">扩大到全部错例后，盲选命中率：Task 1 64–69%，2a 60–63%，2b 61%。</p>
+</div></div>
+<footer class="source">样本：train_evolve 上 reason-v1 的已有输出（<code>20261104-082558</code>），不重跑预测。设计与结果见 <code>docs/agentic-distill/01-blind-probe.md</code>。</footer></section>
+
+<!-- 13 · 第二轮蒸馏设计 -->
+<section class="slide"><header><span>方法 · ⑤ 先事实再蒸馏</span><span class="time">≈1 min</span></header>
+<h1>第二轮：先保证事实读对，再蒸馏规则</h1>
+<p class="small">输出格式改为 <b>facts</b>（先逐字引 2–6 条原文事实 → ≤80 词判断 → 标签）；蒸馏改为智能体式蒸馏（agentic distillation，分析器诊断 → 写补丁 → 在 train_evolve 上真回测 → 合格才合并），得到 facts-v2。</p>
+<table style="font-size:14.5px">
+<tr><th style="width:15%">环节</th><th style="width:40%">上一轮（Trace2Skill v1）</th><th>本轮</th></tr>
+<tr><td style="color:var(--accent);font-weight:650">分析器</td><td>DeepSeek（与预测模型同源，看不出自己的误读）</td><td>Claude Opus 5.5（与预测模型不同）</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">分析顺序</td><td>先看标准答案再找错 → 被答案锚定</td><td>先盲审事实，再看答案归类</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">错误分类</td><td>类别自相矛盾：102 条里 84 条标「读错」，93 条根因又是「等级锚点」</td><td>重新设计事实层 / 判断层类别，代码做一致性检查</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">写规则</td><td>DeepSeek</td><td>Claude</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">验证</td><td>无：分析器只「声称」不会弄坏邻近样本</td><td>train_evolve 上真回测，不能弄坏已判对的样本</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">解释不了的错例</td><td>全部保留（102/102）</td><td>直接丢弃：给不出统一的因果解释，就不该变成规则</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">合并规则</td><td>按错误方向分组，组间不查冲突</td><td>按正确边界分组，合并后整体回测</td></tr>
+</table>
+<footer class="source">设计：<code>docs/agentic-distill/00-common.md</code> §1–§6（修订 R1–R11）；规则：<code>prompts/patches/single/&lt;task&gt;/facts_v2/</code>（Task 1 9 条、2a 8 条、2b 9 条）。</footer></section>
+
+<!-- 14 · facts 结果 -->
+<section class="slide"><header><span>结果 · 先事实再蒸馏</span><span class="time">≈1 min</span></header>
+<h1>Task 1 zero-shot 变好，但没有迁移到 few-shot 和 Task 2</h1>
+<table class="num" style="font-size:15px">
+<thead><tr><th>任务</th><th class="grp">train_evolve<br>v1 → v2</th><th class="grp">train_val<br>v1 → v2</th><th class="grp">dev zero-shot<br>v1 → v2</th><th class="grp">dev BM25 k=10<br>v1 → v2</th><th class="grp">参照：dev zero-shot<br>reason-v1</th></tr></thead>
+<tr><td>Task 1 · MAE ↓</td><td class="grp">0.298 → <b class="best">0.228</b><span class="sig">▲</span></td><td class="grp">0.280 → 0.271</td><td class="grp">0.238 → <b class="best">0.182</b></td><td class="grp">0.210 → 0.210</td><td class="grp">0.238</td></tr>
+<tr><td>Task 2a · Jaccard ↑</td><td class="grp">0.843 → 0.871</td><td class="grp">0.854 → 0.860</td><td class="grp">0.824 → 0.840</td><td class="grp">0.851 → 0.859</td><td class="grp">0.832</td></tr>
+<tr><td>Task 2b · Jaccard ↑</td><td class="grp">0.754 → 0.793</td><td class="grp">0.724 → 0.734</td><td class="grp">0.737 → 0.741</td><td class="grp">0.760 → 0.751</td><td class="grp">0.753</td></tr>
+</table>
+<div class="cols" style="margin-top:16px;gap:28px"><div>
+<h2>Task 1</h2>
+<ul style="font-size:15px">
+<li>dev zero-shot 0.182：相对 answer-v1（0.266）<b>显著</b>更好；相对 facts-v1 是 P=0.93，置信区间跨 0</li>
+<li>改进集中在 3 级，即 3/4 边界</li>
+<li>加上示例后没有更好：BM25 k=10 是 0.210 → 0.210，其余 k 见表 3，都不优于 zero-shot 的 0.182。<span class="muted">猜测：示例只给标签，把规则划好的线又拉回去了；待验证</span></li>
+</ul></div><div>
+<h2>Task 2a / 2b</h2>
+<ul style="font-size:15px">
+<li>train_evolve 上有提升，train_val 和 dev 上<b>全部是噪声</b></li>
+<li>错误主要是「选标签」，不是读错：2a 该选两个只选一个；2b 把「范围越界」判成「授权失败」</li>
+<li>怀疑是标签本身没讲清楚 → 下一页</li>
+</ul></div></div>
+<footer class="source">dev run_id：<code>task1/zero-shot-facts-v2/20261107-094719</code>、<code>task1/few-shot-bm25-k10-facts-v2/20261107-094801</code>；全部见 <code>docs/agentic-distill/05-status.md</code> §2。<span class="sig">▲</span> = 显著。</footer></section>
+
+<!-- 14b · facts 全表 -->
+<section class="slide"><header><span>结果 · 先事实再蒸馏（全表）</span><span class="time">≈0.5 min</span></header>
+<h1 style="margin-bottom:10px">表 3 · facts 线（单任务），dev 143</h1>
+<table class="num" style="font-size:15px">
+<thead><tr><th rowspan="2" style="vertical-align:bottom">设置</th><th colspan="2" class="grp">Task 1 · MAE ↓</th><th colspan="2" class="grp">Task 2a · Jaccard ↑</th><th colspan="2" class="grp">Task 2b · Jaccard ↑</th></tr>
+<tr><th class="grp">facts-v1</th><th class="t2s">facts-v2</th><th class="grp">facts-v1</th><th class="t2s">facts-v2</th><th class="grp">facts-v1</th><th class="t2s">facts-v2</th></tr></thead>
+<tr><td>Zero-shot</td><td class="grp">0.238</td><td class="t2s best">0.182</td><td class="grp">0.824</td><td class="t2s">0.840</td><td class="grp">0.737</td><td class="t2s">0.741</td></tr>
+<tr class="sep"><td>Random k=3</td><td class="grp">0.252</td><td class="t2s">0.190<span class="sig" style="color:var(--muted)">*</span></td><td class="grp">0.857</td><td class="t2s">0.839</td><td class="grp">0.758</td><td class="t2s">0.752</td></tr>
+<tr><td>Random k=5</td><td class="grp">0.287</td><td class="t2s">0.218<span class="sig" style="color:var(--muted)">*</span></td><td class="grp">0.857</td><td class="t2s">0.840</td><td class="grp">0.763</td><td class="t2s best">0.783</td></tr>
+<tr><td>Random k=10</td><td class="grp">0.217</td><td class="t2s">0.206<span class="sig" style="color:var(--muted)">*</span></td><td class="grp">0.840</td><td class="t2s">0.847</td><td class="grp">0.740</td><td class="t2s">0.741</td></tr>
+<tr><td>Random k=20</td><td class="grp">0.238</td><td class="t2s">0.187<span class="sig" style="color:var(--muted)">*</span></td><td class="grp">0.834</td><td class="t2s">0.858</td><td class="grp best">0.781</td><td class="t2s">0.769</td></tr>
+<tr class="sep"><td>BM25 k=3</td><td class="grp">0.273</td><td class="t2s">0.218<span class="sig" style="color:var(--muted)">*</span></td><td class="grp">0.852</td><td class="t2s best">0.861</td><td class="grp">0.772</td><td class="t2s">0.735</td></tr>
+<tr><td>BM25 k=5</td><td class="grp">0.245</td><td class="t2s">0.225<span class="sig" style="color:var(--muted)">*</span></td><td class="grp best">0.860</td><td class="t2s">0.857</td><td class="grp">0.740</td><td class="t2s">0.737</td></tr>
+<tr><td>BM25 k=10</td><td class="grp">0.210</td><td class="t2s">0.210</td><td class="grp">0.851</td><td class="t2s">0.859</td><td class="grp">0.760</td><td class="t2s">0.751</td></tr>
+<tr><td>BM25 k=20</td><td class="grp best">0.182</td><td class="t2s">0.190<span class="sig" style="color:var(--muted)">*</span></td><td class="grp">0.855</td><td class="t2s">0.843</td><td class="grp">0.780</td><td class="t2s">0.762</td></tr>
+</table>
+<p class="xs" style="margin-top:8px">facts-v1 = 先事实的基础指令；facts-v2 = 加智能体式蒸馏规则。<b style="color:var(--accent)">绿色粗体</b> = 该列最好。<span class="sig" style="color:var(--muted)">*</span> = 运行不完整（139–142 / 143 条合法预测），只作参考，未做显著性检验。其余 v2 vs v1 的配对比较<b>全部是噪声</b>（含 Task 1 zero-shot 的 −0.056 [−0.126, +0.014]）。</p>
+<footer class="source">目录 <code>results/deepseek-flash/&lt;task&gt;/{zero-shot,few-shot-*}-facts-v{1,2}/</code>，取较早的一次运行；不完整运行的 metrics.json 带 <code>diagnostic only</code> 标注。</footer></section>
+
+<!-- 15 · 官方定义 -->
+<section class="slide"><header><span>发现 · 补上官方定义（初步）</span><span class="time">≈0.5 min</span></header>
+<h1>之前的 prompt 只有标签名，没有标签的含义</h1>
+<p class="small">11/10 核对官方任务页：2a 的 11 个领域、2b 的 7 个驱动因素，官方 Description 从未进过任何一版 prompt；Task 1 是一版自己压缩的描述，丢了判据（如官方 3 级包含「涉及敏感目标」）。补上定义重跑 zero-shot：</p>
+<table class="num" style="font-size:15px"><thead><tr><th>任务</th><th class="grp">answer v1 → v4</th><th class="grp">reason v1 → v4</th><th class="grp">facts v1 → v3</th></tr></thead>
+<tr><td>Task 1 · MAE ↓</td><td class="grp">0.266 → 0.280</td><td class="grp">0.238 → <b class="best">0.224</b></td><td class="grp">0.238 → 0.245</td></tr>
+<tr><td>Task 2a · Jaccard ↑</td><td class="grp">0.837 → 0.840</td><td class="grp">0.832 → 0.803</td><td class="grp">0.824 → <b class="best">0.854</b></td></tr>
+<tr><td>Task 2b · Jaccard ↑</td><td class="grp">0.711 → 0.733</td><td class="grp">0.753 → 0.751</td><td class="grp">0.737 → <b class="best">0.753</b></td></tr></table>
+<div class="cols" style="margin-top:14px;gap:26px"><div><ul style="font-size:15px">
+<li><b>能认出原来认不出的标签</b>：2a「法律」召回率 0.077 → 0.308；2b「范围越界」约 0.2 → 约 0.5</li>
+<li><b>3/4 边界纹丝不动</b>：真实 3 判成 4 的从 52 条变 53 条，与盲测探针一致</li>
+<li>2b 总分不变 ≠ 没变化：「范围越界」修好，「授权失败」召回率下降，正好抵消</li>
+</ul></div><div><ul style="font-size:15px">
+<li><b>意外发现</b>：facts 格式在 Task 1 上本身就是退步（train_evolve：reason-v1 0.247，facts-v1 0.299）；facts-v2 蒸馏后的 0.228 基本只是把这部分损失补回来</li>
+<li class="muted">这部分还没正式分析，结论待定</li>
+</ul></div></div>
+<footer class="source">dev，zero-shot。详见 <code>docs/definition/00-common.md</code> §7；prompt 由 <code>src/make_definition_prompts.py</code> 生成。</footer></section>
+
+<!-- 16 · 总结 -->
+<section class="slide"><header><span>总结 · 下一步</span><span class="time">≈1 min</span></header>
+<h1>一路走到这里的逻辑</h1>
+<div class="flowrow" style="margin-bottom:16px">
+<div class="box"><b>few-shot 有用，规则没用</b>→ 是读错，还是线不清？</div><div class="arrow">→</div>
+<div class="box"><b>上限测试</b>2a / 2b 基本独立 → 单任务</div><div class="arrow">→</div>
+<div class="box"><b>盲测探针</b>主体是尺度，约 1/3 是阅读</div><div class="arrow">→</div>
+<div class="box"><b>先事实再蒸馏</b>Task 1 zero-shot 变好，没迁移</div><div class="arrow">→</div>
+<div class="box alt"><b>补官方定义</b>标签召回改善，3/4 不动</div>
+</div>
+<div class="cols"><div>
+<h2>目前能下的结论</h2>
+<ul style="font-size:16px">
+<li>单任务 + 有推理是最稳的基线；BM25 示例对 Task 1、2b 显著有效</li>
+<li>3/4 边界不在定义文字里，连强模型盲选都只有 ~50%</li>
+<li>输出格式的选择，影响可能比蒸馏规则更大</li>
+</ul></div><div>
+<h2>下一步（供讨论）</h2>
+<table style="font-size:14.5px">
+<tr><td style="width:80px;color:var(--accent);font-weight:650">Task 1</td><td>从 reason-v4 出发；3/4 边界靠对比示例而不是规则；保护 1 级不被弄坏</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">Task 2a</td><td>从 facts-v3 出发；解决「选一个还是两个」</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">Task 2b</td><td>从 reason-v4 出发；拉回「授权失败」召回，同时保住「范围越界」</td></tr>
+<tr><td style="color:var(--accent);font-weight:650">其他</td><td>示例里带上事实 / 推理；估计重跑波动再定回测标准；3/4 是否有标注噪声；Task 3</td></tr>
+</table></div></div>
+<footer class="source">讨论稿：<code>docs/group-meeting-2026-11-11.md</code> §6。局限：只测了一个预测模型；dev 被多次用于选择；143 条只能分辨约 0.03 以上的差。</footer></section>
+
+<!-- 17 · evolve 方法 -->
+<section class="slide"><header><span>方法 · ⑥ evolve（Qi 设计，替代 Trace2Skill）</span><span class="time">≈1 min</span></header>
+<h1>evolve：一次只改一小处，验证过才保留</h1>
+<p class="xs">只用 train_evolve（461 条），按场景分成 5 <b>折</b>（fold，数据的一份，约 92 条）。每一轮轮流用 1 折<b>提出</b>改动，用另外 4 折（约 370 条）<b>检验</b>改动。train_val 和 dev 不进循环。预测器和提议器（proposer，负责写 prompt 改动的那次模型调用）都是 deepseek-flash，种子 prompt 是 reason-v1。</p>
+<div class="flowrow" style="margin:8px 0 10px">
+<div class="box"><b>① 选目标</b>提议折里最常见的一类错误（格子，如「金标 A、预测成 B」），至少 4 条才开始</div><div class="arrow">→</div>
+<div class="box"><b>② 盲读</b>提议器看错例 + 相近的对例，不看金标，先找出决定答案的原文事实</div><div class="arrow">→</div>
+<div class="box"><b>③ 提改动</b>再看金标，给出 4 种不同的小改动：改定义 / 加检查 / 加对比句 / 删句子</div><div class="arrow">→</div>
+<div class="box"><b>④ 两道闸门</b>先在 40 条上快测，再在 4 折上全测</div><div class="arrow">→</div>
+<div class="box alt"><b>⑤ 留或弃</b>每轮最多保留 1 个；连续 2 轮没有改动通过就停</div>
+</div>
+<table style="font-size:13px">
+<tr><th style="width:24%">Trace2Skill 的问题</th><th>evolve 的做法</th></tr>
+<tr><td>规则把对的改成错的（Task 1 0.266 → 0.350）</td><td>全闸门 G1–G6：修对的要明显多于改坏的（超过噪声 2 倍）、改坏的 ≤ 3%、不许把 A 类错挪到 B 类（G3）、低风险样本不能被改坏、至少 3 折都有收益、无效输出不增加</td></tr>
+<tr><td>分析器看了答案，被答案锚定</td><td>先盲读、后看金标；代码会检查引文是否逐字来自原文</td></tr>
+<tr><td>一次塞进很多条规则，说不清哪条有用</td><td>一次只改一处，每处单独检验；每个改动的来源和闸门数字都写进记录</td></tr>
+<tr><td>train_val 上有效，dev 上消失</td><td>提出改动的折不参与检验；dev 只在预登记后跑一次</td></tr>
+</table>
+<footer class="source">设计：<code>docs/evolve/spec.md</code>、<code>docs/evolve/eval.md</code>（branch <code>feat/evolve-design</code>）；实现：<code>src/evolve.py</code>（commit <code>1bdea5b</code>，尚未 push），离线测试 80 条全部通过。导出版本号定为 <code>reason-v5</code>。</footer></section>
+
+<!-- 18 · evolve 试跑 -->
+<section class="slide"><header><span>结果 · evolve 试跑（Task 2b）</span><span class="time">≈1.5 min</span></header>
+<h1 style="margin-bottom:8px">三次试跑：样本够了流程就走通，卡点只剩噪声门槛</h1>
+<table class="num" style="font-size:14px">
+<thead><tr><th>试跑</th><th class="grp">样本数</th><th class="grp">种子 1−Jaccard</th><th class="grp">最大错误格子</th><th class="grp">噪声底 τ</th><th class="grp">本轮结果</th><th class="grp">输入 token</th></tr></thead>
+<tr><td>每折 10 条（spec 原样）</td><td class="grp">50</td><td class="grp">0.240</td><td class="grp">2 条</td><td class="grp">9（18%）</td><td class="grp warn">跳过：没有目标格子</td><td class="grp">16.7 万</td></tr>
+<tr><td>每折 30 条</td><td class="grp">150</td><td class="grp">0.283</td><td class="grp">3 条</td><td class="grp">26（17%）</td><td class="grp warn">跳过：没有目标格子</td><td class="grp">49.3 万</td></tr>
+<tr><td>每折 50 条</td><td class="grp">250</td><td class="grp">0.273</td><td class="grp">5 条</td><td class="grp">39（16%）</td><td class="grp warn">2 轮都只因 G1 被拒，耐心值停止</td><td class="grp">186.4 万</td></tr>
+</table>
+<div class="cols" style="margin-top:8px;gap:24px"><div>
+<h2 style="margin:0 0 4px">发现</h2>
+<ul style="font-size:12.5px;margin:0">
+<li><b>错例太分散</b>：最多一类只有 3 条，凑不够 <code>min_wrong=4</code>；每折 50 条时有 5 条，提议器正常调用（全量每折约 92 条时有 9–11 条）</li>
+<li><b>temperature 0 也不确定</b>：同一 prompt 跑两遍（即 τ），17% 样本答案不同</li>
+<li>按 G1「净修正 ≥ 2τ」推到约 370 条检验样本，<b>要净修正约 125 条</b>才能通过</li>
+</ul></div><div>
+<h2 style="margin:0 0 4px">全量运行前要讨论的</h2>
+<ol style="font-size:12.5px;padding-left:20px;margin:0">
+<li><code>min_wrong</code> 不必降：每折 50 条已够，全量更够</li>
+<li>τ 只算损失变化的样本（17 而非 26）？多次重复取平均？2 倍降到 1 倍？</li>
+<li>预测器 temperature 一直是 0（Trace2Skill 用较高温度）；要不要多次采样取多数票降噪？</li>
+<li>提议器换 Claude / Codex 会不会更好？做「只换提议器」对照</li>
+<li>待定：OOF（样本外收益）定义；G3 是否过严；2a 的 E+R（进化 prompt + 检索示例）用 BM25 还是 random</li>
+</ol></div></div>
+<footer class="source">run 目录：<code>results/evolve/task2b/20261111-090524</code>（每折 10 条）、<code>20261111-091240</code>（每折 30 条）、<code>20261111-100017</code>（每折 50 条）（worktree <code>AgentRisk-evolve</code>）。</footer></section>
+
+<!-- 19 · evolve 每折 50 条 -->
+<section class="slide"><header><span>结果 · evolve 试跑（每折 50 条）</span><span class="time">≈1.5 min</span></header>
+<h1 style="margin-bottom:8px">提议器合格，两个候选只差 G1：要求净修正 62 条</h1>
+<table class="num" style="font-size:14px">
+<thead><tr><th>候选（全闸门，200 条检验）</th><th class="grp">变好 / 变坏</th><th class="grp">净修正</th><th class="grp">G1 门槛</th><th class="grp">改善概率</th><th class="grp">1−Jaccard 变化 [95% CI]</th><th class="grp">G2–G6</th></tr></thead>
+<tr><td>纯噪声（同一 prompt 跑两遍）</td><td class="grp">11 / 10</td><td class="grp">1</td><td class="grp">—</td><td class="grp">—</td><td class="grp">—</td><td class="grp">—</td></tr>
+<tr><td>r01c1 加检查（Untrusted→Authorization）</td><td class="grp">15 / 6</td><td class="grp"><b>9</b></td><td class="grp warn">62.4</td><td class="grp">0.943</td><td class="grp">−0.022 [−0.048, +0.006]</td><td class="grp">全过，4/4 折改善</td></tr>
+<tr><td>r02c4 删句子（Scope→Authorization）</td><td class="grp">10 / 7</td><td class="grp">3</td><td class="grp warn">62.4</td><td class="grp">0.886</td><td class="grp">−0.013 [−0.033, +0.008]</td><td class="grp">全过，3/4 折改善</td></tr>
+</table>
+<div class="cols" style="margin-top:8px;gap:24px"><div>
+<h2 style="margin:0 0 4px">做对了的</h2>
+<ul style="font-size:12.5px;margin:0">
+<li>盲读引文 100% 逐字来自原文（48/48、36/36）</li>
+<li>改动有效 7/8 = 87.5%（eval.md 要求 ≥ 75%）；唯一被拒的超了 60 词上限</li>
+<li><b>快速闸门拦住过度修正</b>：第 2 轮 3 个改动在 40 条上「对→错」9–11 条（像 Trace2Skill），全被拦下</li>
+<li>若 G1 只留「净修正 ≥ 5 且改善概率 ≥ 0.9」，<b>r01c1 会被接受</b></li>
+</ul></div><div>
+<h2 style="margin:0 0 4px">新发现的问题</h2>
+<ol style="font-size:12.5px;padding-left:20px;margin:0">
+<li><b>G1 的 2τ 项不可达</b>：200 条要 62，全量约 125；不改则每次 2 轮后停</li>
+<li>错因 10/10 都归为「规则错」，从未出现「推理合理但金标难得」，标签噪声跳过机制没触发</li>
+<li>AGENTRISK-227 盲读判「误读」，看金标后改判「规则错」，归因前后不一致</li>
+<li>两个「删句子」改动的因果理由弱，引用错例支持不足</li>
+<li>成本：输入 186 万、输出 14 万 token；全量每轮约为几倍</li>
+</ol></div></div>
+<footer class="source">run 目录：<code>results/evolve/task2b/20261111-100017</code>（worktree <code>AgentRisk-evolve</code>）；逐轮核查见同目录 <code>PILOT_REVIEW.md</code>、<code>rounds/round_0{1,2}/full_gate.json</code>。</footer></section>
+
+<!-- 17 · Future work -->
+<section class="slide"><header><span>FUTURE WORK</span><span class="time">≈1 min</span></header>
+<h1>未来方向：分别针对尺度问题和理解问题</h1>
+<p class="small">盲测探针给出的两类错误：<b>尺度问题</b>（事实读对了，但线划得和标注者不同，占主体）和<b>理解问题</b>（事实读错或漏读，约 1/3）。三个方向分别对准它们。</p>
+<div class="cols3" style="margin-top:6px">
+<div class="card hl"><span class="tag">尺度问题</span><h2 style="margin-top:8px">① Label Definition from Training Data</h2>
+<p class="small">官方定义已经补进 prompt，但只看了总分，还没逐条分析哪些有用。</p>
+<ul class="small" style="font-size:14.5px">
+<li>逐个标签、逐个等级，对照 train 里的正例和易混反例，检验官方描述能否区分它们</li>
+<li>保留有区分力的描述，改写含糊的，补上训练数据里反复出现、但官方没写的判据</li>
+<li>重点：3 / 4 等级边界、Scope ↔ Authorization</li>
+</ul></div>
+<div class="card hl"><span class="tag">尺度问题</span><h2 style="margin-top:8px">② Rules from Experience</h2>
+<p class="small">经验规则（rules from experience）：从模型在训练集上的<b>实际判断记录</b>（对的和错的）里总结出的「遇到什么情况怎么判」，而不是从定义文字推出来的规则。</p>
+<ul class="small" style="font-size:14.5px">
+<li>定义回答「这个标签是什么意思」，经验规则回答「边界上的具体情况该往哪边判」</li>
+<li>每条规则带触发条件、判定和反例，在 train 上回测，不能弄坏已判对的样本</li>
+<li>和 ① 配合：定义划大方向，规则补边界</li>
+</ul></div>
+<div class="card hl"><span class="tag">理解问题</span><h2 style="margin-top:8px">③ evolve：根据试跑反馈修改，再跑全量</h2>
+<p class="small">evolve 已在 Task 2b 上试跑 3 次（第 19–21 页）：流程走通了，提议器合格，卡点是噪声门槛。</p>
+<ul class="small" style="font-size:14.5px">
+<li>根据试跑反馈修改提议器（如盲读与归因前后不一致）</li>
+<li>重新设计 G1 噪声门槛：「净修正 ≥ 2τ」在全量下要约 125 条，几乎不可达；考虑只计损失变化的样本、多次重复取平均、降低倍数</li>
+<li>改完后在全量 train_evolve（5 折）上运行，借「先盲读、再看金标」修阅读错误</li>
+</ul></div>
+</div>
+<footer class="source">评测口径不变：选择在 train 内部做，dev 只在最后测一次。两类错误的依据见第 13 页盲测探针；evolve 设计与闸门 G1–G6 见第 19–21 页及 <code>docs/evolve/spec.md</code>；温度 0 重跑波动见表 2 页脚。</footer></section>
+
+</main><nav class="controls" aria-label="Slide navigation"><button id="prev" aria-label="Previous slide">‹</button><span id="count" aria-live="polite"></span><button id="next" aria-label="Next slide">›</button></nav><script>
+const slides=[...document.querySelectorAll('.slide')];let current=0;const prev=document.getElementById('prev'),next=document.getElementById('next');function show(n){current=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>{s.classList.toggle('active',i===current);s.setAttribute('aria-hidden',String(i!==current))});prev.disabled=current===0;next.disabled=current===slides.length-1;document.getElementById('count').textContent=`${current+1} / ${slides.length}`;history.replaceState(null,'',`#${current+1}`)}prev.onclick=()=>show(current-1);next.onclick=()=>show(current+1);document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(current+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1)});show((parseInt(location.hash.slice(1))||1)-1);
+</script></body></html>

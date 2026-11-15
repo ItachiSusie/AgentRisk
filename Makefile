@@ -99,9 +99,9 @@ summary:
 	$(PY) src/make_summary.py
 
 # ---- agentic distillation, round three (docs/agentic-distill/) -----------------------
-AUDIT_RUN ?= results/_smoke/task1/zero-shot-reason-v1/20261104-082558
+AUDIT_RUN ?= results/_smoke/task1/zero-shot-facts-v1/20261107-082751
 PAIRS     ?= 3:4
-AUDIT_DIR := results/analysis/$(TASK)/$(notdir $(AUDIT_RUN))-audit-v3
+AUDIT_DIR := results/analysis/$(TASK)/$(notdir $(AUDIT_RUN))-audit-v3d
 
 audit:
 	$(PY) src/agentic.py audit --triage $(AUDIT_RUN)/triage/triage.jsonl \

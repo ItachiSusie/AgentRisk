@@ -113,11 +113,20 @@ def output_format_for(task, version):
     return LINEAGE_FORMATS[version.split("-", 1)[0]]
 
 
+GIVEN_KEYS = ("given_risk_domains", "given_risk_drivers")
+
+
 def zero_shot_messages(row, system_prompt):
     payload = {
         "formatted_interaction": row["formatted_interaction"],
         "proposed_action": row["proposed_action"],
     }
+    # Upper-bound experiment only (src/make_oracle_splits.py, prompts *_v3): a gold label of
+    # the OTHER task is passed only when the prompt itself names that key, so ordinary prompts
+    # never see it and a task never receives its own answer.
+    for key in GIVEN_KEYS:
+        if key in row and key in system_prompt:
+            payload[key] = row[key]
     return [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
