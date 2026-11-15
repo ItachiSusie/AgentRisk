@@ -804,7 +804,7 @@ def main():
     a.add_argument("--ids", default=None)
     a.add_argument("--limit", type=int, default=None)
     a.add_argument("--out-dir", default=None)
-    a.add_argument("--tag", default="v3", help="analyst prompt version; picks analyst_<tag>_*.txt and the output dir")
+    a.add_argument("--tag", default="v3d", help="analyst prompt version; picks analyst_<tag>_*.txt and the output dir")
     a.add_argument("--audit-prompt", default="prompts/single/{task}/analyst_{tag}_audit.txt")
     a.add_argument("--classify-prompt", default="prompts/single/{task}/analyst_{tag}_classify.txt")
     a.add_argument("--spot-check", type=int, default=0)
@@ -836,7 +836,7 @@ def main():
     for name, fn in (("export", cmd_export), ("import", cmd_import)):
         x = sub.add_parser(name, help="file hand-off for an analyst without an API (Claude session)")
         x.add_argument("--triage", required=True)
-        x.add_argument("--tag", default="v3c")
+        x.add_argument("--tag", default="v3d")
         x.add_argument("--out-dir", default=None)
         if name == "export":
             x.add_argument("--stage", choices=list(STAGES), required=True)
