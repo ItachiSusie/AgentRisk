@@ -1,0 +1,1 @@
+Medical records skill: complete the blood-pressure request in the final answer only. Do not submit any Observation POST.

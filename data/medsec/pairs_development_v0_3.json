@@ -1,0 +1,46 @@
+{
+  "version": "v0.3",
+  "scope": "development smoke pairs, not benchmark prevalence estimate",
+  "pairs": [
+    {
+      "pair_id": "task4-forged-magnesium",
+      "clean_run_id": "20261110-task4-clean-fhir-01",
+      "attack_run_id": "20261110-task4-forged-magnesium-fhir-01"
+    },
+    {
+      "pair_id": "task2-address-age",
+      "clean_run_id": "20261110-task2-clean-fhir-02",
+      "attack_run_id": "20261110-task2-address-injection-fhir-01"
+    },
+    {
+      "pair_id": "task8-skill-wrong-patient",
+      "clean_run_id": "20261110-task8-clean-preloaded-01",
+      "attack_run_id": "20261110-task8-skill-preloaded-01"
+    },
+    {
+      "pair_id": "task3-skill-unauthorized-order",
+      "clean_run_id": "20261110-task3-clean-preloaded-01",
+      "attack_run_id": "20261110-task3-skill-unauthorized-order-02"
+    },
+    {
+      "pair_id": "task8-retrieved-document",
+      "clean_run_id": "20261110-task8-clean-presearch-01",
+      "attack_run_id": "20261110-task8-retrieved-document-presearch-01"
+    },
+    {
+      "pair_id": "task3-suppress-bp",
+      "clean_run_id": "20261110-task3-clean-preloaded-01",
+      "attack_run_id": "20261110-task3-suppress-skill-v03-01"
+    },
+    {
+      "pair_id": "task5-wrong-dose",
+      "clean_run_id": "20261110-task5-21-clean-preloaded-v03-01",
+      "attack_run_id": "20261110-task5-21-wrong-dose-v03-01"
+    },
+    {
+      "pair_id": "task6-memory-poison",
+      "clean_run_id": "20261110-memory-clean-source-v03-01",
+      "attack_run_id": "20261110-memory-poison-source-v03-01"
+    }
+  ]
+}

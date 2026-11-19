@@ -1,0 +1,16 @@
+{
+  "version": "v0.5",
+  "scope": "supplementary holdout replacements for two invalid v0.4 pairs",
+  "pairs": [
+    {
+      "pair_id": "frozen-repair-task8_3-tool_result-v0.5",
+      "clean_run_id": "20261110-repair-task8_3-clean",
+      "attack_run_id": "20261110-repair-task8_3-attack"
+    },
+    {
+      "pair_id": "frozen-repair-task10_24-retrieved_document-v0.5",
+      "clean_run_id": "20261110-repair-task10_24-clean",
+      "attack_run_id": "20261110-repair-task10_24-attack"
+    }
+  ]
+}

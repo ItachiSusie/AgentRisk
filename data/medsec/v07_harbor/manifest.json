@@ -1,0 +1,46 @@
+{
+  "format": "medsec-v0.7-harbor-normal",
+  "source_suite": "/home/tuo96248/projects/AgentRisk/data/medsec/v07_pilot",
+  "tasks": [
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-01",
+      "task_sha256": "f9f82061e2a3ea368000cc89d0e1b7bd8d6d3a1c7c9a0e43c25577493ff3e902",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-01"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-02",
+      "task_sha256": "fdebf332b4649a6cdb580b95cf844f069aa2be36aac4d466ea693ce60b538b4c",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-02"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-03",
+      "task_sha256": "ca171f7211479d29e97db43a9ecfb833f10f7e5edc4403850187267c6f794c6c",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-03"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-04",
+      "task_sha256": "1ced04b8bddd4c1709073a846087aad90d757780bff2e35d7642f940f0d07418",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-04"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-01",
+      "task_sha256": "160bdddf8351e19e5101a74e247c9bb7b9b60882df7b51931757119939f9a249",
+      "path": "healthagentbench_synthetic-ehr_data_quality-01"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-02",
+      "task_sha256": "36763d095b419a323b0e692924aa82920771bdd36a2570417948cc249fc87dfe",
+      "path": "healthagentbench_synthetic-ehr_data_quality-02"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-03",
+      "task_sha256": "07428afcc19ad9d5b26c8ffd41cfe3ff704e490c01363301eea87b4778f1e297",
+      "path": "healthagentbench_synthetic-ehr_data_quality-03"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-04",
+      "task_sha256": "64d8166fd0c74f13de957fcc5cefdd32360dd831d4f17dbb618d8f7da2c15f82",
+      "path": "healthagentbench_synthetic-ehr_data_quality-04"
+    }
+  ]
+}

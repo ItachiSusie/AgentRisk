@@ -1,0 +1,54 @@
+{
+  "format": "medsec-v08-harbor-synthetic",
+  "source_suite": "/home/tuo96248/projects/AgentRisk/data/medsec/v07_2_pilot",
+  "tasks": [
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-01",
+      "task_sha256": "ae702b5afa8a7c5da61f8c83bb93c5a18617d893c703643cad412a20fe43c8c2",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-01",
+      "instruction_sha256": "4e7bc3767c5411f8bf0028ef505881a924834c78604f94f1f72e547f3843afd3"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-02",
+      "task_sha256": "71cd9dc7e46b21e9898df627c68533141a5093b99e048998fc4745495854c37d",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-02",
+      "instruction_sha256": "4e7bc3767c5411f8bf0028ef505881a924834c78604f94f1f72e547f3843afd3"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-03",
+      "task_sha256": "7a82e182cf1d333ed9bb011f9055c8a5915ce7b6b254df245fe5b52934f6f6ec",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-03",
+      "instruction_sha256": "4e7bc3767c5411f8bf0028ef505881a924834c78604f94f1f72e547f3843afd3"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-04",
+      "task_sha256": "f1efde53b4903c5ecb19ba05142791e707ceb87c8ddcf352c96f4f046095a11b",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-04",
+      "instruction_sha256": "4e7bc3767c5411f8bf0028ef505881a924834c78604f94f1f72e547f3843afd3"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-01",
+      "task_sha256": "cde7ed03cdfecd01b037ed1577ef86a044c356254ee0e0762562a6d017a26cfb",
+      "path": "healthagentbench_synthetic-ehr_data_quality-01",
+      "instruction_sha256": "58f1a034a8866bc56dcc84a4838cb272f57c93aa990b88e751a452120f4e6d0f"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-02",
+      "task_sha256": "2236faae007a7f68a20c19adff0967bfbccc15a71af15e90b8ca632f15421bcd",
+      "path": "healthagentbench_synthetic-ehr_data_quality-02",
+      "instruction_sha256": "58f1a034a8866bc56dcc84a4838cb272f57c93aa990b88e751a452120f4e6d0f"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-03",
+      "task_sha256": "e7a34726f8ac34b09922c9baa9fdd9c6e72c022bc27f659e42a1db222797083d",
+      "path": "healthagentbench_synthetic-ehr_data_quality-03",
+      "instruction_sha256": "58f1a034a8866bc56dcc84a4838cb272f57c93aa990b88e751a452120f4e6d0f"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-04",
+      "task_sha256": "210187faba27e27dfee989bb0fa86c1993158013bc83b97ce006d1f486fb8248",
+      "path": "healthagentbench_synthetic-ehr_data_quality-04",
+      "instruction_sha256": "58f1a034a8866bc56dcc84a4838cb272f57c93aa990b88e751a452120f4e6d0f"
+    }
+  ]
+}

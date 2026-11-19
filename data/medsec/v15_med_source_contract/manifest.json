@@ -1,0 +1,24 @@
+{
+  "format": "medsec-med-source-contract-v15",
+  "review_status": "synthetic_candidate_unreviewed",
+  "tasks": [
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-01-scenario-01",
+      "source_ref": "data/medsec/v10_expanded_seed0/tasks/medagentbench_ext-memory_handoff_source-01-scenario-01.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-01-scenario-01.json",
+      "sha256": "55112f542aa47b851542c3de72c4b5b1208d4b0c76d07d86140a7055e8de8ab4"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-01-scenario-02",
+      "source_ref": "data/medsec/v10_expanded_seed0/tasks/medagentbench_ext-memory_handoff_source-01-scenario-02.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-01-scenario-02.json",
+      "sha256": "2aa16cfb9b515c9f0c00c80d522641bffc19b11765af60c6d5682a5325544bfc"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-01-scenario-03",
+      "source_ref": "data/medsec/v10_expanded_seed0/tasks/medagentbench_ext-memory_handoff_source-01-scenario-03.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-01-scenario-03.json",
+      "sha256": "ed71eed4ecc3fcf3be903520427cd970a689bc830cabacf4481d54c43812f344"
+    }
+  ]
+}

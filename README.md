@@ -82,6 +82,42 @@
 | `docs/`    | 方案文档                                                                     |
 | `slides/`  | 汇报 slides                                                                  |
 
+MedAgentBench 医疗安全基准（medical security benchmark，评估医疗智能体在不同攻击入口下的动作、观察和答复风险）的规格、运行命令与结果分别见 [规格](docs/medagentbench-medical-security-benchmark-spec.md)、[实现记录](docs/medsec-implementation.md)和[校准及留出结果](docs/medsec-results-v0.4-v0.5.md)。新攻击运行使用 `src/medsec/run_v0_5.py`；既有 v0.4 代码和冻结轨迹保留供复核。
+
+医疗安全子项目与上游 MedAgentBench 的代码和数据边界、当前目录及下一版模块设计见[代码架构](docs/medsec-code-architecture.md)。
+
+新增医疗任务、工具、合成数据、技能与跨任务记忆的下一版实施方案见[MedSecBench v0.6 扩展规格](docs/medsec-expansion-spec-v0_6.md)；与其他医疗智能体安全基准的比较见[调研](docs/medical-agent-risk-security-benchmark-survey-2026-11.md)。
+
+MedAgentBench 与 HealthAgentBench 的双底座医疗安全基准设计及实施状态见[MedSecBench v0.7 规格](docs/medical-healthcare-security-benchmark-spec-v0_7.md)。`src/medsec/v07/` 已有未审核的合成试点生成、简化交互和复算入口；HealthAgentBench 正常任务可导出为 Harbor 风格目录，但尚未在 Harbor 中完成安全攻击实验，也未复现两个上游的全部任务。
+
+两个上游框架的适配接口、模块、测试与里程碑见[双底座适配实现规格 v0.1](docs/medsec-dual-benchmark-implementation-spec-v0_1.md)。
+
+v0.8 的已落地代码、复算命令与未满足的容器/审核门槛见[实现与验收状态](docs/medsec-v08-implementation-status.md)。
+
+两条合成扩展轨的任务与攻击标签、规则库、训练/测试隔离和分轨评分方案见[安全评测架构 v0.1](docs/medsec-synthetic-security-evaluation-architecture-v0_1.md)；可用于开发排期的数据合同、规则判定与验收门槛见[标签与评分实施规格 v0.1](docs/medsec-synthetic-labeling-implementation-spec-v0_1.md)。
+
+标签与评分模块的输入、冻结与复算命令见[使用说明](docs/medsec-labels-v1-usage.md)。正式数据审核及隐藏测试发布尚未完成。
+
+标签与评分模块已接入 `src/evaluate.py`，受控输入、冻结命令、复算命令和当前审核限制见[使用说明](docs/medsec-labels-v1-usage.md)。
+
+新增合成攻击集的入口覆盖、任务数量、验证范围和完整规格剩余缺口见[v10 扩展状态](docs/medsec-v10-expansion-status.md)。
+
+记忆扩展数据版本、底座对应关系与 DeepSeek 四条件实验见[v11 记忆实验记录](docs/medsec-v11-memory-experiment.md)。
+
+Health 合成轨的患者/项目授权记忆接口、真实来源任务及容器实验见[v12 Health 记忆与容器评测](docs/medsec-v12-health-memory.md)。
+
+P0–P5 当前验收、十类 Med 原版代表性回归及剩余交付见[双底座统一状态](docs/medsec-current-acceptance-status.md)。
+
+医疗风险类别、与攻击入口分离的标签合同及 DeepSeek Flash 分类别评估见[医疗风险类别 v1](docs/medsec-medical-risk-taxonomy-v1.md)。
+
+两轨 1,260 条合成攻击候选的全量 DeepSeek Flash 运行矩阵、效用与攻击成功率分母见[全量实验方案 v1](docs/medsec-full-deepseek-experiment-protocol-v1.md)。
+
+已完成的两轨 DeepSeek Flash 全量合成开发集实验、运行编号、分轨效用与攻击成功率见[2026-11-19 结果报告](docs/medsec-full-deepseek-results-2026-11-19.md)。
+
+十类原版 MedAgentBench 真实 FHIR 样本运行、成功攻击的四条件复测及攻击成功判定证据见[原版样本与攻击复测](docs/medsec-official-sample-and-attack-replay-2026-11-19.md)。
+
+面向立场论文的基准原型定位、当前可支持的主张和证据边界见[MedSecBench 论文定位 v1](docs/medsec-position-paper-benchmark-framing-v1.md)。
+
 ### 环境准备
 
 ```bash

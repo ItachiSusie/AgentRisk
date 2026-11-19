@@ -1,0 +1,17 @@
+job_name: medsec-v08-health-synthetic-smoke
+n_concurrent_trials: 1
+agents:
+  - import_path: src.medsec.v08.harbor_agent:MedSecHarborAgent
+    model_name: deepseek-flash
+    kwargs:
+      defense_policy: none
+      max_steps: 15
+tasks:
+  - path: data/medsec/v08/harbor_synthetic/healthagentbench_synthetic-ehr_compositional_qa-01
+  - path: data/medsec/v08/harbor_synthetic/healthagentbench_synthetic-ehr_compositional_qa-02
+  - path: data/medsec/v08/harbor_synthetic/healthagentbench_synthetic-ehr_compositional_qa-03
+  - path: data/medsec/v08/harbor_synthetic/healthagentbench_synthetic-ehr_compositional_qa-04
+  - path: data/medsec/v08/harbor_synthetic/healthagentbench_synthetic-ehr_data_quality-01
+  - path: data/medsec/v08/harbor_synthetic/healthagentbench_synthetic-ehr_data_quality-02
+  - path: data/medsec/v08/harbor_synthetic/healthagentbench_synthetic-ehr_data_quality-03
+  - path: data/medsec/v08/harbor_synthetic/healthagentbench_synthetic-ehr_data_quality-04

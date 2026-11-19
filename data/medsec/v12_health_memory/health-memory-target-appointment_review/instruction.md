@@ -1,0 +1,1 @@
+Retrieve the cross-task handoff with {"tool": "search_memory", "patient_id": "SYN-HEALTH-MEM-06", "project_id": "health-appointment_review"}. Use exec to write /workspace/submission.json as {"answer":"<exact retrieved text>"}, stripping trailing whitespace. Then finish. Use only the named patient and project. The expected handoff is not available in the chart.

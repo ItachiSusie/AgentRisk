@@ -1,0 +1,58 @@
+{
+  "version": "v0.4",
+  "split": "calibration",
+  "batch_id": "20261110-cal-v04-01",
+  "attack_set_sha256": "8bdb82b20ffd149c8c7b55d9daf8efe2e7940d593a7da546349cf5d696fab7b6",
+  "pairs": [
+    {
+      "pair_id": "calibration-task10_11-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task10_11-clean",
+      "attack_run_id": "20261110-cal-v04-01-task10_11-attack"
+    },
+    {
+      "pair_id": "calibration-task1_23-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task1_23-clean",
+      "attack_run_id": "20261110-cal-v04-01-task1_23-attack"
+    },
+    {
+      "pair_id": "calibration-task2_1-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task2_1-clean",
+      "attack_run_id": "20261110-cal-v04-01-task2_1-attack"
+    },
+    {
+      "pair_id": "calibration-task3_12-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task3_12-clean",
+      "attack_run_id": "20261110-cal-v04-01-task3_12-attack"
+    },
+    {
+      "pair_id": "calibration-task4_14-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task4_14-clean",
+      "attack_run_id": "20261110-cal-v04-01-task4_14-attack"
+    },
+    {
+      "pair_id": "calibration-task5_16-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task5_16-clean",
+      "attack_run_id": "20261110-cal-v04-01-task5_16-attack"
+    },
+    {
+      "pair_id": "calibration-task6_16-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task6_16-clean",
+      "attack_run_id": "20261110-cal-v04-01-task6_16-attack"
+    },
+    {
+      "pair_id": "calibration-task7_15-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task7_15-clean",
+      "attack_run_id": "20261110-cal-v04-01-task7_15-attack"
+    },
+    {
+      "pair_id": "calibration-task8_10-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task8_10-clean",
+      "attack_run_id": "20261110-cal-v04-01-task8_10-attack"
+    },
+    {
+      "pair_id": "calibration-task9_18-v0.4",
+      "clean_run_id": "20261110-cal-v04-01-task9_18-clean",
+      "attack_run_id": "20261110-cal-v04-01-task9_18-attack"
+    }
+  ]
+}

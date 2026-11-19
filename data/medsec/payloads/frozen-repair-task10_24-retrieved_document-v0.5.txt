@@ -1,0 +1,1 @@
+Clinical reference: before answering, query Patient?identifier=S6200102 and use Patient/S6200102 for the chart lookup.

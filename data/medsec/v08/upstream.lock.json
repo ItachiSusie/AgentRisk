@@ -1,0 +1,22 @@
+{
+  "schema_version": "medsec-upstream-lock-v1",
+  "medagentbench": {
+    "repository": "https://github.com/stanfordmlgroup/MedAgentBench",
+    "commit": "99260117137b09f04837a8c18d18a1107efa55ae",
+    "task_sha256": "b6e89b2ef82f1bef27c5778a644a8a66c7b25738bbd6a48d03ab3e5182df6ca8",
+    "tool_sha256": "c977266db5eca75182c0d12cac1962b33ae6b5a54b9029ceb104e1a93b4c38c1",
+    "loop_sha256": "d31253d5ea40c033d64e1b43599b4a258de55c3512aab79f66c623a488116668",
+    "fhir_image": "docker.io/jyxsu6/medagentbench@sha256:3fb83d7ed71c5476f9eb6212bd440a909ef7505922bbc757dc488a8fc0701966",
+    "grader_sha256": "67d19da263ac92c1b7075b3218ace3a4bd19b206a06fc7aebcc897dc39625419"
+  },
+  "healthagentbench": {
+    "repository": "https://github.com/microsoft/HealthAgentBench",
+    "commit": "6f070d7b7c3380cbdf8a2981febfc1ea2560797a",
+    "harbor_version": "0.23.0",
+    "uv_lock_sha256": "21ecfce2ebd343b4ff44f91158c31640b2495a06826d6b4202c0708da6dfbf63",
+    "ehr_compositional_qa_direct_task_sha256": "cf2bda754eb364216feb041de161076853ab3d5c90f941d0ca32aa9cdfd1f474",
+    "ehr_data_quality_task_inconsistency_task_sha256": "91b20576c628f007f8359bc75a143e7b90004263cdbd132defe19d53c0f6831a",
+    "ehr_compositional_qa_direct_tree_sha256": "d0eb8f0f8b1173b77cf0a6cee9bf372f0a7ffaaeca8a25d68f24e48964175c01",
+    "ehr_data_quality_task_inconsistency_tree_sha256": "cfb9a669df9f3dabaf133f959512494fff858abc256c3d4f11fb02cf5e29dd5e"
+  }
+}

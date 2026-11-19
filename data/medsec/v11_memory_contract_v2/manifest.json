@@ -1,0 +1,2032 @@
+{
+  "format": "medsec-memory-expansion-v1",
+  "benchmark_id": "medagentbench_ext",
+  "status": "candidate_unreviewed",
+  "split": "development",
+  "tool_contract_version": "v2",
+  "tasks": [
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-lab_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-lab_review-01.json",
+      "task_sha256": "16163bdf7a4c7cc9c10c1b0eac0d173dad823df634d7b3528a570f019e2a6fcc",
+      "role": "source",
+      "scenario_group_id": "memory:lab_review",
+      "clinical_context": "lab_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-lab_review-01.json",
+      "task_sha256": "a276d06234a076d35bb0efea7f833cdb3ccdf9b1d9b8bd585d52486140548e9d",
+      "role": "target",
+      "scenario_group_id": "memory:lab_review",
+      "clinical_context": "lab_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-lab_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-lab_review-02.json",
+      "task_sha256": "90fb068cf47115da9d72232170b5c50f9fae105c337b897c84f947e52ac74bb3",
+      "role": "source",
+      "scenario_group_id": "memory:lab_review",
+      "clinical_context": "lab_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-lab_review-02.json",
+      "task_sha256": "86b031b95c72ebff7cbdd5dde76c6230938c1925d066919d48d13c461e8ea485",
+      "role": "target",
+      "scenario_group_id": "memory:lab_review",
+      "clinical_context": "lab_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-lab_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-lab_review-03.json",
+      "task_sha256": "2a474260b7aa087dc1cd0cb48cc708d8f98fffab971238e6eab0925ae8742e74",
+      "role": "source",
+      "scenario_group_id": "memory:lab_review",
+      "clinical_context": "lab_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-lab_review-03.json",
+      "task_sha256": "076f2e5aedaf646ff91f9426801e5564325cc1eff95e97b1cf75823bedb2bc78",
+      "role": "target",
+      "scenario_group_id": "memory:lab_review",
+      "clinical_context": "lab_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-referral_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-referral_review-01.json",
+      "task_sha256": "da15b3f9485bd9ebaa19d57717f2a55d08219dab93fb92fccab8bc98275cb451",
+      "role": "source",
+      "scenario_group_id": "memory:referral_review",
+      "clinical_context": "referral_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-referral_review-01.json",
+      "task_sha256": "9107303e6e11d6024c679734a13ace30b5cb9aeca0869107b6eeabbb22bb2648",
+      "role": "target",
+      "scenario_group_id": "memory:referral_review",
+      "clinical_context": "referral_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-referral_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-referral_review-02.json",
+      "task_sha256": "9311d90d22cf3c4c4478cd761f3867016e3c2f9d6346dd60d1b1a0ab13509da4",
+      "role": "source",
+      "scenario_group_id": "memory:referral_review",
+      "clinical_context": "referral_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-referral_review-02.json",
+      "task_sha256": "a07e9164cd59c01a71851f5739f140768bb236f75dbf41e3ba6443572528e6c0",
+      "role": "target",
+      "scenario_group_id": "memory:referral_review",
+      "clinical_context": "referral_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-referral_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-referral_review-03.json",
+      "task_sha256": "436eadfc6ad127b260a7f162a0b1f77a443fd8ac1bdc86e6f825c8432d4d66e0",
+      "role": "source",
+      "scenario_group_id": "memory:referral_review",
+      "clinical_context": "referral_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-referral_review-03.json",
+      "task_sha256": "d006ebae697144bdb863084489383debed89dddd6ce7477a4dc15283f43ff177",
+      "role": "target",
+      "scenario_group_id": "memory:referral_review",
+      "clinical_context": "referral_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-medication_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-medication_review-01.json",
+      "task_sha256": "0d6f3bac9d502dd37520d4b1a9e13c2bd287f3c14e9dd20aa1c0943e741ecfe5",
+      "role": "source",
+      "scenario_group_id": "memory:medication_review",
+      "clinical_context": "medication_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-medication_review-01.json",
+      "task_sha256": "48048354c6d0df9e538ed897b20e45bfa349776717e22af6d9285207bd211b90",
+      "role": "target",
+      "scenario_group_id": "memory:medication_review",
+      "clinical_context": "medication_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-medication_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-medication_review-02.json",
+      "task_sha256": "c0a666408dec89796e3fd7809e8c2e554181e42c9e9a0319b446a6de391d31fe",
+      "role": "source",
+      "scenario_group_id": "memory:medication_review",
+      "clinical_context": "medication_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-medication_review-02.json",
+      "task_sha256": "4c8bd27beeb37d114e59dadb3617ddd48fd142ceb19f46360b0cc3fceae98521",
+      "role": "target",
+      "scenario_group_id": "memory:medication_review",
+      "clinical_context": "medication_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-medication_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-medication_review-03.json",
+      "task_sha256": "cb42b731843348adfe124d32f8fc3d3530f1558bf9d1ae7365fe71043366f077",
+      "role": "source",
+      "scenario_group_id": "memory:medication_review",
+      "clinical_context": "medication_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-medication_review-03.json",
+      "task_sha256": "150f399e53db3b4222521ade33811d300fc41d7bbb9c2ffb9f7c9d04a4f46fe2",
+      "role": "target",
+      "scenario_group_id": "memory:medication_review",
+      "clinical_context": "medication_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-allergy_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-allergy_review-01.json",
+      "task_sha256": "3766e8f6c0d3e857f0e83a719ee8da2fdaf1af774eb7bee28203beb6dd9b7020",
+      "role": "source",
+      "scenario_group_id": "memory:allergy_review",
+      "clinical_context": "allergy_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-allergy_review-01.json",
+      "task_sha256": "fd3904e24499555753fdcb6c7fa5476317f07180948b346f9a607343fcb350d0",
+      "role": "target",
+      "scenario_group_id": "memory:allergy_review",
+      "clinical_context": "allergy_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-allergy_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-allergy_review-02.json",
+      "task_sha256": "44f1aa9df523dbf572e0b3fa5b0053a1e6e34c3e8850d1f3fd8be4155b8f4b8c",
+      "role": "source",
+      "scenario_group_id": "memory:allergy_review",
+      "clinical_context": "allergy_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-allergy_review-02.json",
+      "task_sha256": "f183eb97ad6afcaca8f934c7de340b67c002925538a61521f24541593be7844b",
+      "role": "target",
+      "scenario_group_id": "memory:allergy_review",
+      "clinical_context": "allergy_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-allergy_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-allergy_review-03.json",
+      "task_sha256": "c3094ff23122db05ddafc445ce01383da887a9154545d6ecd70678b864d90975",
+      "role": "source",
+      "scenario_group_id": "memory:allergy_review",
+      "clinical_context": "allergy_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-allergy_review-03.json",
+      "task_sha256": "e3581876bfbeab2f01dc8d1bf90bc9a04cd88fce22a4cfa7361964815ce8d65a",
+      "role": "target",
+      "scenario_group_id": "memory:allergy_review",
+      "clinical_context": "allergy_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-portal_followup-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-portal_followup-01.json",
+      "task_sha256": "3b78bee3068e34115feb3da2409f9bfb6e253d949c097deddfbe08dc9c6711ee",
+      "role": "source",
+      "scenario_group_id": "memory:portal_followup",
+      "clinical_context": "portal_followup"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-portal_followup-01.json",
+      "task_sha256": "02fad72f59c016c427c34b8d9de7c19a17940081df36635564159d4aea4d2a6c",
+      "role": "target",
+      "scenario_group_id": "memory:portal_followup",
+      "clinical_context": "portal_followup"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-portal_followup-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-portal_followup-02.json",
+      "task_sha256": "e4154b99610a2e880158c5523fd4401d27b8f0ac90f2fbf9957485f1b8857d7e",
+      "role": "source",
+      "scenario_group_id": "memory:portal_followup",
+      "clinical_context": "portal_followup"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-portal_followup-02.json",
+      "task_sha256": "14cfbb1d6f8a44db97d1deee0168039c20f303317b0aa29fc05719c9b190cf8c",
+      "role": "target",
+      "scenario_group_id": "memory:portal_followup",
+      "clinical_context": "portal_followup"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-portal_followup-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-portal_followup-03.json",
+      "task_sha256": "a5c3210786d6f87d2db83f8a5564732692965ad6c027dd16bb940b435518d11f",
+      "role": "source",
+      "scenario_group_id": "memory:portal_followup",
+      "clinical_context": "portal_followup"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-portal_followup-03.json",
+      "task_sha256": "0305da3a9f3034a4d3dd34a03e793f5120e531361d87f92825dbc92d45c17eab",
+      "role": "target",
+      "scenario_group_id": "memory:portal_followup",
+      "clinical_context": "portal_followup"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-appointment_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-appointment_review-01.json",
+      "task_sha256": "e11abb711e0ee9e3bb40b4b781247433620f3c6e859a86253c7511966eee73a5",
+      "role": "source",
+      "scenario_group_id": "memory:appointment_review",
+      "clinical_context": "appointment_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-appointment_review-01.json",
+      "task_sha256": "77bce14b139b1a9b1c597e7ff0efc4c58adc8a8150241f9f9eb4f3641aab455a",
+      "role": "target",
+      "scenario_group_id": "memory:appointment_review",
+      "clinical_context": "appointment_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-appointment_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-appointment_review-02.json",
+      "task_sha256": "0bf4f8282e2db3190e21d6158955928dbdb4e60d0ee6105a4dccab7c6bce9d29",
+      "role": "source",
+      "scenario_group_id": "memory:appointment_review",
+      "clinical_context": "appointment_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-appointment_review-02.json",
+      "task_sha256": "655b007cd09fb950e8851ad4eab7d46987880a58612218df04c04f6a2585f261",
+      "role": "target",
+      "scenario_group_id": "memory:appointment_review",
+      "clinical_context": "appointment_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-appointment_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-appointment_review-03.json",
+      "task_sha256": "4bc103d417f86d28d4c3df46d8539f186b969d493df7497ad2c5c00116236b3c",
+      "role": "source",
+      "scenario_group_id": "memory:appointment_review",
+      "clinical_context": "appointment_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-appointment_review-03.json",
+      "task_sha256": "8ee8575076a40fd83f7d0cee3dec387438719f105a2b898e8499dba08ec4085d",
+      "role": "target",
+      "scenario_group_id": "memory:appointment_review",
+      "clinical_context": "appointment_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-discharge_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-discharge_review-01.json",
+      "task_sha256": "4cd9946f95880773317a9edd18341f5b3a893846aabb279a0fc39e9ae3754933",
+      "role": "source",
+      "scenario_group_id": "memory:discharge_review",
+      "clinical_context": "discharge_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-discharge_review-01.json",
+      "task_sha256": "e2eb513a25cdf5aa961b48e38aef118e4637816fbda899f1eaf2615843ea92e1",
+      "role": "target",
+      "scenario_group_id": "memory:discharge_review",
+      "clinical_context": "discharge_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-discharge_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-discharge_review-02.json",
+      "task_sha256": "e24faad720fb2b6f9ba423f398ade18e288d67f6351896bc9827e9af2c0ca418",
+      "role": "source",
+      "scenario_group_id": "memory:discharge_review",
+      "clinical_context": "discharge_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-discharge_review-02.json",
+      "task_sha256": "4800e24ef82f125a78fd625b9ecc9536e631deeb483e5faf06fe3d055343e63d",
+      "role": "target",
+      "scenario_group_id": "memory:discharge_review",
+      "clinical_context": "discharge_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-discharge_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-discharge_review-03.json",
+      "task_sha256": "002fa3ae48d03c2aa7de9d068c74689649af95c100b62fdc6c6de7f97dc97274",
+      "role": "source",
+      "scenario_group_id": "memory:discharge_review",
+      "clinical_context": "discharge_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-discharge_review-03.json",
+      "task_sha256": "3a98f05910e4dfd79c968257aa31745fd4ee82779d9b7c4780e387cd6f4d102b",
+      "role": "target",
+      "scenario_group_id": "memory:discharge_review",
+      "clinical_context": "discharge_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-imaging_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-imaging_review-01.json",
+      "task_sha256": "8ff8f8f06ad07b6ebf1b64a333abb5a79685662439cfea017b202efc40578b82",
+      "role": "source",
+      "scenario_group_id": "memory:imaging_review",
+      "clinical_context": "imaging_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-imaging_review-01.json",
+      "task_sha256": "60ff3a48d6935f429f8d72202a4639b9f1fa408c1f7018219cc7ce50fdad6cf0",
+      "role": "target",
+      "scenario_group_id": "memory:imaging_review",
+      "clinical_context": "imaging_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-imaging_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-imaging_review-02.json",
+      "task_sha256": "6cee587af73f6eddf89a4f45cd329794caf471504f2e389df4255eac91c022c2",
+      "role": "source",
+      "scenario_group_id": "memory:imaging_review",
+      "clinical_context": "imaging_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-imaging_review-02.json",
+      "task_sha256": "7c12538bb5a5256d1633b2fc813b847f2257c3fb8d6831dfe0dc6c27a37dd28f",
+      "role": "target",
+      "scenario_group_id": "memory:imaging_review",
+      "clinical_context": "imaging_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-imaging_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-imaging_review-03.json",
+      "task_sha256": "71820403e2b478d3aa3f923ed82f4dd75b8e89fa38e0304efc57a172c3b2045d",
+      "role": "source",
+      "scenario_group_id": "memory:imaging_review",
+      "clinical_context": "imaging_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-imaging_review-03.json",
+      "task_sha256": "8f1f44032ca747f7f166cae30a6fef2e675f3a4de4ce7f97fabf3e8dc1a6f396",
+      "role": "target",
+      "scenario_group_id": "memory:imaging_review",
+      "clinical_context": "imaging_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-care_transition-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-care_transition-01.json",
+      "task_sha256": "eaf91444ca277548b15df38170cafe92eb9ffa371e4e5e31e0dbfe1f6ab53f44",
+      "role": "source",
+      "scenario_group_id": "memory:care_transition",
+      "clinical_context": "care_transition"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-care_transition-01.json",
+      "task_sha256": "ac0608986a7facdb25416c8c6cb92da05951557a02237e0184e1b271ff113d4c",
+      "role": "target",
+      "scenario_group_id": "memory:care_transition",
+      "clinical_context": "care_transition"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-care_transition-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-care_transition-02.json",
+      "task_sha256": "8e00e4294f697cde445b7f04c18ea006b31ca34dbc175ceaf8861ab400391a2a",
+      "role": "source",
+      "scenario_group_id": "memory:care_transition",
+      "clinical_context": "care_transition"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-care_transition-02.json",
+      "task_sha256": "241a7f1433eae68ff0bb28b54cfbc186bc02929092b94820f71dde8e20d36324",
+      "role": "target",
+      "scenario_group_id": "memory:care_transition",
+      "clinical_context": "care_transition"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-care_transition-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-care_transition-03.json",
+      "task_sha256": "9e09a5ead97628ef2f7ba0c93e9244caefa728a62374ad17d76ff9d3fa3ae2a0",
+      "role": "source",
+      "scenario_group_id": "memory:care_transition",
+      "clinical_context": "care_transition"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-care_transition-03.json",
+      "task_sha256": "35df1226d45f5fba98c19918a5f3e709ac2529764f8004ebdbed204839e2f307",
+      "role": "target",
+      "scenario_group_id": "memory:care_transition",
+      "clinical_context": "care_transition"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-consent_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-consent_review-01.json",
+      "task_sha256": "4e10cad8975da2f0a3283eca6056f5dff6477ea2d6fd102dd5dbca61c910f1c7",
+      "role": "source",
+      "scenario_group_id": "memory:consent_review",
+      "clinical_context": "consent_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-consent_review-01.json",
+      "task_sha256": "a1a21286b8d9d6a8777fd9bbbb4afd3830915668d8d93bd75a5e433dd57d290b",
+      "role": "target",
+      "scenario_group_id": "memory:consent_review",
+      "clinical_context": "consent_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-consent_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-consent_review-02.json",
+      "task_sha256": "f09d3b8623805be460e9c14d3e404956f47facae7eba1e7f78bdae2839cb6707",
+      "role": "source",
+      "scenario_group_id": "memory:consent_review",
+      "clinical_context": "consent_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-consent_review-02.json",
+      "task_sha256": "b6bcb30913880022df492903a197767edb6470b78bf547d12325fc67a9964600",
+      "role": "target",
+      "scenario_group_id": "memory:consent_review",
+      "clinical_context": "consent_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-consent_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-consent_review-03.json",
+      "task_sha256": "0b1515b371213cc5107634c4090aa924a8391ca7006d8942898062233f9a26c3",
+      "role": "source",
+      "scenario_group_id": "memory:consent_review",
+      "clinical_context": "consent_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-consent_review-03.json",
+      "task_sha256": "e9c7d48d29f7e2aea39e6a03eae790e7245dfa65d3d70fa7279a604e223df693",
+      "role": "target",
+      "scenario_group_id": "memory:consent_review",
+      "clinical_context": "consent_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-data_quality_review-01.json",
+      "task_sha256": "8de08cf66e9a4a6f8650718194d86bc1f25df32cdcd289ffb3d5b4cd180b6143",
+      "role": "source",
+      "scenario_group_id": "memory:data_quality_review",
+      "clinical_context": "data_quality_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-data_quality_review-01.json",
+      "task_sha256": "0e9b310ad730dcb412e8b9a1f34f5bf1e953ff8558c5ed493dff9e973bac0e16",
+      "role": "target",
+      "scenario_group_id": "memory:data_quality_review",
+      "clinical_context": "data_quality_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-data_quality_review-02.json",
+      "task_sha256": "e714dd44a78e52e764a32aee641961f2718778f7f15e97dd2f68ca696dc54674",
+      "role": "source",
+      "scenario_group_id": "memory:data_quality_review",
+      "clinical_context": "data_quality_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-data_quality_review-02.json",
+      "task_sha256": "672740a4dfe2312ae7720eba681b156fc9f290f3981d4c259e77e3df388a5b13",
+      "role": "target",
+      "scenario_group_id": "memory:data_quality_review",
+      "clinical_context": "data_quality_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-data_quality_review-03.json",
+      "task_sha256": "448d746df4acac94237bdf714fb9cdb75d6e77674935e739231f19f7689b32bd",
+      "role": "source",
+      "scenario_group_id": "memory:data_quality_review",
+      "clinical_context": "data_quality_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-data_quality_review-03.json",
+      "task_sha256": "10d0f3ade9c78bd38cd15e83222d130c5324a436306c9b59fccfb447a29cb189",
+      "role": "target",
+      "scenario_group_id": "memory:data_quality_review",
+      "clinical_context": "data_quality_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-care_plan_review-01.json",
+      "task_sha256": "7110c8e7404d2545ab1c8f8204fed7acc329d3f26bea081e99bbf06d2075869a",
+      "role": "source",
+      "scenario_group_id": "memory:care_plan_review",
+      "clinical_context": "care_plan_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-01",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-care_plan_review-01.json",
+      "task_sha256": "7ca9e8f1094b7dc77a86053e423acdd0c40c65a55fe24a45549fbd72e7a08be3",
+      "role": "target",
+      "scenario_group_id": "memory:care_plan_review",
+      "clinical_context": "care_plan_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-care_plan_review-02.json",
+      "task_sha256": "6a4cb9c34b954170be84a1cdab7a2b58ecbedb39d3245103a3870fd5537a449f",
+      "role": "source",
+      "scenario_group_id": "memory:care_plan_review",
+      "clinical_context": "care_plan_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-02",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-care_plan_review-02.json",
+      "task_sha256": "9368498174f0a35f15d573b0285e6fdbc5a53f792a55363c086a6a89da17f3b3",
+      "role": "target",
+      "scenario_group_id": "memory:care_plan_review",
+      "clinical_context": "care_plan_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_source-care_plan_review-03.json",
+      "task_sha256": "5e08f567cf7b0a8d619afe3286658d1f44acbb43487fb754bf8c4eae44e31d08",
+      "role": "source",
+      "scenario_group_id": "memory:care_plan_review",
+      "clinical_context": "care_plan_review"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-03",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-care_plan_review-03.json",
+      "task_sha256": "4a77be33e9a382b4673d474b166c2ede4d9271a4a68ce05f6f4c9a618a4e0121",
+      "role": "target",
+      "scenario_group_id": "memory:care_plan_review",
+      "clinical_context": "care_plan_review"
+    }
+  ],
+  "attacks": [
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-01-cancel.json",
+      "attack_sha256": "179a10c2042fb6c14660da3e740a91f3c0fef47274da66b80ef327e99866ea83",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-01",
+      "clinical_context": "lab_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-01-defer.json",
+      "attack_sha256": "b1e39989d78b81eee919d886f99eeecd6ed5f113eb90eb75bb2603624b9ee6ee",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-01",
+      "clinical_context": "lab_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-01-completed.json",
+      "attack_sha256": "892aab95138a468a3b6b84867a050392ac39706d3f8eefb008c8ef41917a8b11",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-01",
+      "clinical_context": "lab_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-01-routing_override.json",
+      "attack_sha256": "100046d3d3e62943f8671dd92bba4e0098d1bf1190e4d862d95d0fba0dc97964",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-01",
+      "clinical_context": "lab_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-02-cancel.json",
+      "attack_sha256": "76beee4db1744b2355864c2d312e50e5222e0f8f21993ec0f9b9544d7ebd0b80",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-02",
+      "clinical_context": "lab_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-02-defer.json",
+      "attack_sha256": "b623b35e9026adb748b50c4cdee579c8597ef120e045c6e9d3bf7e3b192de2d9",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-02",
+      "clinical_context": "lab_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-02-completed.json",
+      "attack_sha256": "4ee778ba0ddb6753e1b47f463a59dcc954a50e4f44e8ba0fc5336822d7f75e7a",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-02",
+      "clinical_context": "lab_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-02-routing_override.json",
+      "attack_sha256": "929e8f45bf5265ce7ad3775f81d17f7bdb92d07860d6a53f635df933279d593f",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-02",
+      "clinical_context": "lab_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-03-cancel.json",
+      "attack_sha256": "cf0b2c193926061edbc65d7a588dba72d8f538eba6f62464481b380260bb7308",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-03",
+      "clinical_context": "lab_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-03-defer.json",
+      "attack_sha256": "2d0830631602b1f571a19d53af99fd70dc516fd752baeee80da0c1684d22d14c",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-03",
+      "clinical_context": "lab_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-03-completed.json",
+      "attack_sha256": "84d7157f77dd2c74611dda92eef8907a2e7e2db26986aa95c5eb7b5cd334ded2",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-03",
+      "clinical_context": "lab_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-lab_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-lab_review-03-routing_override.json",
+      "attack_sha256": "4bbb26a5d6d7ed0184a2e1553982f6fb36b02ae5a4a6ef0fcbb45f3104fe07fd",
+      "task_id": "medagentbench_ext-memory_handoff_target-lab_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-lab_review-03",
+      "clinical_context": "lab_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-01-cancel.json",
+      "attack_sha256": "8d77ca8f232b40751d858bec9b17d9a1ccd1ebfe6039792ab3307d7e789ddf62",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-01",
+      "clinical_context": "referral_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-01-defer.json",
+      "attack_sha256": "833aa1683481776921740f9093ef4ad411ef5b96b93ff85d9bc1ec950623c7a8",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-01",
+      "clinical_context": "referral_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-01-completed.json",
+      "attack_sha256": "18f98595101271db60943ccdcce7d360ded69277d492c4b2c6ece98a41e753e3",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-01",
+      "clinical_context": "referral_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-01-routing_override.json",
+      "attack_sha256": "f78afe6807e4420e4ffbcce339d5e33316fcb60d373a3d9f06cc8f532cb6145b",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-01",
+      "clinical_context": "referral_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-02-cancel.json",
+      "attack_sha256": "ae13fd29436cf2d3de95aa897b5d4315b03cd27383fe4a6ee81f46e03fb035b4",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-02",
+      "clinical_context": "referral_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-02-defer.json",
+      "attack_sha256": "65da62f2d5d744790cfe9f53a2cd195cf6b6c268bbf23d10fa0cbd30a74b774c",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-02",
+      "clinical_context": "referral_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-02-completed.json",
+      "attack_sha256": "267575cb759d8234b20a108c4f0295a7fd55683fa9a3f97921c2303dca519b3d",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-02",
+      "clinical_context": "referral_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-02-routing_override.json",
+      "attack_sha256": "e8f71a380645787c3591f59c8ef8f6464d5ad0edd29c4cb419b610db22966b2a",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-02",
+      "clinical_context": "referral_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-03-cancel.json",
+      "attack_sha256": "6af056796d1d0cbbe67941440b7ea260e5b42aed0c4726d6ca8fea10295328b3",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-03",
+      "clinical_context": "referral_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-03-defer.json",
+      "attack_sha256": "f9cef08500096fb2a66a539857eac43eb7c5ce98e039c3b84fa472217c467647",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-03",
+      "clinical_context": "referral_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-03-completed.json",
+      "attack_sha256": "5f40f20324d1cc627025a5b7113bab66fc295f6d1a738dcf0ab1d71035779051",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-03",
+      "clinical_context": "referral_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-referral_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-referral_review-03-routing_override.json",
+      "attack_sha256": "69a31d6fa388cffc9c7c4fde49c7874fb6c6c2db92251bdffa8008a7e3d872ce",
+      "task_id": "medagentbench_ext-memory_handoff_target-referral_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-referral_review-03",
+      "clinical_context": "referral_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-01-cancel.json",
+      "attack_sha256": "f12ce745f801a863548702331cb0f29f908de1dded30a349a0fcc5bf08e72d2a",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-01",
+      "clinical_context": "medication_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-01-defer.json",
+      "attack_sha256": "08b733332ae95a762a80ccf099807292834c888ebd702bfc93a39e1245233d81",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-01",
+      "clinical_context": "medication_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-01-completed.json",
+      "attack_sha256": "d28e167c6cab0216c14a3c88c38ffdd53d9bc630761bbff36b3ca8ba551fe770",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-01",
+      "clinical_context": "medication_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-01-routing_override.json",
+      "attack_sha256": "8698b09c2031211cec89784dd0f1b469b2cae4c2a69d80cd4f03cbfbc5a26b0c",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-01",
+      "clinical_context": "medication_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-02-cancel.json",
+      "attack_sha256": "e4de1242d82fc953d82d1c40d756b1433e3ab5ffe6f4afa092ec65124162b3cc",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-02",
+      "clinical_context": "medication_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-02-defer.json",
+      "attack_sha256": "8633e229234947e6322e49e95ac9e84b0e6bc3b374decbd2227566e1fdae398b",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-02",
+      "clinical_context": "medication_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-02-completed.json",
+      "attack_sha256": "24c13d4b36021a979133840b5545e57a1962f4a9e7f5167885f1a470be5900bc",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-02",
+      "clinical_context": "medication_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-02-routing_override.json",
+      "attack_sha256": "add79a5b654ec148a06ea35c817ade1bc0be91bec47925d060b039783ede6985",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-02",
+      "clinical_context": "medication_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-03-cancel.json",
+      "attack_sha256": "a8b73f2cc0940aacf7e3d3d891e26730a4d4f08072a66b34f523c7bcef49464b",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-03",
+      "clinical_context": "medication_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-03-defer.json",
+      "attack_sha256": "ea402b18947ef84fa0cd9aa3bba2d4d92f283a9e7c2fe5d767b8f8ccd3f06e6a",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-03",
+      "clinical_context": "medication_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-03-completed.json",
+      "attack_sha256": "75a4054bb66bb7d72c15b75e335e92f437269e6b47be8ace46b70e34bd23bf8d",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-03",
+      "clinical_context": "medication_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-medication_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-medication_review-03-routing_override.json",
+      "attack_sha256": "8cf9c842b4bb5fb591384b29ffb06ca0065df5fd2c96812764ff3cc12c99a278",
+      "task_id": "medagentbench_ext-memory_handoff_target-medication_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-medication_review-03",
+      "clinical_context": "medication_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-01-cancel.json",
+      "attack_sha256": "aec3aa03b949a4f1003dcca605fec4c30e5cdb327bd075d7e4b02803bbf55259",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-01",
+      "clinical_context": "allergy_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-01-defer.json",
+      "attack_sha256": "5fdd15d9c929cfecb96f3a6a2bcca9614206e35c68b054793a419f7d7843311e",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-01",
+      "clinical_context": "allergy_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-01-completed.json",
+      "attack_sha256": "199e7dff52d97a8f099b5fbd0160082766b448b7d27ae3a607661fe5b6abeb8e",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-01",
+      "clinical_context": "allergy_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-01-routing_override.json",
+      "attack_sha256": "3bfdb5707ccb2d67f9651c94ec58754ed454eb110da4422df62aca17476c610b",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-01",
+      "clinical_context": "allergy_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-02-cancel.json",
+      "attack_sha256": "dabc143dc00c7b4e72232ed6d23756ba6c87e7476b19c1d57c2a65d52e2c6da4",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-02",
+      "clinical_context": "allergy_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-02-defer.json",
+      "attack_sha256": "82783e2a56c2ee816aabd2df6bd711b949984303335303652e8c4dcb715f0601",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-02",
+      "clinical_context": "allergy_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-02-completed.json",
+      "attack_sha256": "81ed69dee06a96c906797fa925d72d3ecbc28af186c788adf3617369543c134d",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-02",
+      "clinical_context": "allergy_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-02-routing_override.json",
+      "attack_sha256": "2871cfd2a207a8bb8c831355de5257cfb6ea9fb57834114870901fb581ff7d5f",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-02",
+      "clinical_context": "allergy_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-03-cancel.json",
+      "attack_sha256": "255a36256e21297f91a23d195107f42cc5c6da429c898dd054452dcfa692c71a",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-03",
+      "clinical_context": "allergy_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-03-defer.json",
+      "attack_sha256": "e3500de8323308fce573369f3548ed1de587a90d539498283a406e562d98ec13",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-03",
+      "clinical_context": "allergy_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-03-completed.json",
+      "attack_sha256": "b6e4572ee68ebbd0b40820eee59bf7003ca40bf44106a6902525ef0bd4c4c69e",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-03",
+      "clinical_context": "allergy_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-allergy_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-allergy_review-03-routing_override.json",
+      "attack_sha256": "d7739d2f8700204279f4283ca37b5bb7d88a22db9052153dba0db0d85a6172d0",
+      "task_id": "medagentbench_ext-memory_handoff_target-allergy_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-allergy_review-03",
+      "clinical_context": "allergy_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-01-cancel.json",
+      "attack_sha256": "f8ef3236877e7b9d33fb917243b96e396499418999745376ecaac6d9c21b4787",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-01",
+      "clinical_context": "portal_followup",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-01-defer.json",
+      "attack_sha256": "031e9cf96272fc7f86a28a29848b65b54b3ebb9374e10ef7ca274fe6fee0e3a8",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-01",
+      "clinical_context": "portal_followup",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-01-completed.json",
+      "attack_sha256": "ca92dd386db8150cfbea8bc7ba4763d6f3e59f6368c1ecad06a8711e44529108",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-01",
+      "clinical_context": "portal_followup",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-01-routing_override.json",
+      "attack_sha256": "8cecf651cc0e540e550628c2b3c0b870d682a9f42bcdcb171d966b4d66bd7195",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-01",
+      "clinical_context": "portal_followup",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-02-cancel.json",
+      "attack_sha256": "a4f9358e29e61f275d84c97b2917a9f3894a86400754964694d3d45f94d4d47e",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-02",
+      "clinical_context": "portal_followup",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-02-defer.json",
+      "attack_sha256": "c100a2f77e08c3fec4f10a68ee25dbcb0184b06402a8fec297b2cd99c6a8b809",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-02",
+      "clinical_context": "portal_followup",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-02-completed.json",
+      "attack_sha256": "7cd037d79231170f354342db08b991b55e1623ba312e28c642bbd4d2d451de2a",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-02",
+      "clinical_context": "portal_followup",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-02-routing_override.json",
+      "attack_sha256": "4942e3ed86773756f9a46eeb8ce6396621d8fddf96efa0d814f787024a6bdbad",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-02",
+      "clinical_context": "portal_followup",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-03-cancel.json",
+      "attack_sha256": "b5d4cbabe3ee84d32ad733766572c2a1301dcf2fb1fd89367b2e445ff16ed1be",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-03",
+      "clinical_context": "portal_followup",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-03-defer.json",
+      "attack_sha256": "d6480f7acb435b71f9cee6c7a301a811964897b6385ea7347e99a756c9f49140",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-03",
+      "clinical_context": "portal_followup",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-03-completed.json",
+      "attack_sha256": "9c2112f009783852c2d7be8ad4c4ab89c7e4de0b841cd85939233115eb26fa31",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-03",
+      "clinical_context": "portal_followup",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-portal_followup-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-portal_followup-03-routing_override.json",
+      "attack_sha256": "2ee930740e87a839a439d25bd696cdf430cbd29c7d0fb5cc602ce57de75b50b1",
+      "task_id": "medagentbench_ext-memory_handoff_target-portal_followup-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-portal_followup-03",
+      "clinical_context": "portal_followup",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-01-cancel.json",
+      "attack_sha256": "551590900329400ab82cfae27514eaa2a39053807f90f40e6a4d0e07574f6af9",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-01",
+      "clinical_context": "appointment_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-01-defer.json",
+      "attack_sha256": "50226bcc6fed0699957a05e7cf847e52e10edf4c3bb2151c3a71e402fd253f76",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-01",
+      "clinical_context": "appointment_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-01-completed.json",
+      "attack_sha256": "461c90b3c46c27d321d9969485b5db6b1b1fb9f546b832cb6804985d2c2f888b",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-01",
+      "clinical_context": "appointment_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-01-routing_override.json",
+      "attack_sha256": "bdbd375465cdd173c95f8e3add56b3abcfaafbb6b2bd53f1d2bd4a9a875e930c",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-01",
+      "clinical_context": "appointment_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-02-cancel.json",
+      "attack_sha256": "9cfc5fceafdfa63c49af350119ecf13a617b13516b80e6c6f18e2841db83d90d",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-02",
+      "clinical_context": "appointment_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-02-defer.json",
+      "attack_sha256": "ffe82af07f0b509589bbeb9a06b41c74a424b4812692f6987c587d4f13d726fb",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-02",
+      "clinical_context": "appointment_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-02-completed.json",
+      "attack_sha256": "54f1e686bd2ca32de3fbd7890ddd05543d6d8abeb3465cd9290e6af4fb33f707",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-02",
+      "clinical_context": "appointment_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-02-routing_override.json",
+      "attack_sha256": "3551f77ee9d58d8f2717365f3672e23fb874abfde409e0929d409fe0113f9d89",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-02",
+      "clinical_context": "appointment_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-03-cancel.json",
+      "attack_sha256": "89e60301f98a44e0ecc7832bd027337478a2f855b9db53590f9224672d995804",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-03",
+      "clinical_context": "appointment_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-03-defer.json",
+      "attack_sha256": "9e3a73a4ddc3fb2a59b184b89e1f1374babc4fa682ec0fb172b8efc0e8ba46ce",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-03",
+      "clinical_context": "appointment_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-03-completed.json",
+      "attack_sha256": "684ae660b1c6a4678e3260e6f2bfeabd67d29495b3789e706463673ef7961763",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-03",
+      "clinical_context": "appointment_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-appointment_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-appointment_review-03-routing_override.json",
+      "attack_sha256": "5f8c736253dda8e7eb02e77662f6a58259f462fdfe7c5534a81a33a1debf0bca",
+      "task_id": "medagentbench_ext-memory_handoff_target-appointment_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-appointment_review-03",
+      "clinical_context": "appointment_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-01-cancel.json",
+      "attack_sha256": "1447229c587c39a35f7e267ae7195ac95c409709bcf93b6192f9d8441044fae4",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-01",
+      "clinical_context": "discharge_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-01-defer.json",
+      "attack_sha256": "295e167338b70b83f8b689d53145762878346069a6aaf14a89b919ee24d12311",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-01",
+      "clinical_context": "discharge_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-01-completed.json",
+      "attack_sha256": "d998898436b910ee32d3c0695c1277c87d1355c2de86b34ecc03654963843436",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-01",
+      "clinical_context": "discharge_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-01-routing_override.json",
+      "attack_sha256": "65cc46f510a59d7e7797a7dcd6f59054fd03d4ae53477318b50ee1f8ecb0535e",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-01",
+      "clinical_context": "discharge_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-02-cancel.json",
+      "attack_sha256": "ff5d4d5ab095a57bbb4e11ee4337c949fd526b4777f62724fc15bd8379b3dc59",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-02",
+      "clinical_context": "discharge_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-02-defer.json",
+      "attack_sha256": "57365bfbdc109ed909d3cc2142f65064774a8c5c25d10419eca76ed73badd8b2",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-02",
+      "clinical_context": "discharge_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-02-completed.json",
+      "attack_sha256": "afb5b7294170d83a89d3f89440666a064e769fc0db232d532298fbb33670d096",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-02",
+      "clinical_context": "discharge_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-02-routing_override.json",
+      "attack_sha256": "c1c4309c69e3eb6062f1415db77228a642bcd2193f585a75d2c7cb1a800d2f39",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-02",
+      "clinical_context": "discharge_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-03-cancel.json",
+      "attack_sha256": "68c5298502297de37496a57d84e6ec410aa66a73b72f2cc3b50c749a86e2a921",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-03",
+      "clinical_context": "discharge_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-03-defer.json",
+      "attack_sha256": "873f8f6c88ac5848a4c6bf9896ba49aeb5f12c3ea3bf5927b2318166434cd8df",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-03",
+      "clinical_context": "discharge_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-03-completed.json",
+      "attack_sha256": "74dab5d4b398fbb85f3b4307edabac5e46f00217049e262bfdeee80cb0ecfee4",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-03",
+      "clinical_context": "discharge_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-discharge_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-discharge_review-03-routing_override.json",
+      "attack_sha256": "e69edc38b79c61cfa2c3908c6f0a1141b969f4382f20f3d2b364e3703ee81a68",
+      "task_id": "medagentbench_ext-memory_handoff_target-discharge_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-discharge_review-03",
+      "clinical_context": "discharge_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-01-cancel.json",
+      "attack_sha256": "99d9aaf97e52c9ec3b6df3cb16eac4000a2445386a0753d4221033592e405c2b",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-01",
+      "clinical_context": "imaging_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-01-defer.json",
+      "attack_sha256": "b65e71269bf001ab00000c6aaf8f167295936121006bd5f5afdcb6cf37839d07",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-01",
+      "clinical_context": "imaging_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-01-completed.json",
+      "attack_sha256": "59dc0c9d163b0b691d5b344d684c27973d2b9c6a5fd685cacebd6816f9dc164e",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-01",
+      "clinical_context": "imaging_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-01-routing_override.json",
+      "attack_sha256": "e83f8b974a33026f8f1950f47e6a02ae0706f04729ff7e80be1ddb75ee22a51e",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-01",
+      "clinical_context": "imaging_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-02-cancel.json",
+      "attack_sha256": "b53f3a6c045c76a567d5d17a1fc23477bb7b56878c3842beabd9c9d50bc087ed",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-02",
+      "clinical_context": "imaging_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-02-defer.json",
+      "attack_sha256": "ed16c56a7d7e6f43a0abd35bb322555ef34dba63fd9d98476584bead8b25143d",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-02",
+      "clinical_context": "imaging_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-02-completed.json",
+      "attack_sha256": "5438ebecbe9f8157ada4f2bb65878138ea966c33aeae69c3bff4e80083cab709",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-02",
+      "clinical_context": "imaging_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-02-routing_override.json",
+      "attack_sha256": "b9947e11816f03630a5b9bfc16095fd0a23c32af45da7b6f0d123e20f4dbda77",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-02",
+      "clinical_context": "imaging_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-03-cancel.json",
+      "attack_sha256": "e7a4f6da6ca1cf95f5c27d88e8be58c3a8e275aa5536d1b9aabe1b38a5646526",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-03",
+      "clinical_context": "imaging_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-03-defer.json",
+      "attack_sha256": "508b0ef072331ca037df563b2a88843c90830dd0b7d5104aa76c6cb170337ce6",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-03",
+      "clinical_context": "imaging_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-03-completed.json",
+      "attack_sha256": "6cc96d91c6827c44490c3f382ff8ace3ea7d19b7c43c9087b8a6506e6b88b629",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-03",
+      "clinical_context": "imaging_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-imaging_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-imaging_review-03-routing_override.json",
+      "attack_sha256": "4878ef07d35b2a47b52e4e432aab12ab035890291850a9cc71a89bae8e50d6a3",
+      "task_id": "medagentbench_ext-memory_handoff_target-imaging_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-imaging_review-03",
+      "clinical_context": "imaging_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-01-cancel.json",
+      "attack_sha256": "9a12882f58cc9578663d78f885cf2a14e6d27d05bbe1ddde604cf6b5c6a256fc",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-01",
+      "clinical_context": "care_transition",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-01-defer.json",
+      "attack_sha256": "c2b51a1351f9124a26e4e17ff9f6a478c777127636791dcc206ebd7402a33ad5",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-01",
+      "clinical_context": "care_transition",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-01-completed.json",
+      "attack_sha256": "250e20f14ce4795f55361d4bdb7b9eb6292274413621ecf1be0fe93da477f8ae",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-01",
+      "clinical_context": "care_transition",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-01-routing_override.json",
+      "attack_sha256": "cea06178bac21bd50ad75d72012bb9da0d6d735e2fe85b174657edb3a27bc8a0",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-01",
+      "clinical_context": "care_transition",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-02-cancel.json",
+      "attack_sha256": "87a05eb3c86d86f97c722d9631c3e99a297509af947cc20dc95d7887529f5bc7",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-02",
+      "clinical_context": "care_transition",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-02-defer.json",
+      "attack_sha256": "833e6abbc9d2631981807b67d4b990ec271c7aca5b7b08cc406fd6a55e67a428",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-02",
+      "clinical_context": "care_transition",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-02-completed.json",
+      "attack_sha256": "217fa76e7d30beee050593cb55bfa0a6f337cbb75f03b1fd8a8abed5683ebffa",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-02",
+      "clinical_context": "care_transition",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-02-routing_override.json",
+      "attack_sha256": "f4bc90c28ab40cac5241f430958c8fd2a7fe1f5bbb31c7c5bba9e2458f06714c",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-02",
+      "clinical_context": "care_transition",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-03-cancel.json",
+      "attack_sha256": "5f55fc415932985d45e7b49f8dd7a1c99725c516e8d391470c725a772755ceb4",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-03",
+      "clinical_context": "care_transition",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-03-defer.json",
+      "attack_sha256": "185152eafc0b30e2e88c77fa61116becab40046262d896391fc0af16d738f9ae",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-03",
+      "clinical_context": "care_transition",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-03-completed.json",
+      "attack_sha256": "c2bb81be6df488bc50203c69c5cdd60cbaa60f03257e388a50fda927208456df",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-03",
+      "clinical_context": "care_transition",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_transition-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_transition-03-routing_override.json",
+      "attack_sha256": "7e71bd9727e5bc1c23232abaf6f50a5660b60541cec72458b39dd1e10f6bdbc1",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_transition-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_transition-03",
+      "clinical_context": "care_transition",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-01-cancel.json",
+      "attack_sha256": "cf88fc0d219513aefde6fb2aa971019755e25ceece857f6ce435fda19ca4bb8c",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-01",
+      "clinical_context": "consent_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-01-defer.json",
+      "attack_sha256": "f9e0143291cada267ab0520a20f30bf58847586a46f6210884b732ef9ed7f2f8",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-01",
+      "clinical_context": "consent_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-01-completed.json",
+      "attack_sha256": "01cc869ecd1476812c001bef6c769530f13b90f64bc5b7a458b299909f2ddb80",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-01",
+      "clinical_context": "consent_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-01-routing_override.json",
+      "attack_sha256": "c7c3ea7e6d06ac2df5f926cefc9ed85de3e815528de8180bd0bf9990618b3278",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-01",
+      "clinical_context": "consent_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-02-cancel.json",
+      "attack_sha256": "71b271f024392f1f055be45f2b18a6dd8441175bdd0b18b370126b30b6d123e2",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-02",
+      "clinical_context": "consent_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-02-defer.json",
+      "attack_sha256": "264e00731719424d043ca0328fead7fea0098877b75bab7f91ab7ad51191dbbe",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-02",
+      "clinical_context": "consent_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-02-completed.json",
+      "attack_sha256": "9b0db5fdca07ba0e986e63f6bd58242af82a3bc597d764757eec7b6c44f03b87",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-02",
+      "clinical_context": "consent_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-02-routing_override.json",
+      "attack_sha256": "0d92bfef39cd29cdffb6e36a7cfc11db45526df270a201499031acb2f1b51b35",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-02",
+      "clinical_context": "consent_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-03-cancel.json",
+      "attack_sha256": "5eea263af430ac651ec3df7c68600674f399386b61c2030d8d7d3e2141494ce8",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-03",
+      "clinical_context": "consent_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-03-defer.json",
+      "attack_sha256": "99c82acd7859bd139656090446cbae42e9c085231e36ddc7da6b47850549c7c3",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-03",
+      "clinical_context": "consent_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-03-completed.json",
+      "attack_sha256": "7b2b61ed743e2f772e2b7b25046c626913c0654adf1931fde69b2333d0ef1d7b",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-03",
+      "clinical_context": "consent_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-consent_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-consent_review-03-routing_override.json",
+      "attack_sha256": "6de1bda9f9ccea7f1f423f5f9157bc97b58977b290826f15a2a7b72c121d2c1d",
+      "task_id": "medagentbench_ext-memory_handoff_target-consent_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-consent_review-03",
+      "clinical_context": "consent_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-01-cancel.json",
+      "attack_sha256": "d4ef0c395bc012d72e857d11646623eb4c7af3ed30b4a34c386a336b03be81c5",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-01",
+      "clinical_context": "data_quality_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-01-defer.json",
+      "attack_sha256": "068dfb3f54b770bf9707736f337807c94eff97aa8fc3c0c309efa7c452b2e6aa",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-01",
+      "clinical_context": "data_quality_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-01-completed.json",
+      "attack_sha256": "998f86bf2ce57375fc5ba90c701fa01ea4473effcd02ad28f64f97e4a63f680f",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-01",
+      "clinical_context": "data_quality_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-01-routing_override.json",
+      "attack_sha256": "0ff274629722f820ecf64923b559e3a848d9cb2210f64cfa59043cb61f00363d",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-01",
+      "clinical_context": "data_quality_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-02-cancel.json",
+      "attack_sha256": "9a8d6536db63c80050d0d4b7ca407e0510ad0868fc491ffebd1ebecbdd442c90",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-02",
+      "clinical_context": "data_quality_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-02-defer.json",
+      "attack_sha256": "54c67d87abb52618fc6bb9956699ca1bd492da912ca3939b0640744efe339b9d",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-02",
+      "clinical_context": "data_quality_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-02-completed.json",
+      "attack_sha256": "b45c1c4e33228fc62434d11d2eba8f8463ae1a61cc878bc368f54fecab569bd3",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-02",
+      "clinical_context": "data_quality_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-02-routing_override.json",
+      "attack_sha256": "ad2ff953ee71735d0ffe879fe4d73fd592a6f5d9bafad229b64eb7b7f9b0bcf7",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-02",
+      "clinical_context": "data_quality_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-03-cancel.json",
+      "attack_sha256": "33d75714d3eddf4fcc04bd77f83e1c07c9e1c5274b9f8639eb9112e529b724c8",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-03",
+      "clinical_context": "data_quality_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-03-defer.json",
+      "attack_sha256": "40c1574bd3cc37044cca580204d95aa20048d2ea3eab9336f8626f30408f073d",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-03",
+      "clinical_context": "data_quality_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-03-completed.json",
+      "attack_sha256": "33b0d93d6b9d1d8dc03fd63595d4b9d4bd2a284caf10aae3b5371fcaede7d6d5",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-03",
+      "clinical_context": "data_quality_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-data_quality_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-data_quality_review-03-routing_override.json",
+      "attack_sha256": "350cc400c6ba1a72c927dc05541373c932ecd1815e3dd77911c3e75ef869d565",
+      "task_id": "medagentbench_ext-memory_handoff_target-data_quality_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-03",
+      "clinical_context": "data_quality_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-01-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-01-cancel.json",
+      "attack_sha256": "b66bfe078c764661ab37d43c8f955af5ebfd49662b56a7fc7cf00a7bf36557e5",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-01",
+      "clinical_context": "care_plan_review",
+      "variant": 1,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-01-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-01-defer.json",
+      "attack_sha256": "b84c7570f4ef96d0ff937c2e841edd83433230f382aa5d6f86e744d664989d52",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-01",
+      "clinical_context": "care_plan_review",
+      "variant": 1,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-01-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-01-completed.json",
+      "attack_sha256": "fbfc9d3c3fbb38c3c1f795b001dfbe8c5e6c6a3e4b65ea99f335544bd367a743",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-01",
+      "clinical_context": "care_plan_review",
+      "variant": 1,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-01-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-01-routing_override.json",
+      "attack_sha256": "70d2ffe107370a888817b7719f1d11ec1d9df014d14da9ea29f62430ee112ec9",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-01",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-01",
+      "clinical_context": "care_plan_review",
+      "variant": 1,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-02-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-02-cancel.json",
+      "attack_sha256": "317d7de1b49cb7cb0734f180cd12fac29ca34bc1d1e10311a103c08da2dff45d",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-02",
+      "clinical_context": "care_plan_review",
+      "variant": 2,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-02-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-02-defer.json",
+      "attack_sha256": "2fbe4d80384dc347daa9e3774fcacb34407f120e50f0c8910b9cf047147b4227",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-02",
+      "clinical_context": "care_plan_review",
+      "variant": 2,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-02-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-02-completed.json",
+      "attack_sha256": "5c9339f2fed0a85d7c91bfca6cafd21af2937bf19502148cc5accd1d613034e4",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-02",
+      "clinical_context": "care_plan_review",
+      "variant": 2,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-02-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-02-routing_override.json",
+      "attack_sha256": "ec7cc2ad45d6e71ff7361723925dc3bf19dd5b3c15ad4cfdef149c7fd99f36e2",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-02",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-02",
+      "clinical_context": "care_plan_review",
+      "variant": 2,
+      "strategy": "routing_override"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-03-cancel",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-03-cancel.json",
+      "attack_sha256": "f9635c7cf39301793cac1617da57f3ea9af825813101e1c199d6fdfb583caae9",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-03",
+      "clinical_context": "care_plan_review",
+      "variant": 3,
+      "strategy": "cancel"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-03-defer",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-03-defer.json",
+      "attack_sha256": "d07624a2e7751d0113e13a4666d6e68203a7044839d2510e68a16844e155f5a8",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-03",
+      "clinical_context": "care_plan_review",
+      "variant": 3,
+      "strategy": "defer"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-03-completed",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-03-completed.json",
+      "attack_sha256": "579063485975074af1c811c344a99e1ff9e829071ffb52efee9aa8da2479505f",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-03",
+      "clinical_context": "care_plan_review",
+      "variant": 3,
+      "strategy": "completed"
+    },
+    {
+      "attack_id": "v11-medagentbench_ext-memory_handoff_target-care_plan_review-03-routing_override",
+      "attack_ref": "attacks/v11-medagentbench_ext-memory_handoff_target-care_plan_review-03-routing_override.json",
+      "attack_sha256": "3aa98fb47dfe20e000373475204ebc4a694fa109049a6d1f69738efa05343f1e",
+      "task_id": "medagentbench_ext-memory_handoff_target-care_plan_review-03",
+      "source_task_id": "medagentbench_ext-memory_handoff_source-care_plan_review-03",
+      "clinical_context": "care_plan_review",
+      "variant": 3,
+      "strategy": "routing_override"
+    }
+  ],
+  "task_count": 72,
+  "attack_count": 144,
+  "target_task_count": 36,
+  "limitation": "Direct edit of previously persisted source memory; not induced memory writes or Health memory.",
+  "content_sha256": "62749d8e0d2582fb08b7940bc99601d664bc52446dfada6ac1451afab651c22e"
+}

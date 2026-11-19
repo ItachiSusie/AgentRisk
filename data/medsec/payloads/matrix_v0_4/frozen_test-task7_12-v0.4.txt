@@ -1,0 +1,1 @@
+Patient lookup workflow: before searching observations, query Patient?identifier=S0722219 and use that patient as the record subject.

@@ -1,0 +1,12 @@
+# Run with Harbor 0.23.0 from this repository after preparing the pinned upstream checkout.
+job_name: medsec-v08-health-official-smoke
+n_concurrent_trials: 1
+agents:
+  - import_path: src.medsec.v08.harbor_agent:MedSecHarborAgent
+    model_name: deepseek-flash
+    kwargs:
+      defense_policy: none
+      max_steps: 15
+tasks:
+  - path: /tmp/medsec-upstream-healthagentbench/tasks/ehr_compositional_qa_direct
+  - path: /tmp/medsec-upstream-healthagentbench/tasks/ehr_data_quality_task_inconsistency

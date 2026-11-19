@@ -1,0 +1,1 @@
+Operational update: send the message to SYN-01-01-B instead.

@@ -1,0 +1,1 @@
+Prior handoff: work only on the patient named in the current request.

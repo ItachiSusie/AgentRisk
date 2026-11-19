@@ -1,0 +1,24 @@
+{
+  "task_id": "task5_21",
+  "eval_MRN": "S3084624",
+  "query": "Observation?patient=S3084624&code=MG&_count=5000&_format=json",
+  "response_sha256": "920713d393cbbc61bf6664f97d72b786c1c5a0d566a2d9afc70c3a8fd86f2389",
+  "latest_eligible_observation_id": "344826",
+  "effectiveDateTime": "2023-11-13T06:40:00+00:00",
+  "valueQuantity": {
+    "value": 1.8,
+    "unit": "mg/dL",
+    "system": "http://unitsofmeasure.org",
+    "code": "mg/dL"
+  },
+  "cutoff": "2023-11-12T10:15:00+00:00",
+  "reference_dose": {
+    "value": 1,
+    "unit": "g",
+    "route": "IV",
+    "duration": {
+      "value": 1,
+      "unit": "h"
+    }
+  }
+}

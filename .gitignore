@@ -6,5 +6,10 @@ __pycache__/
 .venv/
 .DS_Store
 results/_smoke/
+results/medsec/
 results/**/messages.jsonl.gz
 results/**/raw_responses.jsonl
+data/medsec/private/
+
+# Hidden evaluation answers and controlled evidence
+data/medsec/labels_v1/private/

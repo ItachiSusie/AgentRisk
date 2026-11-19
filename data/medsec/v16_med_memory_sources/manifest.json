@@ -1,0 +1,79 @@
+{
+  "format": "medsec-med-source-repair-v16",
+  "parent_run_id": "v15-med-20261119T072041Z-2aecb840",
+  "review_status": "synthetic_candidate_unreviewed",
+  "tasks": [
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-discharge_review-01",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-discharge_review-01.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-discharge_review-01.json",
+      "sha256": "12b7523247cffac04b17e1dbedde44a43a69d5bdfb475a1a330fbff838d48497"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-data_quality_review-03",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-data_quality_review-03.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-data_quality_review-03.json",
+      "sha256": "9e5623a3b83df29703798026f65acbc41c82dfd3e3c0df04a48fa50b4ef87d72"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-discharge_review-03",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-discharge_review-03.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-discharge_review-03.json",
+      "sha256": "ba29fa7c651ccf2c9e425c8f293d8f97b0281ea89aed5871b031d16a030caa59"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-allergy_review-02",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-allergy_review-02.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-allergy_review-02.json",
+      "sha256": "f05cfdb297be25bcc0e4bb55a8c12d1ce44c29ae95132d62cd45365236d96a2b"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-care_transition-03",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-care_transition-03.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-care_transition-03.json",
+      "sha256": "41bb9f8a2a642df9e99caf47f7d0f351a1bf2dd855f1f60387af06c749d72b1a"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-lab_review-03",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-lab_review-03.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-lab_review-03.json",
+      "sha256": "41e201c550ee504bc3f31673349caff18fb13e2a6d6b139beee782fafd2bfba0"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-consent_review-03",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-consent_review-03.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-consent_review-03.json",
+      "sha256": "749ba2d49cf8fda9d68aa91c37b7b7ccd81376cbd9fd80d464b27d1dae994817"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-lab_review-01",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-lab_review-01.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-lab_review-01.json",
+      "sha256": "2ef4d07a7df2995fae38e78d5893aef14771c0fed57483b59c37572fc7cd8a40"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-portal_followup-02",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-portal_followup-02.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-portal_followup-02.json",
+      "sha256": "000fd834b91887a9fabd0a2d30b53082d3a2e50893fe1592f35a65b0c40e8d9d"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-imaging_review-03",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-imaging_review-03.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-imaging_review-03.json",
+      "sha256": "a944fcefd1c17b0406f8974685fa7019821175e39833071de42fc74817ddafe8"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-care_transition-01",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-care_transition-01.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-care_transition-01.json",
+      "sha256": "153da4be43f484369ce7f62846796afd49692c09c6f7f662df584980f82180c7"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_source-medication_review-02",
+      "source_ref": "data/medsec/v11_memory_contract_v2/tasks/medagentbench_ext-memory_handoff_source-medication_review-02.json",
+      "task_ref": "medagentbench_ext-memory_handoff_source-medication_review-02.json",
+      "sha256": "cb1b6de2276e567b340200aef832807e47c727f24cea8e46ab98cecac03b0c97"
+    }
+  ]
+}

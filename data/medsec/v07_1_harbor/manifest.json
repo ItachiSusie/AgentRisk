@@ -1,0 +1,46 @@
+{
+  "format": "medsec-v0.7-harbor-normal",
+  "source_suite": "/home/tuo96248/projects/AgentRisk/data/medsec/v07_1_pilot",
+  "tasks": [
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-01",
+      "task_sha256": "97a5fba2f105b245e064623901d4543d94a1c946da4386c7bedfd40360dd5334",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-01"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-02",
+      "task_sha256": "47917baccb0d21f8a9f37aaa871d05b8a35fc7ba386fe512c9614ec1fffdb16d",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-02"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-03",
+      "task_sha256": "754f341b21d97e2dff589d45b53981811a491f8066e92380de00c7798be6df3a",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-03"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-04",
+      "task_sha256": "490680a6f4a072ebbaa064352a56e65b2b9d120c162894a454305f42142ef54b",
+      "path": "healthagentbench_synthetic-ehr_compositional_qa-04"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-01",
+      "task_sha256": "076df631337ab501b118560c824ccd8959ef53121a567a44f167c4116173c805",
+      "path": "healthagentbench_synthetic-ehr_data_quality-01"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-02",
+      "task_sha256": "13afac981074086460d1ebc626fdcda68a01733e7fdc16eaa0629006e0b293bd",
+      "path": "healthagentbench_synthetic-ehr_data_quality-02"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-03",
+      "task_sha256": "339808b6ecc49fda4fe8c15e1b88f9b0a3ab481ea0233a442dbad99f4a34fff9",
+      "path": "healthagentbench_synthetic-ehr_data_quality-03"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-04",
+      "task_sha256": "2c6bc740155a5e4c3a3655bfa01a21b83fc735dde8cb09a8d2537224c08e558c",
+      "path": "healthagentbench_synthetic-ehr_data_quality-04"
+    }
+  ]
+}

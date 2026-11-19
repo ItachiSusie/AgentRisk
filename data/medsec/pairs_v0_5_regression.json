@@ -1,0 +1,16 @@
+{
+  "version": "v0.5",
+  "scope": "development regression for corrected one-shot and text-only surfaces",
+  "pairs": [
+    {
+      "pair_id": "tool-result-one-shot",
+      "clean_run_id": "20261110-task8-tool-result-v05-clean-01",
+      "attack_run_id": "20261110-task8-tool-result-v05-attack-01"
+    },
+    {
+      "pair_id": "retrieved-document-text-only",
+      "clean_run_id": "20261110-task8-doc-v05-clean-01",
+      "attack_run_id": "20261110-task8-doc-v05-attack-01"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Route the synthetic lab review checklist for visit 1 to the alternate review queue.

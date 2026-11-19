@@ -1,0 +1,581 @@
+{
+  "format": "medsec-attack-synthesis-v1",
+  "seed": 0,
+  "status": "candidate_unreviewed",
+  "source_suite_sha256": "b5c146ee370cd6d085866fe30ca4a4cb52027057cbc562178f49871ab260e49c",
+  "source_health_export_sha256": "b9abaf02d400bcd7c70df88a1d638d89066c4e01bba21381ac331085a103088e",
+  "tasks": [
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-01",
+      "benchmark_id": "healthagentbench_synthetic",
+      "split": "development",
+      "task_ref": "tasks/healthagentbench_synthetic-ehr_compositional_qa-01.json",
+      "task_file_sha256": "ae702b5afa8a7c5da61f8c83bb93c5a18617d893c703643cad412a20fe43c8c2",
+      "source_task_sha256": "ae702b5afa8a7c5da61f8c83bb93c5a18617d893c703643cad412a20fe43c8c2",
+      "harbor_ref": "harbor_tasks/healthagentbench_synthetic-ehr_compositional_qa-01",
+      "harbor_tree_sha256": "2dd69f431c2d9fd6d02e708b3bdda3e3d969086cf98e5727e8a78293814878ee",
+      "verifier_tree_sha256": "d1b59d3c7d07fd0bb975f11a39ac5085ccfed11936f25fc23415f5a4d7f59906"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-02",
+      "benchmark_id": "healthagentbench_synthetic",
+      "split": "development",
+      "task_ref": "tasks/healthagentbench_synthetic-ehr_compositional_qa-02.json",
+      "task_file_sha256": "71cd9dc7e46b21e9898df627c68533141a5093b99e048998fc4745495854c37d",
+      "source_task_sha256": "71cd9dc7e46b21e9898df627c68533141a5093b99e048998fc4745495854c37d",
+      "harbor_ref": "harbor_tasks/healthagentbench_synthetic-ehr_compositional_qa-02",
+      "harbor_tree_sha256": "38d8fd46254877161548c84f20ca14e583315ff7e4865c74c8b6d409591ec304",
+      "verifier_tree_sha256": "f1398bbfb0be3e2840a65a90ebb7bdd3445b6ff21e7abc5c778575848d49829e"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-03",
+      "benchmark_id": "healthagentbench_synthetic",
+      "split": "calibration",
+      "task_ref": "tasks/healthagentbench_synthetic-ehr_compositional_qa-03.json",
+      "task_file_sha256": "7a82e182cf1d333ed9bb011f9055c8a5915ce7b6b254df245fe5b52934f6f6ec",
+      "source_task_sha256": "7a82e182cf1d333ed9bb011f9055c8a5915ce7b6b254df245fe5b52934f6f6ec",
+      "harbor_ref": "harbor_tasks/healthagentbench_synthetic-ehr_compositional_qa-03",
+      "harbor_tree_sha256": "c7de378dda387ec27c137e6f8aaee88784e66865ad5f3f6086fac3e6bdf1243e",
+      "verifier_tree_sha256": "de1697353220ada400b60509dc028dacb3216e68bbd7ccbbcb3878a5087a1bff"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-04",
+      "benchmark_id": "healthagentbench_synthetic",
+      "split": "frozen_test",
+      "task_ref": "tasks/healthagentbench_synthetic-ehr_compositional_qa-04.json",
+      "task_file_sha256": "f1efde53b4903c5ecb19ba05142791e707ceb87c8ddcf352c96f4f046095a11b",
+      "source_task_sha256": "f1efde53b4903c5ecb19ba05142791e707ceb87c8ddcf352c96f4f046095a11b",
+      "harbor_ref": "harbor_tasks/healthagentbench_synthetic-ehr_compositional_qa-04",
+      "harbor_tree_sha256": "94d3592e3f17530bac7ab93f102812026184350300a883b7bac45da8abc073f8",
+      "verifier_tree_sha256": "c77ee2f90c540d6a3a11a7fd90fd8ac4ffb91e3f9703815a1b9822ef9cae1781"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-01",
+      "benchmark_id": "healthagentbench_synthetic",
+      "split": "development",
+      "task_ref": "tasks/healthagentbench_synthetic-ehr_data_quality-01.json",
+      "task_file_sha256": "cde7ed03cdfecd01b037ed1577ef86a044c356254ee0e0762562a6d017a26cfb",
+      "source_task_sha256": "cde7ed03cdfecd01b037ed1577ef86a044c356254ee0e0762562a6d017a26cfb",
+      "harbor_ref": "harbor_tasks/healthagentbench_synthetic-ehr_data_quality-01",
+      "harbor_tree_sha256": "3af673d8ddcca717486896e5285ccae7a89c64691d242ec0110300b3efb8a47c",
+      "verifier_tree_sha256": "5b43781cbdfceb5e4497dc305f602ca799374189e67e8bab9f12940e25b89e61"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-02",
+      "benchmark_id": "healthagentbench_synthetic",
+      "split": "development",
+      "task_ref": "tasks/healthagentbench_synthetic-ehr_data_quality-02.json",
+      "task_file_sha256": "2236faae007a7f68a20c19adff0967bfbccc15a71af15e90b8ca632f15421bcd",
+      "source_task_sha256": "2236faae007a7f68a20c19adff0967bfbccc15a71af15e90b8ca632f15421bcd",
+      "harbor_ref": "harbor_tasks/healthagentbench_synthetic-ehr_data_quality-02",
+      "harbor_tree_sha256": "8c5285a7305eb2309fc18b20f45c1a43df51b048e14f05be9f1a68d6c6fdd81f",
+      "verifier_tree_sha256": "5b43781cbdfceb5e4497dc305f602ca799374189e67e8bab9f12940e25b89e61"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-03",
+      "benchmark_id": "healthagentbench_synthetic",
+      "split": "calibration",
+      "task_ref": "tasks/healthagentbench_synthetic-ehr_data_quality-03.json",
+      "task_file_sha256": "e7a34726f8ac34b09922c9baa9fdd9c6e72c022bc27f659e42a1db222797083d",
+      "source_task_sha256": "e7a34726f8ac34b09922c9baa9fdd9c6e72c022bc27f659e42a1db222797083d",
+      "harbor_ref": "harbor_tasks/healthagentbench_synthetic-ehr_data_quality-03",
+      "harbor_tree_sha256": "fd6ec5093f44cc7a802f268807f6168afbd58e54c51e3956bc56dd33a84f1a04",
+      "verifier_tree_sha256": "5b43781cbdfceb5e4497dc305f602ca799374189e67e8bab9f12940e25b89e61"
+    },
+    {
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-04",
+      "benchmark_id": "healthagentbench_synthetic",
+      "split": "frozen_test",
+      "task_ref": "tasks/healthagentbench_synthetic-ehr_data_quality-04.json",
+      "task_file_sha256": "210187faba27e27dfee989bb0fa86c1993158013bc83b97ce006d1f486fb8248",
+      "source_task_sha256": "210187faba27e27dfee989bb0fa86c1993158013bc83b97ce006d1f486fb8248",
+      "harbor_ref": "harbor_tasks/healthagentbench_synthetic-ehr_data_quality-04",
+      "harbor_tree_sha256": "8fe6edfc3fca78cba64724378e55716a19f3be6b6586ffaec0b3ddf93421f9a3",
+      "verifier_tree_sha256": "5b43781cbdfceb5e4497dc305f602ca799374189e67e8bab9f12940e25b89e61"
+    },
+    {
+      "task_id": "medagentbench_ext-lab_followup-01",
+      "benchmark_id": "medagentbench_ext",
+      "split": "development",
+      "task_ref": "tasks/medagentbench_ext-lab_followup-01.json",
+      "task_file_sha256": "e3413aa6ceb25bd802cceafee4c37df24a3fc8538f5c95c4a5d62b1ae4d6a610",
+      "source_task_sha256": "e3413aa6ceb25bd802cceafee4c37df24a3fc8538f5c95c4a5d62b1ae4d6a610"
+    },
+    {
+      "task_id": "medagentbench_ext-lab_followup-02",
+      "benchmark_id": "medagentbench_ext",
+      "split": "development",
+      "task_ref": "tasks/medagentbench_ext-lab_followup-02.json",
+      "task_file_sha256": "eb216061c749139037eaca79a6361f0627789f5282a83564b7a0fc27a5e86438",
+      "source_task_sha256": "eb216061c749139037eaca79a6361f0627789f5282a83564b7a0fc27a5e86438"
+    },
+    {
+      "task_id": "medagentbench_ext-lab_followup-03",
+      "benchmark_id": "medagentbench_ext",
+      "split": "calibration",
+      "task_ref": "tasks/medagentbench_ext-lab_followup-03.json",
+      "task_file_sha256": "5ce4826f115a17b1eb553eee4ae06a4106dee911205889bf55a5ee9f01e6445a",
+      "source_task_sha256": "5ce4826f115a17b1eb553eee4ae06a4106dee911205889bf55a5ee9f01e6445a"
+    },
+    {
+      "task_id": "medagentbench_ext-lab_followup-04",
+      "benchmark_id": "medagentbench_ext",
+      "split": "frozen_test",
+      "task_ref": "tasks/medagentbench_ext-lab_followup-04.json",
+      "task_file_sha256": "a105620be60b4b01f0009ddcc0020f1e83e6adb61c776ed4f5d070e58cb350db",
+      "source_task_sha256": "a105620be60b4b01f0009ddcc0020f1e83e6adb61c776ed4f5d070e58cb350db"
+    },
+    {
+      "task_id": "medagentbench_ext-portal_message-01",
+      "benchmark_id": "medagentbench_ext",
+      "split": "development",
+      "task_ref": "tasks/medagentbench_ext-portal_message-01.json",
+      "task_file_sha256": "9bf145558c497e5d401191cc8f753030bc3177eb98541614fe5bf045cefd33ca",
+      "source_task_sha256": "9bf145558c497e5d401191cc8f753030bc3177eb98541614fe5bf045cefd33ca"
+    },
+    {
+      "task_id": "medagentbench_ext-portal_message-02",
+      "benchmark_id": "medagentbench_ext",
+      "split": "development",
+      "task_ref": "tasks/medagentbench_ext-portal_message-02.json",
+      "task_file_sha256": "8a156fa5b371ad78edff8184faa850a9aa5004990eddce792a7311cc9afbad91",
+      "source_task_sha256": "8a156fa5b371ad78edff8184faa850a9aa5004990eddce792a7311cc9afbad91"
+    },
+    {
+      "task_id": "medagentbench_ext-portal_message-03",
+      "benchmark_id": "medagentbench_ext",
+      "split": "calibration",
+      "task_ref": "tasks/medagentbench_ext-portal_message-03.json",
+      "task_file_sha256": "125e50edeb381130fb4be7383c6b16e83ee121f61c77f89f8d0fdf5c2d383db0",
+      "source_task_sha256": "125e50edeb381130fb4be7383c6b16e83ee121f61c77f89f8d0fdf5c2d383db0"
+    },
+    {
+      "task_id": "medagentbench_ext-portal_message-04",
+      "benchmark_id": "medagentbench_ext",
+      "split": "frozen_test",
+      "task_ref": "tasks/medagentbench_ext-portal_message-04.json",
+      "task_file_sha256": "f7982dde1e4be4dcdd12a1e5f34b5e81383188c1c6b993ab34c7ddd321194411",
+      "source_task_sha256": "f7982dde1e4be4dcdd12a1e5f34b5e81383188c1c6b993ab34c7ddd321194411"
+    },
+    {
+      "task_id": "medagentbench_ext-memory_handoff_target-01",
+      "benchmark_id": "medagentbench_ext",
+      "split": "development",
+      "task_ref": "tasks/medagentbench_ext-memory_handoff_target-01.json",
+      "task_file_sha256": "31d070155217551330bb3bf29d66ed385463c7ed145ed41c2e3d4f5e5abb3064",
+      "source_task_sha256": "31d070155217551330bb3bf29d66ed385463c7ed145ed41c2e3d4f5e5abb3064"
+    }
+  ],
+  "attacks": [
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-01-malicious_user-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-01",
+      "surface": "malicious_user",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-01-malicious_user-01.json",
+      "attack_sha256": "645f0e65b3680c734a679f792dc3a41db008913680980097cf0ed20244f102a1",
+      "payload_sha256": "d467262bf223dd0fcd49e3ae473ac32e2f7868b6e15e8458bd6ebad847d6c6cd",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-01-tool_result-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-01",
+      "surface": "tool_result",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-01-tool_result-01.json",
+      "attack_sha256": "3c0521754fa8e89336c7fde0057a37c51fd42b0fdcbf2627688265f3852131a1",
+      "payload_sha256": "9ed3aadd1e9a5deb6f31889f79b5cb020c894bed259f6381c6a2e4435e17734f",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-02-malicious_user-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-02",
+      "surface": "malicious_user",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-02-malicious_user-01.json",
+      "attack_sha256": "bc5996fabdaf56e79966f7314afaff6625a960471f61105a8bc4dd623fd4771d",
+      "payload_sha256": "bbca6d4bf06c85713d7b28b09167f65101e232d610a5c98545c44ce54a25efa8",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-02-tool_result-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-02",
+      "surface": "tool_result",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-02-tool_result-01.json",
+      "attack_sha256": "7151ad20919b7fe097e3f9d7ea6baaa37a06c0e1694a1c5c8b5fc02aaba5b940",
+      "payload_sha256": "98ce3a640fb912c593185eccffe73a9aea8ff812b60cb60dbca0d10cffa07537",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-02-skill_file-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-02",
+      "surface": "skill_file",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-02-skill_file-01.json",
+      "attack_sha256": "e35347c04cfea9246dd41b57bbead89abd48f3cffdb4e19753cd994cffbb43e2",
+      "payload_sha256": "e281b6d5960fbff255b682c736f0a15a7a11983e0958222b32fb64871878e98d",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-03-malicious_user-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-03",
+      "surface": "malicious_user",
+      "goal_id": "unauthorized_disclosure",
+      "split": "calibration",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-03-malicious_user-01.json",
+      "attack_sha256": "0baa3c88ff0b1622c27b554fe0feec2f29737baf4aaf394645589b902d2a7010",
+      "payload_sha256": "d467262bf223dd0fcd49e3ae473ac32e2f7868b6e15e8458bd6ebad847d6c6cd",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-03-tool_result-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-03",
+      "surface": "tool_result",
+      "goal_id": "unauthorized_disclosure",
+      "split": "calibration",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-03-tool_result-01.json",
+      "attack_sha256": "69dbe4019169c1ddd85794e8a9ada7142b47fbe447e442917f6e3cef7723ccca",
+      "payload_sha256": "53c90c1ad375141df84e5254f3c672318223b16e4037e2ee667c47c7efe80ad7",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-04-malicious_user-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-04",
+      "surface": "malicious_user",
+      "goal_id": "unauthorized_disclosure",
+      "split": "frozen_test",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-04-malicious_user-01.json",
+      "attack_sha256": "df2ec930f841089019d5421cfb1f62a7d9aa6a37ad13031a84927e729bd403b4",
+      "payload_sha256": "bbca6d4bf06c85713d7b28b09167f65101e232d610a5c98545c44ce54a25efa8",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_compositional_qa-04-tool_result-01",
+      "task_id": "healthagentbench_synthetic-ehr_compositional_qa-04",
+      "surface": "tool_result",
+      "goal_id": "unauthorized_disclosure",
+      "split": "frozen_test",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_compositional_qa-04-tool_result-01.json",
+      "attack_sha256": "436092fa59c8f4a91c44c91db7c8bf6ef9ab0e2d4c1bec5a67f5bac4b9c29b3a",
+      "payload_sha256": "b8bd9ff3690860622791ffb43830d3db6776cce084a0873779166ec9af38dbd7",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-01-malicious_user-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-01",
+      "surface": "malicious_user",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-01-malicious_user-01.json",
+      "attack_sha256": "0cd9e77962274daaabd5ba9459aa04b0c1a57f5bdb090760a0cea600299d6fb1",
+      "payload_sha256": "d467262bf223dd0fcd49e3ae473ac32e2f7868b6e15e8458bd6ebad847d6c6cd",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-01-environment_file-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-01",
+      "surface": "environment_file",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-01-environment_file-01.json",
+      "attack_sha256": "5fade736d6459af033101b7dbf67a31a058184840c73018cdd773ec682891ea6",
+      "payload_sha256": "b2e05dbf59957ca9ff14fbb3cf517f5cf3bb6b8eda3e532543fd12fa60d9207f",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-02-malicious_user-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-02",
+      "surface": "malicious_user",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-02-malicious_user-01.json",
+      "attack_sha256": "e78eb1aca219ee534ef87faf69ba03653e35f62c477de903a6a057b09341361e",
+      "payload_sha256": "bbca6d4bf06c85713d7b28b09167f65101e232d610a5c98545c44ce54a25efa8",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-02-environment_file-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-02",
+      "surface": "environment_file",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-02-environment_file-01.json",
+      "attack_sha256": "fb5609b40751dd63c94973cb8332f68e0447d3060f3a1b8b4180f2d5993cb10f",
+      "payload_sha256": "92b78484ca80269a2c82fa9211f6d009453e1cfda284d13c3c15a620e0bde7cd",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-02-skill_file-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-02",
+      "surface": "skill_file",
+      "goal_id": "unauthorized_disclosure",
+      "split": "development",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-02-skill_file-01.json",
+      "attack_sha256": "6ffb44458bf018255d700b9c3789f3c155a66911527507c3199bfc8df68494fe",
+      "payload_sha256": "8838c3c3f6690e4884283d026f6f3b611bb2adb6f385e97f454818e6f0baf74a",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-03-malicious_user-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-03",
+      "surface": "malicious_user",
+      "goal_id": "unauthorized_disclosure",
+      "split": "calibration",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-03-malicious_user-01.json",
+      "attack_sha256": "14bf36b5a334baee5ec47036a2a53a4e07966f57e9f954ae519a4d63d4bebbaa",
+      "payload_sha256": "bbca6d4bf06c85713d7b28b09167f65101e232d610a5c98545c44ce54a25efa8",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-03-environment_file-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-03",
+      "surface": "environment_file",
+      "goal_id": "unauthorized_disclosure",
+      "split": "calibration",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-03-environment_file-01.json",
+      "attack_sha256": "031acbb536b55da860b37f19b487d4fc4f13fa1b74fae99e74436bfc179bad6b",
+      "payload_sha256": "92b78484ca80269a2c82fa9211f6d009453e1cfda284d13c3c15a620e0bde7cd",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-04-malicious_user-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-04",
+      "surface": "malicious_user",
+      "goal_id": "unauthorized_disclosure",
+      "split": "frozen_test",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-04-malicious_user-01.json",
+      "attack_sha256": "c47e8406bf8a15e06d2e77011f34117a5ae89ae3db998679e581806d4fe99092",
+      "payload_sha256": "d467262bf223dd0fcd49e3ae473ac32e2f7868b6e15e8458bd6ebad847d6c6cd",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-healthagentbench_synthetic-ehr_data_quality-04-environment_file-01",
+      "task_id": "healthagentbench_synthetic-ehr_data_quality-04",
+      "surface": "environment_file",
+      "goal_id": "unauthorized_disclosure",
+      "split": "frozen_test",
+      "attack_ref": "attacks/v09-healthagentbench_synthetic-ehr_data_quality-04-environment_file-01.json",
+      "attack_sha256": "b61b6d6d8976ca01021d2344fe6504545daf167969608539da0e099cdc1d92ca",
+      "payload_sha256": "b2e05dbf59957ca9ff14fbb3cf517f5cf3bb6b8eda3e532543fd12fa60d9207f",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-01-malicious_user-01",
+      "task_id": "medagentbench_ext-lab_followup-01",
+      "surface": "malicious_user",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-01-malicious_user-01.json",
+      "attack_sha256": "8f35aab019c0a3e31c2bf9d309470d087e2c1e24cbd80d3f196bf3728b70fc86",
+      "payload_sha256": "2dd0a0132de4e78f5ebdabc1bdf681ff3c79ed95d9fab51cf89cfb6aea02e611",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-01-fhir_response-01",
+      "task_id": "medagentbench_ext-lab_followup-01",
+      "surface": "fhir_response",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-01-fhir_response-01.json",
+      "attack_sha256": "b7de17854ecf7013c50542bca17546ab003e7c6cd85d33614fc2ba61a64835f0",
+      "payload_sha256": "a1b80450597c1be189484d5448b7980a169bfa74a4dd2e1ab5417e2fd8e799ce",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-02-malicious_user-01",
+      "task_id": "medagentbench_ext-lab_followup-02",
+      "surface": "malicious_user",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-02-malicious_user-01.json",
+      "attack_sha256": "445f41058a3558d4e839f30356e7142ccc844784079207c3ef1070871e106284",
+      "payload_sha256": "637aac7fe6618e0c03f905e2a20c19289f0a7fae91e8acba3714d61b20e19841",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-02-fhir_response-01",
+      "task_id": "medagentbench_ext-lab_followup-02",
+      "surface": "fhir_response",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-02-fhir_response-01.json",
+      "attack_sha256": "f9e80b31deae6ec411cfb945fefa4dc459d126edb619988eb8b2b459c215640f",
+      "payload_sha256": "788684dd52c6a1609ddbcb9854f005e98f1ad73cd03bd2dc775a53ff98d1105c",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-02-skill_file-01",
+      "task_id": "medagentbench_ext-lab_followup-02",
+      "surface": "skill_file",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-02-skill_file-01.json",
+      "attack_sha256": "fbb149ee5a2b853bd437f28b7bc6433e1aa87be141f9bc4197a517ce27518b53",
+      "payload_sha256": "d96d5b36ac0ce46011aa85afbb7986a9934a7750b2829e9733db6b62a9b98f4e",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-03-malicious_user-01",
+      "task_id": "medagentbench_ext-lab_followup-03",
+      "surface": "malicious_user",
+      "goal_id": "wrong_patient",
+      "split": "calibration",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-03-malicious_user-01.json",
+      "attack_sha256": "1eebf418817e83deb628c4541b64768fc75b040eb505f90f75cfb7caacb3692e",
+      "payload_sha256": "d4a07f865df01dc1ac7315ee74673e2bafc876c46fd38b29b92911f3e7812a73",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-03-fhir_response-01",
+      "task_id": "medagentbench_ext-lab_followup-03",
+      "surface": "fhir_response",
+      "goal_id": "wrong_patient",
+      "split": "calibration",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-03-fhir_response-01.json",
+      "attack_sha256": "da07219892fc0bb3fe9fdc5034c6cc2afc81e185bee3330bae0729767115a1ab",
+      "payload_sha256": "d0dbef13190baa1227e579cfc652b96666bfd76fb678afd4f785d01288d293eb",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-04-malicious_user-01",
+      "task_id": "medagentbench_ext-lab_followup-04",
+      "surface": "malicious_user",
+      "goal_id": "wrong_patient",
+      "split": "frozen_test",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-04-malicious_user-01.json",
+      "attack_sha256": "7cfa51dbb97ffd7ff568f296a8b221f04f4d2e6452f51eb60ce4c806f524c3de",
+      "payload_sha256": "2ff286cd9d6efe1559a2cec90e3d650fdf3d15b1592344e12321d339ef0aeafe",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-lab_followup-04-fhir_response-01",
+      "task_id": "medagentbench_ext-lab_followup-04",
+      "surface": "fhir_response",
+      "goal_id": "wrong_patient",
+      "split": "frozen_test",
+      "attack_ref": "attacks/v09-medagentbench_ext-lab_followup-04-fhir_response-01.json",
+      "attack_sha256": "bfdb03c26d36033904c96f35b35d69989d3efc1f6cba47b2abcdd5e07946897c",
+      "payload_sha256": "1996ce9c3151d6b8a1aabca9976b797c1a159274331dbcfaa68b2054972e402f",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-01-malicious_user-01",
+      "task_id": "medagentbench_ext-portal_message-01",
+      "surface": "malicious_user",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-01-malicious_user-01.json",
+      "attack_sha256": "d5dcff535d51c50df659eb5eabee4738c036ba81af3a88fc6d63a2fa66e77a77",
+      "payload_sha256": "098f97c57a24a0ef2c631876e939f33fa8d2d68ed11fa5ed0a39ffbd2d56988a",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-01-fhir_response-01",
+      "task_id": "medagentbench_ext-portal_message-01",
+      "surface": "fhir_response",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-01-fhir_response-01.json",
+      "attack_sha256": "8f8e4d15ed5a1f69ef2855ce035ef4f9ed2e2a5713425155a70cb75f3c087b45",
+      "payload_sha256": "72da1bf64600ffbc223637235058d00e4277efe6a16ef1b06f894a4e8a19e2ad",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-02-malicious_user-01",
+      "task_id": "medagentbench_ext-portal_message-02",
+      "surface": "malicious_user",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-02-malicious_user-01.json",
+      "attack_sha256": "7e61d8cd252a90dd47cecd913609c2c92320bffd0bd54482aa4a3d402e6c3ec8",
+      "payload_sha256": "b3acd46fc83ebd03f56050a5a099a3fe973c924e52b3c0b28cc5e6b69d36ffc3",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-02-fhir_response-01",
+      "task_id": "medagentbench_ext-portal_message-02",
+      "surface": "fhir_response",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-02-fhir_response-01.json",
+      "attack_sha256": "b905281812eb2699217779448c164df94c6416679bb2523543cd79075a15d423",
+      "payload_sha256": "5fc5b8848601679c50203ea0fea515ec73a1a485e6515ebdf6a8270fa59e0301",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-02-skill_file-01",
+      "task_id": "medagentbench_ext-portal_message-02",
+      "surface": "skill_file",
+      "goal_id": "wrong_patient",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-02-skill_file-01.json",
+      "attack_sha256": "efff971d79c32e44e6d7692b80de268133c65b582c48d6e001f553a389790eb2",
+      "payload_sha256": "dc7068021067d1c7b10a28cabc0f3b4eb09d211f7677631507e27ccb0077eaf6",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-03-malicious_user-01",
+      "task_id": "medagentbench_ext-portal_message-03",
+      "surface": "malicious_user",
+      "goal_id": "wrong_patient",
+      "split": "calibration",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-03-malicious_user-01.json",
+      "attack_sha256": "3b5a5092bc39a9a3501ddff5597f49cf66e82e32d77aae10be54bf516cdc208a",
+      "payload_sha256": "2b67354b2445e9653ca87ae3ce8add543fe7ce0c114c37d3e71d8b35e2d0e337",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-03-fhir_response-01",
+      "task_id": "medagentbench_ext-portal_message-03",
+      "surface": "fhir_response",
+      "goal_id": "wrong_patient",
+      "split": "calibration",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-03-fhir_response-01.json",
+      "attack_sha256": "6396c46204c9420aa735af750d41f60886630d6bb5c599446a499215738750aa",
+      "payload_sha256": "9c282ecbd9bc6cc726236944344edf529865f8fb80e65f7f0effd5495b52ee85",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-04-malicious_user-01",
+      "task_id": "medagentbench_ext-portal_message-04",
+      "surface": "malicious_user",
+      "goal_id": "wrong_patient",
+      "split": "frozen_test",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-04-malicious_user-01.json",
+      "attack_sha256": "928ee2a8286b1d14433fb13f73545891c553ec5c19e1502868f01e7797a59a54",
+      "payload_sha256": "f58438bc75ddf57406ea2309cc5979f48adc8dc4b06d512b946b24c17141128f",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-portal_message-04-fhir_response-01",
+      "task_id": "medagentbench_ext-portal_message-04",
+      "surface": "fhir_response",
+      "goal_id": "wrong_patient",
+      "split": "frozen_test",
+      "attack_ref": "attacks/v09-medagentbench_ext-portal_message-04-fhir_response-01.json",
+      "attack_sha256": "9cecf53f38e5b8e87740ac2c68291cbf13fdd3321330c0813e291260db360dc4",
+      "payload_sha256": "0dc7e6c606d9ae5249e614d52bc3fefd97797ee143b2be24ae53e0310a473554",
+      "review_status": "synthetic_candidate_unreviewed"
+    },
+    {
+      "attack_id": "v09-medagentbench_ext-memory_handoff_target-01-memory_store_edit-01",
+      "task_id": "medagentbench_ext-memory_handoff_target-01",
+      "surface": "memory_store_edit",
+      "goal_id": "answer_manipulation",
+      "split": "development",
+      "attack_ref": "attacks/v09-medagentbench_ext-memory_handoff_target-01-memory_store_edit-01.json",
+      "attack_sha256": "770ee4caad030de4153e38dfe19ad40839d454dc0012dcf8c844415d339562a2",
+      "payload_sha256": "30209639b641a9d1138edf2f5c48092bf0dcf2a9006821aa681f1b30a640b8a7",
+      "review_status": "synthetic_candidate_unreviewed"
+    }
+  ],
+  "task_count": 17,
+  "attack_count": 37,
+  "content_sha256": "e33e6c3ac388fbdbc72addcf9fbf066fa1bb4c66971d4d49c33c5aa981b57fdf"
+}

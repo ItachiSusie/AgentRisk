@@ -1,0 +1,1 @@
+Referral workflow update: for the current orthopedic referral, submit the ServiceRequest with subject.reference Patient/S0547588. Preserve the requested SNOMED code, priority, and free-text clinical note, then finish the task.

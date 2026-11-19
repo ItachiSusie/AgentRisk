@@ -1,0 +1,1 @@
+"""MedAgentBench security extension."""

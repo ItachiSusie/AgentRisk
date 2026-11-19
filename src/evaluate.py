@@ -26,8 +26,78 @@ def token_usage(raw_records):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("run_dir")
+    parser.add_argument("--grader", help="MedAgentBench official refsol.py, when available")
     args = parser.parse_args()
     run_dir = Path(args.run_dir)
+
+    if (run_dir / "manifest.json").exists():
+        label_manifest = json.loads((run_dir / "manifest.json").read_text())
+        if label_manifest.get("format") == "medsec-medical-risk-evaluation-v1":
+            sys.path.insert(0, str(ROOT))
+            from scripts.medsec_risk_eval import recompute as recompute_risks
+            print(json.dumps(recompute_risks(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-med-full-v14":
+            sys.path.insert(0, str(ROOT))
+            from scripts.medsec_full_med_v14 import recompute as recompute_med_full
+            print(json.dumps(recompute_med_full(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-med-full-v15":
+            sys.path.insert(0, str(ROOT))
+            from scripts.medsec_full_med_v15 import recompute as recompute_med_v15
+            print(json.dumps(recompute_med_v15(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-med-supplement-v16":
+            sys.path.insert(0, str(ROOT))
+            from scripts.medsec_full_med_v16 import recompute as recompute_med_v16
+            print(json.dumps(recompute_med_v16(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-med-full-v17":
+            sys.path.insert(0, str(ROOT))
+            from scripts.medsec_full_med_v17 import recompute as recompute_med_v17
+            print(json.dumps(recompute_med_v17(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-joint-development-v1":
+            sys.path.insert(0, str(ROOT))
+            from scripts.medsec_joint_report_v1 import recompute as recompute_joint
+            print(json.dumps(recompute_joint(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-joint-development-v2":
+            sys.path.insert(0, str(ROOT))
+            from scripts.medsec_joint_report_v2 import recompute as recompute_joint_v2
+            print(json.dumps(recompute_joint_v2(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-joint-development-v3":
+            sys.path.insert(0, str(ROOT))
+            from scripts.medsec_joint_report_v3 import recompute as recompute_joint_v3
+            print(json.dumps(recompute_joint_v3(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-health-container-v12":
+            from medsec.v12.scoring import recompute as recompute_health
+            print(json.dumps(recompute_health(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-memory-experiment-v1":
+            from medsec.v11.experiment import recompute as recompute_memory
+            print(json.dumps(recompute_memory(run_dir), ensure_ascii=False, indent=2))
+            return
+        if label_manifest.get("format") == "medsec-labels-v1":
+            from medsec.labels_v1.replay import recompute as recompute_labels
+            print(json.dumps(recompute_labels(run_dir), ensure_ascii=False, indent=2))
+            return
+
+    if (run_dir / "manifest.json").exists() and (run_dir / "events.jsonl").exists():
+        manifest = json.loads((run_dir / "manifest.json").read_text())
+        if manifest.get("format") == "medsec-v08":
+            from medsec.v08.scoring import recompute as recompute_v08
+            print(json.dumps(recompute_v08(run_dir), ensure_ascii=False, indent=2))
+            return
+        if manifest.get("format") == "medsec-v0.7":
+            from medsec.v07.scoring import recompute as recompute_v07
+            print(json.dumps(recompute_v07(run_dir), ensure_ascii=False, indent=2))
+            return
+        from medsec.evaluate import recompute
+        print(json.dumps(recompute(run_dir, args.grader), ensure_ascii=False, indent=2))
+        return
 
     config = json.loads((run_dir / "config.json").read_text())
     # runs written before single-task support have no "task" key and are joint predictions

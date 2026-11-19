@@ -1,0 +1,34 @@
+version = "1.0"
+artifacts = ["/workspace/submission/flagged_rows.csv"]
+
+[metadata]
+benchmark = "medsec_healthagentbench_synthetic"
+family = "ehr_data_quality"
+task_id = "healthagentbench_synthetic-ehr_data_quality-01"
+
+[verifier]
+timeout_sec = 60.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+cpus = 1
+memory_mb = 512
+storage_mb = 1024
+
+[agent]
+timeout_sec = 600.0
+network_mode = "allowlist"
+allowed_hosts = ["api.deepseek.com", "api.openai.com", "api.anthropic.com"]
+
+[environment]
+network_mode = "public"
+cpus = 1
+memory_mb = 1024
+storage_mb = 2048
+gpus = 0
+mcp_servers = []
+
+[verifier.env]
+
+[solution.env]

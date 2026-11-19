@@ -1,0 +1,35 @@
+{
+  "version": "v0.5",
+  "status": "supplementary holdout repair; not part of original v0.4 seal",
+  "replaces": [
+    "frozen_test-task8_12-v0.4",
+    "frozen_test-task10_1-v0.4"
+  ],
+  "run_ids": [
+    "20261110-repair-task8_3-clean",
+    "20261110-repair-task8_3-attack",
+    "20261110-repair-task10_24-clean",
+    "20261110-repair-task10_24-attack"
+  ],
+  "files_sha256": {
+    "/home/tuo96248/projects/AgentRisk/data/medsec/attacks_repair_v0_5.jsonl": "634197dea9e1c98b2984fe3593e4f54221b8fa1c41d8d9ca61c3c672167bff76",
+    "/home/tuo96248/projects/AgentRisk/data/medsec/extended_tasks_v0_3.json": "1f5ffdc0957f002a2c4e3c9e8d4142934c4d10eb98751db97223dd96eb4bca9d",
+    "/home/tuo96248/projects/AgentRisk/data/medsec/upstream/funcs_v1.json": "c977266db5eca75182c0d12cac1962b33ae6b5a54b9029ceb104e1a93b4c38c1",
+    "/home/tuo96248/projects/AgentRisk/data/medsec/splits_v0_3.json": "5654cf31fe52f90174191813df4dff93d48246b7562b86e0444c9d7b54645c67",
+    "/home/tuo96248/projects/AgentRisk/results/medsec/reports/frozen-v0.4-audited-03.json": "3b272d801d481e19227011ed1a075b1e333c04e448e09e38d86f77b1de390df7",
+    "/tmp/medsec-refsol.py": "67d19da263ac92c1b7075b3218ace3a4bd19b206a06fc7aebcc897dc39625419",
+    "/home/tuo96248/projects/AgentRisk/data/medsec/attacks_repair_v0_5/frozen-repair-task10_24-retrieved_document-v0.5.json": "62ea953acec0a1acece433c2d47cc189e3549359ffa29fbfcd1cb79b744934ea",
+    "/home/tuo96248/projects/AgentRisk/data/medsec/attacks_repair_v0_5/frozen-repair-task8_3-tool_result-v0.5.json": "7040bdaa1cfdaacebda03d89f6ab1827c31f929e26f5379048801cdb9da77b27",
+    "/home/tuo96248/projects/AgentRisk/data/medsec/payloads/frozen-repair-task10_24-retrieved_document-v0.5.txt": "0a43e7adf961ddbc516c388fcaa572dedebf59c37b7123234e2031e7a30798a8",
+    "/home/tuo96248/projects/AgentRisk/data/medsec/payloads/frozen-repair-task8_3-tool_result-v0.5.txt": "2243bd16f35014c9f7bcb27b195ea87c02e9329faa98303a8e4aec16c955cee9",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/run.py": "984989f96518896fb155db9cee83a3782f590153d0fbd300968a4d65b05009d4",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/run_v0_5.py": "97ea32d69542a335a085a985a0b2d0c16914d2102a8abc458dcb2c325e6a4df3",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/runtime.py": "f39484e4bed810dfcefd8f5c0fcce2a980deeee39731b7964fefeeafed9dd536",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/judge.py": "bc9cdb41178173e0499c072b69f1bd74db9d8ce7d6e99662cf3de52a854e7b2e",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/evaluate.py": "a713030aaf9ff9e84b1d99a5011fc5b14d64d61ecded58c655639ac5f9f66d12",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/splits.py": "bc9a39a53e86f7174c1221c4613d32482df973120d12d65fbe793d4ea3e57b8e",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/report.py": "aa8e86f43bc7d821a1088b42b1470b97db112dee1ca0e8d87c150c65baabdcfc",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/audit_report.py": "ee05c574c05cba1ff49e51d78fd76e60b865006b1b58203f0803f48c5a4b8edc",
+    "/home/tuo96248/projects/AgentRisk/src/medsec/lock.py": "59a2157ea10eb7395e190bf9296077cfa61042407cbce0779b9b031831baa5fe"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "version": "v0.4",
+  "split": "frozen_test",
+  "batch_id": "20261110-frozen-v04-01",
+  "attack_set_sha256": "8bdb82b20ffd149c8c7b55d9daf8efe2e7940d593a7da546349cf5d696fab7b6",
+  "pairs": [
+    {
+      "pair_id": "frozen_test-task10_1-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task10_1-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task10_1-attack"
+    },
+    {
+      "pair_id": "frozen_test-task1_10-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task1_10-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task1_10-attack"
+    },
+    {
+      "pair_id": "frozen_test-task2_27-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task2_27-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task2_27-attack"
+    },
+    {
+      "pair_id": "frozen_test-task3_2-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task3_2-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task3_2-attack"
+    },
+    {
+      "pair_id": "frozen_test-task4_16-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task4_16-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task4_16-attack"
+    },
+    {
+      "pair_id": "frozen_test-task5_1-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task5_1-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task5_1-attack"
+    },
+    {
+      "pair_id": "frozen_test-task6_1-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task6_1-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task6_1-attack"
+    },
+    {
+      "pair_id": "frozen_test-task7_12-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task7_12-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task7_12-attack"
+    },
+    {
+      "pair_id": "frozen_test-task8_12-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task8_12-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task8_12-attack"
+    },
+    {
+      "pair_id": "frozen_test-task9_15-v0.4",
+      "clean_run_id": "20261110-frozen-v04-01-task9_15-clean",
+      "attack_run_id": "20261110-frozen-v04-01-task9_15-attack"
+    }
+  ]
+}

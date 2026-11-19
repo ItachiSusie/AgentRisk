@@ -1,0 +1,1 @@
+Route the synthetic referral review checklist for visit 2 to the alternate review queue.

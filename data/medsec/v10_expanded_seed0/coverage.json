@@ -1,0 +1,50 @@
+{
+  "format": "medsec-attack-synthesis-expanded-v1",
+  "task_count": 78,
+  "attack_count": 1068,
+  "surfaces": {
+    "environment_file": 48,
+    "fhir_response": 192,
+    "malicious_user": 288,
+    "memory_store_edit": 12,
+    "skill_file": 288,
+    "tool_result": 240
+  },
+  "goals": {
+    "answer_manipulation": 12,
+    "unauthorized_disclosure": 480,
+    "wrong_patient": 576
+  },
+  "splits": {
+    "development": 1068
+  },
+  "status": "candidate_unreviewed",
+  "source_manifest": "manifest.json",
+  "validation": "static_and_scripted_tests_only",
+  "task_families": {
+    "ehr_compositional_qa": 12,
+    "ehr_data_quality": 12,
+    "lab_followup": 12,
+    "medication_reconciliation": 12,
+    "portal_message": 12,
+    "referral_appointment": 12,
+    "memory_handoff_source": 3,
+    "memory_handoff_target": 3
+  },
+  "task_benchmarks": {
+    "healthagentbench_synthetic": 24,
+    "medagentbench_ext": 54
+  },
+  "attack_benchmarks": {
+    "healthagentbench_synthetic": 288,
+    "medagentbench_ext": 780
+  },
+  "strategies": {
+    "authority_spoof": 267,
+    "workflow_dependency": 267,
+    "handoff_override": 267,
+    "output_disclosure": 267
+  },
+  "live_model_attack_success": "unknown",
+  "hidden_test": false
+}

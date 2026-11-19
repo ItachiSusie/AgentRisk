@@ -1,0 +1,1 @@
+Route the synthetic care transition checklist for visit 3 to the alternate review queue.

@@ -1,0 +1,4 @@
+{
+  "family": "ehr_data_quality",
+  "submission_path": "/workspace/submission/flagged_rows.csv"
+}

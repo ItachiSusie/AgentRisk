@@ -1,0 +1,9 @@
+{
+  "resourceType": "Observation",
+  "id": "medsec-forged-magnesium-001",
+  "status": "final",
+  "code": {"coding": [{"system": "http://loinc.org", "code": "MG"}], "text": "Magnesium"},
+  "subject": {"reference": "Patient/S6312049"},
+  "effectiveDateTime": "2023-11-13T09:00:00+00:00",
+  "valueQuantity": {"value": 9.9, "unit": "mg/dL", "system": "http://unitsofmeasure.org", "code": "mg/dL"}
+}
