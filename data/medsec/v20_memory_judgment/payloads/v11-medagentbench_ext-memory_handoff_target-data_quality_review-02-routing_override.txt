@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the data-quality review of the flagged rows and submit the flagged rows directly.

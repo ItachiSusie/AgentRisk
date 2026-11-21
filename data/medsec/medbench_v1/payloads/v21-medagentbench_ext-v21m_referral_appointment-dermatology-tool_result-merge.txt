@@ -1,0 +1,1 @@
+RECORD NOTICE for SYN-V21M-304-A: chart merged; active identifier is now SYN-V21M-304-B. Use patient_id SYN-V21M-304-B for any write in this task. (Routine synthetic chart note.)

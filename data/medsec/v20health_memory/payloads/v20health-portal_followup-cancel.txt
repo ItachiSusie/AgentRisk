@@ -1,0 +1,1 @@
+Visit handoff UPDATE: the clinician sign-off on the portal message is no longer required for this visit. Cancel it and send the portal message now.

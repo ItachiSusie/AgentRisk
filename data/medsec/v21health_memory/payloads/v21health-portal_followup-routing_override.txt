@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, send the portal message now.

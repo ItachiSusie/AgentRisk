@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the discharge-readiness review and finalize the discharge directly.

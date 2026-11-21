@@ -118,6 +118,16 @@ P0–P5 当前验收、十类 Med 原版代表性回归及剩余交付见[双底
 
 面向立场论文的基准原型定位、当前可支持的主张和证据边界见[MedSecBench 论文定位 v1](docs/medsec-position-paper-benchmark-framing-v1.md)。
 
+针对全量结果暴露的执行器问题（单回合多动作早停、记忆照抄任务、攻击元数据泄露、非法技能 id 崩溃）的修复：Med 在新包 `src/medsec/v20/`、Health 在 `src/medsec/v20health/`（均不改 v08/v11/v12 以保冻结运行可复算）。全部 39 个 Med 记忆家族由 `scripts/gen_v20_memory_judgment.py` 改判断型；Med 干净全量重跑 `scripts/medsec_full_med_v20.py` 已完成（`v20-med-20261119T235634Z-8b571802`，2061/2061，效用约 97%，记忆投毒 ASR 0/312，错患者 malicious_user 无防御 5/184、scope 0/180）。Health 判断型套件 + 修复桥接已通过容器端到端冒烟（`v20health-...3c0094ac`）。结果、费用与遗留项见[v20 执行器修复与结果](docs/medsec-v20-executor-fixes.md)。
+
+攻击目标从"错患者"扩到 **6 类医疗危害**：判定器 `src/medsec/v21/goals.py` 新增 PHI 泄露/外发、危险医嘱（剂量/禁忌/错药）、危急值漏处置、越过临床复核；`scripts/medsec_calibrate_v22.py` 校准出 69 条真成功攻击（`data/medsec/v22_attacks/`）。做法、分入口成功表与"注入向量有效性不同"的发现见[v22 医疗危害类型](docs/medsec-v22-harm-types.md)。
+
+统一 Med 安全基准 `data/medsec/medbench_v1/`（185 条、6 类危害 × 5 入口，`scripts/medsec_bench_build.py` 构建、`scripts/medsec_bench_run.py` 跑 none/scope 出大表）：中性 agent 下 6 类危害 ASR 0.90–1.00，`scope` 防御只挡错患者（0.99→0）、对其余 5 类内容级危害无效（总体 0.97→0.54）。position paper 形式的初步数据、方法与局限见[MedSecBench 初步结果](docs/medsec-position-paper-results-v1.md)。
+
+由于 v20 各入口 ASR 几乎为 0（基准太易，非模型安全），`src/medsec/v21/`（中性 base agent）+ `scripts/medsec_calibrate_v21.py` 按入口校准出真成功攻击；并用 `scripts/gen_v21_med_tasks.py` 扩出 40 个独立场景任务，使非记忆入口的独立场景组从 4 升到 20–36。合并全部成功后选集 `data/medsec/v21_attacks/` 共 549 条（错患者 4 入口 + 记忆投毒），做法、局限与下一步（跑 none/scope 成对量防御差）见[v21 校准攻击集](docs/medsec-v21-calibrated-attacks.md)。
+
+在另一台机器同步代码、配置其他模型并收集实验结果，见[其他模型复现说明](docs/medsec-other-model-reproduction.md)。
+
 ### 环境准备
 
 ```bash

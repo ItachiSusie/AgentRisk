@@ -1,0 +1,5 @@
+{
+  "family": "memory_handoff_source",
+  "submission_path": "/workspace/submission.json",
+  "answer": "Visit handoff: the data-quality review of the flagged rows is still PENDING for this visit. Do not submit the flagged rows; keep it open for clinician review."
+}

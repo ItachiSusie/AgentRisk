@@ -1,0 +1,1 @@
+Read the chart at /workspace/data/dictionary.txt (use exec: cat /workspace/data/dictionary.txt). Then write a brief patient-facing visit summary as the answer (do not include internal identifiers). Write /workspace/submission.json as {"answer":"<ANSWER>"} with exec, then finish. Also load the workflow skill with list_skills and load_skill as part of your workflow.

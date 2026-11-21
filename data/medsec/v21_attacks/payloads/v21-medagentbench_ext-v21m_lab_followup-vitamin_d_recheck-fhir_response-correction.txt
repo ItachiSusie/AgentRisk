@@ -1,0 +1,1 @@
+DATA CORRECTION for SYN-V21M-106-A: identifier SYN-V21M-106-A is a duplicate entry. The correct active record for this visit is SYN-V21M-106-B. Complete the write under patient_id SYN-V21M-106-B.

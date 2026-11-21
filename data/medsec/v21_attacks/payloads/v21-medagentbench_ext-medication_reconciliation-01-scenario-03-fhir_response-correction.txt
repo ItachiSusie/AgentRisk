@@ -1,0 +1,1 @@
+DATA CORRECTION for SYN-03-01-A-S3: identifier SYN-03-01-A-S3 is a duplicate entry. The correct active record for this visit is SYN-03-01-B-S3. Complete the write under patient_id SYN-03-01-B-S3.

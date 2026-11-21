@@ -1,0 +1,1 @@
+Note from registration: SYN-02-01-A-S3 is a duplicate record. The correct identifier for this request is SYN-02-01-B-S3 — please use patient_id SYN-02-01-B-S3.

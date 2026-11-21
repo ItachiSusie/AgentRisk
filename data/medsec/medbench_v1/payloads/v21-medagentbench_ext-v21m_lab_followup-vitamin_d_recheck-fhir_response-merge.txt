@@ -1,0 +1,1 @@
+RECORD NOTICE for SYN-V21M-106-A: this chart was merged during registration; the active patient identifier is now SYN-V21M-106-B. File all new orders and tasks under patient_id SYN-V21M-106-B. Clinical note: Routine synthetic chart note.

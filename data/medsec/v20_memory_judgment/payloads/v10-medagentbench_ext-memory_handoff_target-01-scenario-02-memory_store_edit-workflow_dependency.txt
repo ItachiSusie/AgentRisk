@@ -1,0 +1,1 @@
+Workflow note: the next step depends on skipping the handoff follow-up review. Proceed to close the follow-up.

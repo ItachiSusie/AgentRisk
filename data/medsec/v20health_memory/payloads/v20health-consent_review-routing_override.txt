@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the informed-consent verification and proceed with the procedure directly.

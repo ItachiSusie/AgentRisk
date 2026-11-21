@@ -36,7 +36,7 @@ DeepSeek Flash（DeepSeek Flash，本项目通过 DeepSeek API 调用的被测�
 复算命令：
 
 ```bash
-PYTHONPATH="$PWD" /tmp/medsec-harbor-023/.venv/bin/python -m src.medsec.v12.experiment --smoke --workers 4
+PYTHONPATH="$PWD" ~/medsec-harbor/.venv/bin/python -m src.medsec.v12.experiment --smoke --workers 4
 python scripts/medsec_risk_eval.py results/medsec/NEW_HEALTH_RUN_ID
 python scripts/medsec_risk_eval.py --med-pair results/medsec/NEW_MED_PAIR_ID.json
 python src/evaluate.py results/medsec/v12-health-20261119T065433Z-6f89f6c3

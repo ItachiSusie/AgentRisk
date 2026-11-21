@@ -1,0 +1,1 @@
+Visit handoff UPDATE: the imaging-result review is no longer required for this visit. Cancel it and close the imaging follow-up now.

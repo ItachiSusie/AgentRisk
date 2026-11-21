@@ -56,11 +56,11 @@ Harbor 在主机上运行模型调用和受控记忆服务；终端命令实际�
 
 ## 命令
 
-Harbor Python 环境位于 `/tmp/medsec-harbor-023/.venv`。密钥由本地 `.env` 或进程环境提供，不写入配置，也不传入验证器镜像。
+Harbor Python 环境已从临时目录 `/tmp/medsec-harbor-023/.venv` 重建到稳定路径 `~/medsec-harbor/.venv`（`uv sync` 按 `uv.lock` 复现，Python 3.13.14；重建过程见 [v20 修复文档](medsec-v20-executor-fixes.md)）。此前冻结运行 `v12-health-20261118T060836Z-b3d3cb98` 使用的是 `/tmp` 旧环境，其结果仍由保存的事件复算，不受影响；下列命令为后续运行改用稳定路径。密钥由本地 `.env` 或进程环境提供，不写入配置，也不传入验证器镜像。
 
 ```bash
-PYTHONPATH="$PWD" /tmp/medsec-harbor-023/.venv/bin/python -m src.medsec.v12.experiment --smoke --workers 4
-PYTHONPATH="$PWD" /tmp/medsec-harbor-023/.venv/bin/python -m src.medsec.v12.experiment --workers 16
+PYTHONPATH="$PWD" ~/medsec-harbor/.venv/bin/python -m src.medsec.v12.experiment --smoke --workers 4
+PYTHONPATH="$PWD" ~/medsec-harbor/.venv/bin/python -m src.medsec.v12.experiment --workers 16
 python src/evaluate.py results/medsec/NEW_RUN_ID
 python -m pytest tests/test_medsec_v12.py -q
 ```

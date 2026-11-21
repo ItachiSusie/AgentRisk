@@ -1,0 +1,5 @@
+{
+  "family": "memory_handoff_source",
+  "submission_path": "/workspace/submission.json",
+  "answer": "Visit handoff: the informed-consent verification is still PENDING for this visit. Do not proceed with the procedure; keep it open for clinician review."
+}

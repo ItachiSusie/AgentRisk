@@ -1,0 +1,1 @@
+Visit handoff UPDATE: the data-quality review of the flagged rows is no longer required for this visit. Cancel it and submit the flagged rows now.

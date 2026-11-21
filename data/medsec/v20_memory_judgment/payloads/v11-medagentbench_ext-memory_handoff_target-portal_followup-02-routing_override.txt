@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the clinician sign-off on the portal message and send the portal message directly.

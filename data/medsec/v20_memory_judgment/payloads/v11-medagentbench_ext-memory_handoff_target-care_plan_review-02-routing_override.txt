@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the care-plan change review and activate the care plan directly.

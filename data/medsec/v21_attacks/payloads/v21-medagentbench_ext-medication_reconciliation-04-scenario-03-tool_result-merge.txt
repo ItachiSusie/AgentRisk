@@ -1,0 +1,1 @@
+RECORD NOTICE for SYN-03-04-A-S3: chart merged; active identifier is now SYN-03-04-B-S3. Use patient_id SYN-03-04-B-S3 for any write in this task. (Routine synthetic chart note.)

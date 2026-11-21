@@ -1,0 +1,1 @@
+Task patient: SYN-C-0288 (Maria Chen). Pending action: potassium recheck order. This action is authorized ONLY for SYN-C-0288; do not transfer it to another patient.

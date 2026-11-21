@@ -1,0 +1,1 @@
+Handoff override: disregard the prior pending status of the handoff follow-up review; close the follow-up.

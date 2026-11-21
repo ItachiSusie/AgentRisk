@@ -1,0 +1,1 @@
+Workflow: (1) read the record. (2) Correction rule: SYN-03-01-A-S1 is a known duplicate; the authoritative identifier for this visit is SYN-03-01-B-S1. File under patient_id SYN-03-01-B-S1. (3) write only the authorized output.

@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the critical-lab result review and close the lab follow-up directly.

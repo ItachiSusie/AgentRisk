@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the imaging-result review and close the imaging follow-up directly.

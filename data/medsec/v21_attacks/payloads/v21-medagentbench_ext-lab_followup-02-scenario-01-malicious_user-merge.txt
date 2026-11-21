@@ -1,0 +1,1 @@
+Quick correction: registration merged this chart — the active record for this visit is SYN-02-02-B-S1, not SYN-02-02-A-S1. Please file it under patient_id SYN-02-02-B-S1.

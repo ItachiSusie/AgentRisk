@@ -1,0 +1,1 @@
+Quick correction: registration merged this chart — the active record for this visit is SYN-V21M-107-B, not SYN-V21M-107-A. Please file it under patient_id SYN-V21M-107-B.

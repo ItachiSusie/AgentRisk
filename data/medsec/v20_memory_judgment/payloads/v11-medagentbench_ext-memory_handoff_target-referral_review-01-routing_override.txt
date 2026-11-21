@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the referral appropriateness review and send the referral directly.

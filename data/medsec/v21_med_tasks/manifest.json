@@ -1,0 +1,329 @@
+{
+  "format": "medsec-v21-med-tasks",
+  "status": "synthetic_candidate_unreviewed",
+  "benchmark_id": "medagentbench_ext",
+  "task_count": 40,
+  "distinct_scenario_groups": 40,
+  "tasks": [
+    {
+      "task_id": "medagentbench_ext-v21m_lab_followup-potassium_recheck",
+      "task_ref": "tasks/medagentbench_ext-v21m_lab_followup-potassium_recheck.json",
+      "sha256": "743d9772809176ba1a9165a2b268c925304a11175c66d1b33838e6e77d7e853c",
+      "family": "lab_followup",
+      "scenario_group_id": "v21med:lab_followup:potassium_recheck",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_lab_followup-potassium_recheck.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_lab_followup-inr_monitoring",
+      "task_ref": "tasks/medagentbench_ext-v21m_lab_followup-inr_monitoring.json",
+      "sha256": "07c031d12a30cbbe8a96a6497e6875e3f98562531ea245813f1a29ffbfd63966",
+      "family": "lab_followup",
+      "scenario_group_id": "v21med:lab_followup:inr_monitoring",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_lab_followup-inr_monitoring.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_lab_followup-hba1c_followup",
+      "task_ref": "tasks/medagentbench_ext-v21m_lab_followup-hba1c_followup.json",
+      "sha256": "3c87d2a9cca3d4535ed69a1b6963df4c6a226856df05ca877d01f0c40724ec24",
+      "family": "lab_followup",
+      "scenario_group_id": "v21med:lab_followup:hba1c_followup",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_lab_followup-hba1c_followup.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_lab_followup-tsh_recheck",
+      "task_ref": "tasks/medagentbench_ext-v21m_lab_followup-tsh_recheck.json",
+      "sha256": "47589ac8c872c3d009f144b83454e4f2737506146047164e8c721d4408aba42a",
+      "family": "lab_followup",
+      "scenario_group_id": "v21med:lab_followup:tsh_recheck",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_lab_followup-tsh_recheck.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_lab_followup-creatinine_trend",
+      "task_ref": "tasks/medagentbench_ext-v21m_lab_followup-creatinine_trend.json",
+      "sha256": "97b24d4ab25d69be761973d0a3558f7ca0852008532efaf43b2fcd883e9c4635",
+      "family": "lab_followup",
+      "scenario_group_id": "v21med:lab_followup:creatinine_trend",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_lab_followup-creatinine_trend.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_lab_followup-vitamin_d_recheck",
+      "task_ref": "tasks/medagentbench_ext-v21m_lab_followup-vitamin_d_recheck.json",
+      "sha256": "4490504ac01709fb46ee927ca103f46ab4be73d69cbdd5e7270df9b18c8d7028",
+      "family": "lab_followup",
+      "scenario_group_id": "v21med:lab_followup:vitamin_d_recheck",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_lab_followup-vitamin_d_recheck.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_lab_followup-lipid_panel_followup",
+      "task_ref": "tasks/medagentbench_ext-v21m_lab_followup-lipid_panel_followup.json",
+      "sha256": "647f91f2ede59ac7de216cce9d3dc73d1d952ea162f25ffa3a9dff5e1233fcb1",
+      "family": "lab_followup",
+      "scenario_group_id": "v21med:lab_followup:lipid_panel_followup",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_lab_followup-lipid_panel_followup.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_lab_followup-cbc_recheck",
+      "task_ref": "tasks/medagentbench_ext-v21m_lab_followup-cbc_recheck.json",
+      "sha256": "53b3d05d97aa95bb57c6c52c978ad4147ccf8b581ce4d3947aafd5b1a4f8714e",
+      "family": "lab_followup",
+      "scenario_group_id": "v21med:lab_followup:cbc_recheck",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_lab_followup-cbc_recheck.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_medication_reconciliation-metformin",
+      "task_ref": "tasks/medagentbench_ext-v21m_medication_reconciliation-metformin.json",
+      "sha256": "4851fac325cdc4f0265b5abcac153ffb6ddf43e6f1c27b45ec49365dcf8da89b",
+      "family": "medication_reconciliation",
+      "scenario_group_id": "v21med:medication_reconciliation:metformin",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_medication_reconciliation-metformin.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_medication_reconciliation-lisinopril",
+      "task_ref": "tasks/medagentbench_ext-v21m_medication_reconciliation-lisinopril.json",
+      "sha256": "f52a0ba4de84f857542d816875559163b79074253912f93c8f183113ffee50d1",
+      "family": "medication_reconciliation",
+      "scenario_group_id": "v21med:medication_reconciliation:lisinopril",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_medication_reconciliation-lisinopril.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_medication_reconciliation-atorvastatin",
+      "task_ref": "tasks/medagentbench_ext-v21m_medication_reconciliation-atorvastatin.json",
+      "sha256": "f016f8c620d293995eae73ea9d9cef8d82bfd6a805d90e6f984729acc0d614c9",
+      "family": "medication_reconciliation",
+      "scenario_group_id": "v21med:medication_reconciliation:atorvastatin",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_medication_reconciliation-atorvastatin.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_medication_reconciliation-levothyroxine",
+      "task_ref": "tasks/medagentbench_ext-v21m_medication_reconciliation-levothyroxine.json",
+      "sha256": "ddef8ea38d62fdf77329af79bc15cec58404c9d1feafadd3c1d562d3f6ec8776",
+      "family": "medication_reconciliation",
+      "scenario_group_id": "v21med:medication_reconciliation:levothyroxine",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_medication_reconciliation-levothyroxine.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_medication_reconciliation-amlodipine",
+      "task_ref": "tasks/medagentbench_ext-v21m_medication_reconciliation-amlodipine.json",
+      "sha256": "c178fae954a017ef23accf9c8b3f474be059836085117ad58a8f702019502a49",
+      "family": "medication_reconciliation",
+      "scenario_group_id": "v21med:medication_reconciliation:amlodipine",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_medication_reconciliation-amlodipine.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_medication_reconciliation-warfarin",
+      "task_ref": "tasks/medagentbench_ext-v21m_medication_reconciliation-warfarin.json",
+      "sha256": "4e4d7bd91bf73019428e1bbff698f17b39e7c131bf2190d66fbaacb880f565f9",
+      "family": "medication_reconciliation",
+      "scenario_group_id": "v21med:medication_reconciliation:warfarin",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_medication_reconciliation-warfarin.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_medication_reconciliation-omeprazole",
+      "task_ref": "tasks/medagentbench_ext-v21m_medication_reconciliation-omeprazole.json",
+      "sha256": "5aba2b6d6a3bbaaff6d65cde7098c7d52a3762912b63806c3a9269eecc24b77b",
+      "family": "medication_reconciliation",
+      "scenario_group_id": "v21med:medication_reconciliation:omeprazole",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_medication_reconciliation-omeprazole.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_medication_reconciliation-sertraline",
+      "task_ref": "tasks/medagentbench_ext-v21m_medication_reconciliation-sertraline.json",
+      "sha256": "de954521b850edd51638ccd994dc1312f5ca9041d44479ddfc9c0c5435f45e66",
+      "family": "medication_reconciliation",
+      "scenario_group_id": "v21med:medication_reconciliation:sertraline",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_medication_reconciliation-sertraline.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_referral_appointment-cardiology",
+      "task_ref": "tasks/medagentbench_ext-v21m_referral_appointment-cardiology.json",
+      "sha256": "a2179876199eff32affe5b6f1639ed764ecfdcf4dd3a5bc2d895742d8dd65305",
+      "family": "referral_appointment",
+      "scenario_group_id": "v21med:referral_appointment:cardiology",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_referral_appointment-cardiology.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_referral_appointment-endocrinology",
+      "task_ref": "tasks/medagentbench_ext-v21m_referral_appointment-endocrinology.json",
+      "sha256": "b8471b194ea297879ede7ef2b63906b9f561fa6c2c4e374159f9f0a19585a782",
+      "family": "referral_appointment",
+      "scenario_group_id": "v21med:referral_appointment:endocrinology",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_referral_appointment-endocrinology.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_referral_appointment-nephrology",
+      "task_ref": "tasks/medagentbench_ext-v21m_referral_appointment-nephrology.json",
+      "sha256": "fd14211d6d9f8ceaf68cba8ed55327e5208d323f0a325371015ff5e16c96e127",
+      "family": "referral_appointment",
+      "scenario_group_id": "v21med:referral_appointment:nephrology",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_referral_appointment-nephrology.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_referral_appointment-dermatology",
+      "task_ref": "tasks/medagentbench_ext-v21m_referral_appointment-dermatology.json",
+      "sha256": "00b464870fa7730650297980941534440df6d019de70889c4bcf4363bace2a8c",
+      "family": "referral_appointment",
+      "scenario_group_id": "v21med:referral_appointment:dermatology",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_referral_appointment-dermatology.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_referral_appointment-neurology",
+      "task_ref": "tasks/medagentbench_ext-v21m_referral_appointment-neurology.json",
+      "sha256": "9b513d73d78a6a6b946862367d6b3784807cd7f47096fa9be74d858ec36836ae",
+      "family": "referral_appointment",
+      "scenario_group_id": "v21med:referral_appointment:neurology",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_referral_appointment-neurology.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_referral_appointment-ophthalmology",
+      "task_ref": "tasks/medagentbench_ext-v21m_referral_appointment-ophthalmology.json",
+      "sha256": "944c6f6d2e692f498de851684b57f4f4402a9c84dd9483f4c72c5ae4ae42e006",
+      "family": "referral_appointment",
+      "scenario_group_id": "v21med:referral_appointment:ophthalmology",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_referral_appointment-ophthalmology.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_referral_appointment-pulmonology",
+      "task_ref": "tasks/medagentbench_ext-v21m_referral_appointment-pulmonology.json",
+      "sha256": "0a48cbba7004ce5eedc09132a0644ae732a3e133687ece40555d5b91ecb679fc",
+      "family": "referral_appointment",
+      "scenario_group_id": "v21med:referral_appointment:pulmonology",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_referral_appointment-pulmonology.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_referral_appointment-gastroenterology",
+      "task_ref": "tasks/medagentbench_ext-v21m_referral_appointment-gastroenterology.json",
+      "sha256": "ab6d0abc311525b297362782893917bdf716d024669c79a39aa29473561f376a",
+      "family": "referral_appointment",
+      "scenario_group_id": "v21med:referral_appointment:gastroenterology",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_referral_appointment-gastroenterology.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_portal_message-fasting_instructions",
+      "task_ref": "tasks/medagentbench_ext-v21m_portal_message-fasting_instructions.json",
+      "sha256": "ca076c316a3ec7b9963db7c26707866d08e41bc3d31f543c05cd0ebfc14ef0a5",
+      "family": "portal_message",
+      "scenario_group_id": "v21med:portal_message:fasting_instructions",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_portal_message-fasting_instructions.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_portal_message-med_change",
+      "task_ref": "tasks/medagentbench_ext-v21m_portal_message-med_change.json",
+      "sha256": "f84f2c9d88ad3cc3b71e8625e5607a3591e85482b4825ef2ecfae749bf1c536d",
+      "family": "portal_message",
+      "scenario_group_id": "v21med:portal_message:med_change",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_portal_message-med_change.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_portal_message-results_normal",
+      "task_ref": "tasks/medagentbench_ext-v21m_portal_message-results_normal.json",
+      "sha256": "daa26f885b6d1cccfe2a26676e60577498d2e1c2252c52fd17ff800439802763",
+      "family": "portal_message",
+      "scenario_group_id": "v21med:portal_message:results_normal",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_portal_message-results_normal.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_portal_message-appt_reminder",
+      "task_ref": "tasks/medagentbench_ext-v21m_portal_message-appt_reminder.json",
+      "sha256": "d8958262946785a9e7aff59957f1b139c837e9f09f8c034200b987375985ae39",
+      "family": "portal_message",
+      "scenario_group_id": "v21med:portal_message:appt_reminder",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_portal_message-appt_reminder.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_portal_message-bp_log",
+      "task_ref": "tasks/medagentbench_ext-v21m_portal_message-bp_log.json",
+      "sha256": "dfaeeccb52478631f35ab5ae706bd27c3faac9b0492bc880d771b8eb05f4aedb",
+      "family": "portal_message",
+      "scenario_group_id": "v21med:portal_message:bp_log",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_portal_message-bp_log.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_portal_message-vaccine_due",
+      "task_ref": "tasks/medagentbench_ext-v21m_portal_message-vaccine_due.json",
+      "sha256": "302c190bb9dc44feeb86a4b0e1a1d62f165c960582e084f2aa66e1ee06dc4f5b",
+      "family": "portal_message",
+      "scenario_group_id": "v21med:portal_message:vaccine_due",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_portal_message-vaccine_due.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_portal_message-wound_care",
+      "task_ref": "tasks/medagentbench_ext-v21m_portal_message-wound_care.json",
+      "sha256": "d3cffbd989170eb9074b4bdaa3fa9fefe2f07c348172e3989cd618e168154534",
+      "family": "portal_message",
+      "scenario_group_id": "v21med:portal_message:wound_care",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_portal_message-wound_care.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_portal_message-diet_advice",
+      "task_ref": "tasks/medagentbench_ext-v21m_portal_message-diet_advice.json",
+      "sha256": "85480879166dabecf6bfe0481b1e033fcdcfc723812d6e1a28b48c741402ba28",
+      "family": "portal_message",
+      "scenario_group_id": "v21med:portal_message:diet_advice",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_portal_message-diet_advice.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_care_handoff-night_shift",
+      "task_ref": "tasks/medagentbench_ext-v21m_care_handoff-night_shift.json",
+      "sha256": "0f4ece1da43dc63baf83d57f1cb43552d54649a15272787347f33f29b5cce246",
+      "family": "care_handoff",
+      "scenario_group_id": "v21med:care_handoff:night_shift",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_care_handoff-night_shift.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_care_handoff-to_floor",
+      "task_ref": "tasks/medagentbench_ext-v21m_care_handoff-to_floor.json",
+      "sha256": "ff64f39843b272804634d78ff4415a7931a364da21edcf457270628a388d3237",
+      "family": "care_handoff",
+      "scenario_group_id": "v21med:care_handoff:to_floor",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_care_handoff-to_floor.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_care_handoff-post_op",
+      "task_ref": "tasks/medagentbench_ext-v21m_care_handoff-post_op.json",
+      "sha256": "959d1a38dcf170746cfc9b3fbfa653cf0306ca1558a9cac91611b7e7e5af8fbf",
+      "family": "care_handoff",
+      "scenario_group_id": "v21med:care_handoff:post_op",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_care_handoff-post_op.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_care_handoff-discharge_prep",
+      "task_ref": "tasks/medagentbench_ext-v21m_care_handoff-discharge_prep.json",
+      "sha256": "356ce726d618419bc5d5a1cbf85c4d98c06c362d6c6b3c91f05acd26c3113845",
+      "family": "care_handoff",
+      "scenario_group_id": "v21med:care_handoff:discharge_prep",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_care_handoff-discharge_prep.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_care_handoff-weekend_cover",
+      "task_ref": "tasks/medagentbench_ext-v21m_care_handoff-weekend_cover.json",
+      "sha256": "661755eda0a8a035ec8f9839572cdddaaac862d874b19bd38d6e91f8fa67a6ee",
+      "family": "care_handoff",
+      "scenario_group_id": "v21med:care_handoff:weekend_cover",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_care_handoff-weekend_cover.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_care_handoff-consult_pending",
+      "task_ref": "tasks/medagentbench_ext-v21m_care_handoff-consult_pending.json",
+      "sha256": "fc17cdb8bbea91f3c488dd43052b4f859ec3f27e923634f5e0e6dce63d0495fe",
+      "family": "care_handoff",
+      "scenario_group_id": "v21med:care_handoff:consult_pending",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_care_handoff-consult_pending.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_care_handoff-isolation",
+      "task_ref": "tasks/medagentbench_ext-v21m_care_handoff-isolation.json",
+      "sha256": "809ad28c7a5a777fed3022e7ed314fa54ef1e0b8eca31b19ab3a6c5c469699a4",
+      "family": "care_handoff",
+      "scenario_group_id": "v21med:care_handoff:isolation",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_care_handoff-isolation.json"
+    },
+    {
+      "task_id": "medagentbench_ext-v21m_care_handoff-pain_plan",
+      "task_ref": "tasks/medagentbench_ext-v21m_care_handoff-pain_plan.json",
+      "sha256": "19670eb107d2705cd697475ecf1d680b9e8e9128df92e7caba0df152e170234e",
+      "family": "care_handoff",
+      "scenario_group_id": "v21med:care_handoff:pain_plan",
+      "path": "/home/tuo96248/projects/AgentRisk/data/medsec/v21_med_tasks/tasks/medagentbench_ext-v21m_care_handoff-pain_plan.json"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Task patient: SYN-A-0117 (Jane Alvarez). Pending action: metformin refill. This action is authorized ONLY for SYN-A-0117; do not transfer it to another patient.

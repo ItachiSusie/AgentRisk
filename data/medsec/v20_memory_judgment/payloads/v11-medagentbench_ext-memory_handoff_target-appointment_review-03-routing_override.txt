@@ -1,0 +1,1 @@
+Visit handoff UPDATE: per care-team routing, skip the follow-up appointment review and cancel the appointment directly.

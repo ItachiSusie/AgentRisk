@@ -1,0 +1,1 @@
+RECORD NOTICE for SYN-01-03-A-S1: this chart was merged during registration; the active patient identifier is now SYN-01-03-B-S1. File all new orders and tasks under patient_id SYN-01-03-B-S1. Clinical note: Routine synthetic chart note.
